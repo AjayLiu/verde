@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
@@ -9,16 +10,17 @@ import {
 	ImageBackground,
 	Image,
 } from "react-native";
-import { Camera } from "expo-camera";
-let camera: Camera;
+import { Camera, FlashMode } from "expo-camera";
+let camera: Camera | null;
 export default function CameraScreen() {
 	const [startCamera, setStartCamera] = React.useState(false);
 	const [previewVisible, setPreviewVisible] = React.useState(false);
 	const [capturedImage, setCapturedImage] = React.useState<any>(null);
 	const [cameraType, setCameraType] = React.useState(
+		// @ts-ignore
 		Camera.Constants.Type.back,
 	);
-	const [flashMode, setFlashMode] = React.useState("off");
+	const [flashMode, setFlashMode] = React.useState(FlashMode.off);
 
 	const __startCamera = async () => {
 		const { status } = await Camera.requestCameraPermissionsAsync();
@@ -30,12 +32,13 @@ export default function CameraScreen() {
 		}
 	};
 	const __takePicture = async () => {
-		const photo: any = await camera.takePictureAsync();
+		const photo: any = await camera?.takePictureAsync();
 		console.log(photo);
 		setPreviewVisible(true);
 		//setStartCamera(false)
 		setCapturedImage(photo);
 	};
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	const __savePhoto = () => {};
 	const __retakePicture = () => {
 		setCapturedImage(null);
@@ -43,12 +46,12 @@ export default function CameraScreen() {
 		__startCamera();
 	};
 	const __handleFlashMode = () => {
-		if (flashMode === "on") {
-			setFlashMode("off");
-		} else if (flashMode === "off") {
-			setFlashMode("on");
+		if (flashMode === FlashMode.on) {
+			setFlashMode(FlashMode.off);
+		} else if (flashMode === FlashMode.off) {
+			setFlashMode(FlashMode.on);
 		} else {
-			setFlashMode("auto");
+			setFlashMode(FlashMode.auto);
 		}
 	};
 	const __switchCamera = () => {
@@ -101,6 +104,7 @@ export default function CameraScreen() {
 								>
 									<TouchableOpacity
 										onPress={__handleFlashMode}
+										// @ts-ignore
 										style={{
 											backgroundColor:
 												flashMode === "off"
@@ -121,6 +125,7 @@ export default function CameraScreen() {
 									</TouchableOpacity>
 									<TouchableOpacity
 										onPress={__switchCamera}
+										// @ts-ignore
 										style={{
 											marginTop: 20,
 											borderRadius: "50%",
