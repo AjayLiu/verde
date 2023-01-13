@@ -34,7 +34,7 @@ const SignInScreen = () => {
 
 	return (
 		<View style={styles.container}>
-			<Text>Signin screen!</Text>
+			<Text>Sign in</Text>
 
 			{!!value.error && (
 				<View style={styles.error}>
