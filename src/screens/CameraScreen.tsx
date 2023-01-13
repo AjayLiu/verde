@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import Constants from "expo-constants";
 import {
 	StyleSheet,
 	Text,
@@ -9,6 +10,7 @@ import {
 	Alert,
 	ImageBackground,
 	Image,
+	Platform,
 } from "react-native";
 import {
 	Camera,
@@ -17,8 +19,19 @@ import {
 	FlashMode,
 } from "expo-camera";
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
+import {
+	getDownloadURL,
+	getStorage,
+	ref,
+	uploadBytes,
+	uploadBytesResumable,
+} from "firebase/storage";
+import uuid from "react-native-uuid";
 
 let camera: Camera | null;
+
+const storage = getStorage();
+
 export default function CameraScreen() {
 	const [startCamera, setStartCamera] = React.useState(false);
 	const [previewVisible, setPreviewVisible] = React.useState(false);
@@ -45,16 +58,84 @@ export default function CameraScreen() {
 			photo = await manipulateAsync(
 				photo?.uri || "",
 				[{ rotate: 180 }, { flip: FlipType.Vertical }],
-				{ compress: 1, format: SaveFormat.PNG },
+				{ compress: 0, format: SaveFormat.JPEG },
 			);
+		} else {
+			photo = await manipulateAsync(photo?.uri || "", [], {
+				compress: 0,
+				format: SaveFormat.JPEG,
+			});
 		}
 
 		setPreviewVisible(true);
 		//setStartCamera(false)
 		setCapturedImage(photo);
 	};
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	const __savePhoto = () => {};
+	const __savePhoto = async () => {
+		async function uploadImageAsync(uri: string) {
+			try {
+				const response = await fetch(uri);
+
+				const blobFile = await response.blob();
+
+				const onlineImageFileName = "images/" + uuid.v4();
+
+				const reference = ref(storage, onlineImageFileName);
+				console.log(reference);
+				const uploadTask = uploadBytesResumable(reference, blobFile);
+
+				// Listen for state changes, errors, and completion of the upload.
+				uploadTask.on(
+					"state_changed",
+					(snapshot) => {
+						// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+						const progress =
+							(snapshot.bytesTransferred / snapshot.totalBytes) *
+							100;
+						console.log("Upload is " + progress + "% done");
+						switch (snapshot.state) {
+							case "paused":
+								console.log("Upload is paused");
+								break;
+							case "running":
+								console.log("Upload is running");
+								break;
+						}
+					},
+					(error) => {
+						// A full list of error codes is available at
+						// https://firebase.google.com/docs/storage/web/handle-errors
+						switch (error.code) {
+							case "storage/unauthorized":
+								// User doesn't have permission to access the object
+								break;
+							case "storage/canceled":
+								// User canceled the upload
+								break;
+
+							// ...
+
+							case "storage/unknown":
+								// Unknown error occurred, inspect error.serverResponse
+								break;
+						}
+					},
+					() => {
+						// Upload completed successfully, now we can get the download URL
+						getDownloadURL(uploadTask.snapshot.ref).then(
+							(downloadURL) => {
+								console.log("File available at", downloadURL);
+							},
+						);
+					},
+				);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		}
+		if (!capturedImage?.uri) return;
+		uploadImageAsync(capturedImage.uri);
+	};
 	const __retakePicture = () => {
 		setCapturedImage(null);
 		setPreviewVisible(false);
