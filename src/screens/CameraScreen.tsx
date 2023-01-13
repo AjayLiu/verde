@@ -10,30 +10,45 @@ import {
 	ImageBackground,
 	Image,
 } from "react-native";
-import { Camera, FlashMode } from "expo-camera";
+import {
+	Camera,
+	CameraCapturedPicture,
+	CameraType,
+	FlashMode,
+} from "expo-camera";
+import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
+
 let camera: Camera | null;
 export default function CameraScreen() {
 	const [startCamera, setStartCamera] = React.useState(false);
 	const [previewVisible, setPreviewVisible] = React.useState(false);
-	const [capturedImage, setCapturedImage] = React.useState<any>(null);
-	const [cameraType, setCameraType] = React.useState(
-		// @ts-ignore
-		Camera.Constants.Type.back,
+	const [capturedImage, setCapturedImage] = React.useState<
+		CameraCapturedPicture | null | undefined
+	>(null);
+	const [cameraType, setCameraType] = React.useState<CameraType>(
+		CameraType.back,
 	);
 	const [flashMode, setFlashMode] = React.useState(FlashMode.off);
 
 	const __startCamera = async () => {
 		const { status } = await Camera.requestCameraPermissionsAsync();
-		console.log(status);
 		if (status === "granted") {
 			setStartCamera(true);
 		} else {
 			Alert.alert("Access denied");
 		}
 	};
+
 	const __takePicture = async () => {
-		const photo: any = await camera?.takePictureAsync();
-		console.log(photo);
+		let photo = await camera?.takePictureAsync();
+		if (cameraType === CameraType.front) {
+			photo = await manipulateAsync(
+				photo?.uri || "",
+				[{ rotate: 180 }, { flip: FlipType.Vertical }],
+				{ compress: 1, format: SaveFormat.PNG },
+			);
+		}
+
 		setPreviewVisible(true);
 		//setStartCamera(false)
 		setCapturedImage(photo);
@@ -55,10 +70,10 @@ export default function CameraScreen() {
 		}
 	};
 	const __switchCamera = () => {
-		if (cameraType === "back") {
-			setCameraType("front");
+		if (cameraType === CameraType.back) {
+			setCameraType(CameraType.front);
 		} else {
-			setCameraType("back");
+			setCameraType(CameraType.back);
 		}
 	};
 	return (
@@ -227,7 +242,6 @@ const styles = StyleSheet.create({
 });
 
 const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
-	console.log("sdsfds", photo);
 	return (
 		<View
 			style={{
