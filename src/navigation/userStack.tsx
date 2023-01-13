@@ -9,8 +9,8 @@ const Stack = createStackNavigator();
 export default function UserStack() {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name="Camera" component={CameraScreen} />
 			<Stack.Screen name="Home" component={HomeScreen} />
+			<Stack.Screen name="Camera" component={CameraScreen} />
 		</Stack.Navigator>
 	);
 }
