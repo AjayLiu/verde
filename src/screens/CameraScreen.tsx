@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Camera } from "expo-camera";
 let camera: Camera;
-export default function App() {
+export default function CameraScreen() {
 	const [startCamera, setStartCamera] = React.useState(false);
 	const [previewVisible, setPreviewVisible] = React.useState(false);
 	const [capturedImage, setCapturedImage] = React.useState<any>(null);
