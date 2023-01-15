@@ -3,8 +3,9 @@ import { StyleSheet, Text, View } from "react-native";
 import { useAuthentication } from "@hooks/useAuthentication";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
+import { RouterProps } from "src/types";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation }: RouterProps) {
 	const { user } = useAuthentication();
 	const auth = getAuth();
 
