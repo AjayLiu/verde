@@ -4,6 +4,7 @@ import { useAuthentication } from "@hooks/useAuthentication";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
 
+// @ts-ignore
 export default function HomeScreen({ navigation }) {
 	const { user } = useAuthentication();
 	const auth = getAuth();
