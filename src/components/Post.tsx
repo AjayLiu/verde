@@ -37,8 +37,6 @@ const Post = (props: PostProps) => {
 const styles = StyleSheet.create({
 	outer: {
 		width: "100%",
-		borderColor: "black",
-		borderWidth: 1,
 	},
 	inner: {
 		flexDirection: "row",
