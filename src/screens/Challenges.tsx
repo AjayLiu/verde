@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from "react-native";
 import { useAuthentication } from "@hooks/useAuthentication";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
-import { NavigationContainer } from "@react-navigation/native";
 
 export default function HomeScreen({ navigation }) {
 	const { user } = useAuthentication();
@@ -11,30 +10,13 @@ export default function HomeScreen({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Text>Welcome {user?.email}!</Text>
+			<Text>!!THIS IS A STUB!!</Text>
+			<Text>Challenges for {user?.email}!</Text>
 
 			<Button
-				title="Sign Out"
+				title="Home"
 				style={styles.button}
-				onPress={() => signOut(auth)}
-			/>
-
-			<Button
-				title="Camera"
-				style={styles.button}
-				onPress={() => navigation.navigate("Camera")}
-			/>
-
-			<Button
-				title="Challenges"
-				style={styles.button}
-				onPress={() => navigation.navigate("Challenges")}
-			/>
-
-			<Button
-				title="Profile"
-				style={styles.button}
-				onPress={() => navigation.navigate("Profile")}
+				onPress={() => navigation.navigate("Home")}
 			/>
 		</View>
 	);
