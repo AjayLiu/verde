@@ -1,25 +1,22 @@
 import React from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
+import Username from "@components/Username";
+import ProfilePicture from "@components/ProfilePicture";
+
+const dimensions = Dimensions.get("window");
 
 type PostProps = {
 	image: string;
-	username: string;
+	uid: string;
 	caption: string;
-	comment: string;
 };
-
-const styles = StyleSheet.create({
-	image: {
-		width: 100,
-		height: 100,
-	},
-});
 
 const Post = (props: PostProps) => {
 	return (
-		<View>
-			<View>
-				<Text>{props.username}</Text>
+		<View style={styles.outer}>
+			<View style={styles.inner}>
+				<ProfilePicture />
+				<Username style={styles.username} />
 			</View>
 			<Image
 				style={styles.image}
@@ -27,12 +24,37 @@ const Post = (props: PostProps) => {
 					uri: props.image,
 				}}
 			/>
-			<View>
-				<Text>{props.caption}</Text>
-				<Text>{props.comment}</Text>
+			{/* TODO: Add like button, comment button, share button? */}
+			<View style={styles.inner}>
+				<Username />
+				<Text style={styles.caption}>{props.caption}</Text>
 			</View>
+			{/* TODO: Add comment section under post */}
 		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	outer: {
+		width: "100%",
+		borderColor: "black",
+		borderWidth: 1,
+	},
+	inner: {
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+		alignItems: "center",
+	},
+	username: {
+		width: "85%",
+	},
+	caption: {
+		width: "68%",
+	},
+	image: {
+		width: dimensions.width,
+		height: dimensions.width,
+	},
+});
 
 export default Post;
