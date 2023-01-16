@@ -3,10 +3,11 @@ import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { StackScreenProps } from "@react-navigation/stack";
 
 const auth = getAuth();
 
-const SignInScreen = () => {
+const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 	const [value, setValue] = React.useState({
 		email: "",
 		password: "",

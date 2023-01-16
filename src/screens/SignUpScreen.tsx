@@ -4,14 +4,18 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { StackScreenProps } from "@react-navigation/stack";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useUser } from "@utils/hooks/useUser";
 
 const auth = getAuth();
+
 const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 	const [value, setValue] = React.useState({
 		email: "",
 		password: "",
 		error: "",
 	});
+
+	const { writeToUserFirestore } = useUser();
 
 	async function signUp() {
 		if (value.email === "" || value.password === "") {
@@ -28,7 +32,18 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 				value.email,
 				value.password,
 			);
-			navigation.navigate("Sign In");
+
+			await writeToUserFirestore({
+				uid: auth.currentUser?.uid || "ERROR",
+				email: value.email,
+				displayName: "New User",
+				photoUrl: "https://picsum.photos/200",
+				friendsUids: [],
+				postsUids: [],
+			});
+			console.log("User created successfully.");
+
+			// navigation.navigate("Sign In");
 		} catch (error: any) {
 			setValue({
 				...value,
