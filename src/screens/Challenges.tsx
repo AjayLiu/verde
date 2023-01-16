@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useAuthentication } from "@hooks/useAuthentication";
 import { Button } from "react-native-elements";
-import { getAuth, signOut } from "firebase/auth";
 import { RouterProps } from "src/types";
+import { useUser } from "@utils/hooks/useUser";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { user } = useAuthentication();
-	const auth = getAuth();
+	const { authUser } = useUser();
 
 	return (
 		<View style={styles.container}>
 			<Text>!!THIS IS A STUB!!</Text>
-			<Text>Challenges for {user?.email}!</Text>
+			<Text>Challenges for {authUser?.email}!</Text>
 
 			<Button
 				title="Home"

@@ -1,10 +1,10 @@
 import React from "react";
-import { useAuthentication } from "@hooks/useAuthentication";
 import UserStack from "./userStack";
 import AuthStack from "./authStack";
+import { useUser } from "@utils/hooks/useUser";
 
 export default function RootNavigation() {
-	const { user } = useAuthentication();
+	const { isSignedIn } = useUser();
 
-	return user ? <UserStack /> : <AuthStack />;
+	return isSignedIn ? <UserStack /> : <AuthStack />;
 }

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import Constants from "expo-constants";
 import {
 	StyleSheet,
 	Text,
@@ -9,8 +8,6 @@ import {
 	TouchableOpacity,
 	Alert,
 	ImageBackground,
-	Image,
-	Platform,
 } from "react-native";
 import {
 	Camera,
@@ -23,7 +20,6 @@ import {
 	getDownloadURL,
 	getStorage,
 	ref,
-	uploadBytes,
 	uploadBytesResumable,
 } from "firebase/storage";
 import uuid from "react-native-uuid";

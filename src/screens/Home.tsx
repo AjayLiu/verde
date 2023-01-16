@@ -1,19 +1,18 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useAuthentication } from "@hooks/useAuthentication";
+import { useUser } from "@hooks/useUser";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
-import { NavigationContainer } from "@react-navigation/native";
 import Post from "@components/Post";
 import { RouterProps } from "src/types";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { user } = useAuthentication();
+	const { authUser } = useUser();
 	const auth = getAuth();
 
 	return (
 		<View style={styles.container}>
-			<Text>Welcome {user?.email}!</Text>
+			<Text>Welcome {authUser?.email}!</Text>
 
 			<Button
 				title="Sign Out"
