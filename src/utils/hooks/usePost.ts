@@ -6,6 +6,8 @@ import {
 	arrayUnion,
 	getDocs,
 	collection,
+	query,
+	orderBy,
 } from "firebase/firestore";
 import { db } from "@config/firebase";
 import { useUser } from "./useUser";
@@ -39,7 +41,9 @@ export function usePost() {
 	};
 
 	const getAllPosts = async () => {
-		const querySnapshot = await getDocs(collection(db, "posts"));
+		const querySnapshot = await getDocs(
+			query(collection(db, "posts"), orderBy("timeUTC", "desc")),
+		);
 		return querySnapshot.docs.map((doc) => doc.data()) as Post[];
 	};
 

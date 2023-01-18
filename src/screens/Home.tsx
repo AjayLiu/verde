@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useCallback, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useUser } from "@hooks/useUser";
 import { Button } from "react-native-elements";
@@ -6,7 +6,7 @@ import { getAuth, signOut } from "firebase/auth";
 import PostComponent from "@components/PostComponent";
 import { Post, RouterProps } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
-import { ScrollView } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser } = useUser();
@@ -15,16 +15,30 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	const [posts, setPosts] = React.useState<Post[]>([]);
 
+	const fetchAllPosts = async () => {
+		const allPosts = await getAllPosts();
+		setPosts(allPosts);
+	};
+
 	useEffect(() => {
-		const fetchAllPosts = async () => {
-			const allPosts = await getAllPosts();
-			setPosts(allPosts);
-		};
 		fetchAllPosts();
 	}, []);
 
+	const [refreshing, setRefreshing] = React.useState(false);
+
+	const onRefresh = useCallback(async () => {
+		await fetchAllPosts();
+		setRefreshing(false);
+	}, []);
 	return (
-		<ScrollView>
+		<ScrollView
+			refreshControl={
+				<RefreshControl
+					refreshing={refreshing}
+					onRefresh={onRefresh}
+				></RefreshControl>
+			}
+		>
 			<View style={styles.container}>
 				<Text>Welcome {authUser?.displayName}!</Text>
 
