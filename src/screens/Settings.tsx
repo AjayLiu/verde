@@ -5,7 +5,13 @@ import { RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { authUser } = useUser();
+	const { authUser, deleteUserFromFirestore } = useUser();
+
+	const deleteAccount = async () => {
+		console.log("Deleting account");
+
+		await deleteUserFromFirestore(authUser?.uid || "");
+	};
 
 	return (
 		<View style={styles.container}>
@@ -16,6 +22,12 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				title="Profile"
 				style={styles.button}
 				onPress={() => navigation.navigate("Profile")}
+			/>
+
+			<Button
+				title="Delete account"
+				style={styles.button}
+				onPress={deleteAccount}
 			/>
 		</View>
 	);

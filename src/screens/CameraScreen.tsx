@@ -80,7 +80,8 @@ export default function CameraScreen() {
 
 				const blobFile = await response.blob();
 
-				const onlineImageFileName = "images/" + uuid.v4();
+				const postUid = uuid.v4();
+				const onlineImageFileName = "posts/" + postUid;
 
 				const reference = ref(storage, onlineImageFileName);
 				console.log(reference);
@@ -134,7 +135,7 @@ export default function CameraScreen() {
 							authorUid: authUser?.uid || "",
 							imgUrl: downloadURL,
 							timeUTC: Date.now(),
-							uid: uuid.v4() as string,
+							uid: postUid as string,
 							comments: [],
 							likes: [],
 							caption: "",
