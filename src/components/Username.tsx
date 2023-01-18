@@ -1,3 +1,4 @@
+import { useUser } from "@utils/hooks/useUser";
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
@@ -7,11 +8,12 @@ type UsernameProps = {
 };
 
 export const Username = (props: UsernameProps) => {
+	const { authUser } = useUser();
 	return (
-		// TODO: make call to firebase to find username for uid, then put username in stub below
-
 		// stub
-		<Text style={[styles.username, props.style]}>username_here</Text>
+		<Text style={[styles.username, props.style]}>
+			{authUser?.displayName}
+		</Text>
 	);
 };
 
