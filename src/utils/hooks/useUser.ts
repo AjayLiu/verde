@@ -9,7 +9,6 @@ const auth = getAuth();
 
 export function useUser() {
 	const [authUser, setAuthUser] = useState<User>();
-	const [firestoreUser, setFirestoreUser] = useState<FirestoreUser>();
 
 	// Auth changes
 	useEffect(() => {

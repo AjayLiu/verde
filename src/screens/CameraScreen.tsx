@@ -105,6 +105,8 @@ export default function CameraScreen() {
 						}
 					},
 					(error) => {
+						console.error(error);
+
 						// A full list of error codes is available at
 						// https://firebase.google.com/docs/storage/web/handle-errors
 						switch (error.code) {
