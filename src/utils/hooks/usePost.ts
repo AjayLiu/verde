@@ -22,7 +22,7 @@ export function usePost() {
 
 			// Then add post to user's data
 			updateUserFirestore(post.authorUid, {
-				posts: arrayUnion(post.uid),
+				postsUids: arrayUnion(post.uid),
 			});
 		} catch (e) {
 			console.error("Error making post: ", e);
