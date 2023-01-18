@@ -1,3 +1,4 @@
+import { useUser } from "@utils/hooks/useUser";
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
@@ -9,13 +10,12 @@ type ProfilePictureProps = {
 const size = 35;
 
 const ProfilePicture = (props: ProfilePictureProps) => {
+	const { authUser } = useUser();
 	return (
-		// TODO: make call to firebase to get profile picture for uid and put link in stub below
-
 		// stub
 		<Image
 			source={{
-				uri: "https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg",
+				uri: authUser?.photoURL || "",
 			}}
 			style={[styles.image, props.style]}
 		/>
