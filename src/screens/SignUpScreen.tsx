@@ -3,7 +3,11 @@ import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { StackScreenProps } from "@react-navigation/stack";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	updateProfile,
+} from "firebase/auth";
 import { useUser } from "@utils/hooks/useUser";
 
 const auth = getAuth();
@@ -32,12 +36,22 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 				value.email,
 				value.password,
 			);
+			if (auth.currentUser === null) throw new Error("User is null");
+
+			// Some default user values
+			const defaultProfilePic =
+				"https://img.freepik.com/free-icon/user_318-864557.jpg?w=2000";
+
+			updateProfile(auth.currentUser, {
+				displayName: "New User",
+				photoURL: defaultProfilePic,
+			});
 
 			await writeToUserFirestore({
 				uid: auth.currentUser?.uid || "ERROR",
 				email: value.email,
 				displayName: "New User",
-				photoUrl: "https://picsum.photos/200",
+				photoUrl: defaultProfilePic,
 				friendsUids: [],
 				postsUids: [],
 			});

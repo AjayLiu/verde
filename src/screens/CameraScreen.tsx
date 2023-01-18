@@ -133,6 +133,9 @@ export default function CameraScreen() {
 							imgUrl: downloadURL,
 							timeUTC: Date.now(),
 							uid: uuid.v4() as string,
+							comments: [],
+							likes: [],
+							caption: "",
 						});
 					},
 				);

@@ -16,6 +16,24 @@ export interface FirestoreUser {
 export interface Post {
 	uid: string;
 	imgUrl: string;
+	caption: string;
 	authorUid: string;
+	timeUTC: number;
+	comments: Comment[];
+	likes: Like[];
+}
+
+export interface Comment {
+	uid: string;
+	authorUid: string;
+	postUid: string;
+	timeUTC: number;
+	text: string;
+}
+
+export interface Like {
+	uid: string;
+	authorUid: string;
+	postUid: string;
 	timeUTC: number;
 }

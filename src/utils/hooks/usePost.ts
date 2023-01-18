@@ -1,5 +1,12 @@
 import { Post } from "src/types";
-import { getDoc, doc, setDoc, arrayUnion } from "firebase/firestore";
+import {
+	getDoc,
+	doc,
+	setDoc,
+	arrayUnion,
+	getDocs,
+	collection,
+} from "firebase/firestore";
 import { db } from "@config/firebase";
 import { useUser } from "./useUser";
 
@@ -31,5 +38,10 @@ export function usePost() {
 		return docSnap.data() as Post;
 	};
 
-	return { makePost, getPost };
+	const getAllPosts = async () => {
+		const querySnapshot = await getDocs(collection(db, "posts"));
+		return querySnapshot.docs.map((doc) => doc.data()) as Post[];
+	};
+
+	return { makePost, getPost, getAllPosts };
 }

@@ -15,7 +15,10 @@ const ProfilePicture = (props: ProfilePictureProps) => {
 		// stub
 		<Image
 			source={{
-				uri: authUser?.photoURL || "",
+				uri:
+					authUser?.photoURL ||
+					// loading image
+					"https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=", // loading image,
 			}}
 			style={[styles.image, props.style]}
 		/>
