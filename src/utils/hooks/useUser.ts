@@ -36,28 +36,28 @@ export function useUser() {
 		try {
 			console.log(user);
 			const docRef = await setDoc(doc(db, "users", user.uid), user);
-			console.log("Document written: ", docRef);
+			console.log("User written: ", docRef);
 		} catch (e) {
-			console.error("Error adding document: ", e);
+			console.error("Error writing user: ", e);
 		}
 	};
 
 	const updateUserFirestore = async (userUid: string, data: any) => {
 		try {
 			const docRef = await updateDoc(doc(db, "users", userUid), data);
-			console.log("Document updated: ", docRef);
+			console.log("User updated: ", docRef);
 		} catch (e) {
-			console.error("Error updating document: ", e);
+			console.error("Error updating user: ", e);
 		}
 	};
 
 	const getUserFromFirestore = async (uid: string) => {
 		const docSnap = await getDoc(doc(db, "users", uid));
 		if (docSnap.exists()) {
-			console.log("Document data:", docSnap.data());
+			console.log("User data:", docSnap.data());
 		} else {
 			// doc.data() will be undefined in this case
-			console.log("No such document!");
+			console.log("Can't find user data!");
 		}
 	};
 

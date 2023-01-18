@@ -23,6 +23,8 @@ import {
 	uploadBytesResumable,
 } from "firebase/storage";
 import uuid from "react-native-uuid";
+import { usePost } from "@utils/hooks/usePost";
+import { useUser } from "@utils/hooks/useUser";
 
 let camera: Camera | null;
 
@@ -67,6 +69,10 @@ export default function CameraScreen() {
 		//setStartCamera(false)
 		setCapturedImage(photo);
 	};
+
+	const { makePost } = usePost();
+	const { authUser } = useUser();
+
 	const __savePhoto = async () => {
 		async function uploadImageAsync(uri: string) {
 			try {
@@ -116,13 +122,18 @@ export default function CameraScreen() {
 								break;
 						}
 					},
-					() => {
+					async () => {
 						// Upload completed successfully, now we can get the download URL
-						getDownloadURL(uploadTask.snapshot.ref).then(
-							(downloadURL) => {
-								console.log("File available at", downloadURL);
-							},
+						const downloadURL = await getDownloadURL(
+							uploadTask.snapshot.ref,
 						);
+
+						await makePost({
+							authorUid: authUser?.uid || "",
+							imgUrl: downloadURL,
+							timeUTC: Date.now(),
+							uid: uuid.v4() as string,
+						});
 					},
 				);
 			} catch (err) {
