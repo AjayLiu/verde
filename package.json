@@ -20,6 +20,7 @@
 		"expo-camera": "^13.1.0",
 		"expo-constants": "~14.0.2",
 		"expo-image-manipulator": "^11.0.0",
+		"expo-image-picker": "~14.0.2",
 		"expo-status-bar": "~1.4.2",
 		"firebase": "^9.15.0",
 		"react": "18.1.0",

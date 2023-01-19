@@ -5,23 +5,7 @@ import { RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { authUser, updateUserFirestore } = useUser();
-
-	// Update the user's displayName and/or photoURL
-	const updateUserProfile = async (
-		displayName?: string,
-		photoURL?: string,
-	) => {
-		if (!authUser?.uid) {
-			console.error("No user logged in");
-			return;
-		}
-
-		await updateUserFirestore(authUser?.uid, {
-			displayName: displayName || authUser?.displayName,
-			photoURL: photoURL || authUser?.photoURL,
-		});
-	};
+	const { authUser } = useUser();
 
 	return (
 		<View style={styles.container}>
