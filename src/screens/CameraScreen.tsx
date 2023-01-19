@@ -16,19 +16,9 @@ import {
 	FlashMode,
 } from "expo-camera";
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
-import {
-	getDownloadURL,
-	getStorage,
-	ref,
-	uploadBytesResumable,
-} from "firebase/storage";
-import uuid from "react-native-uuid";
-import { usePost } from "@utils/hooks/usePost";
-import { useUser } from "@utils/hooks/useUser";
+import { usePost } from "@hooks/usePost";
 
 let camera: Camera | null;
-
-const storage = getStorage();
 
 export default function CameraScreen() {
 	const [startCamera, setStartCamera] = React.useState(false);
@@ -71,80 +61,10 @@ export default function CameraScreen() {
 	};
 
 	const { makePost } = usePost();
-	const { authUser } = useUser();
 
 	const __savePhoto = async () => {
 		async function uploadImageAsync(uri: string) {
-			try {
-				const response = await fetch(uri);
-
-				const blobFile = await response.blob();
-
-				const postUid = uuid.v4();
-				const onlineImageFileName = "posts/" + postUid;
-
-				const reference = ref(storage, onlineImageFileName);
-				console.log(reference);
-				const uploadTask = uploadBytesResumable(reference, blobFile);
-
-				// Listen for state changes, errors, and completion of the upload.
-				uploadTask.on(
-					"state_changed",
-					(snapshot) => {
-						// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-						const progress =
-							(snapshot.bytesTransferred / snapshot.totalBytes) *
-							100;
-						console.log("Upload is " + progress + "% done");
-						switch (snapshot.state) {
-							case "paused":
-								console.log("Upload is paused");
-								break;
-							case "running":
-								console.log("Upload is running");
-								break;
-						}
-					},
-					(error) => {
-						console.error(error);
-
-						// A full list of error codes is available at
-						// https://firebase.google.com/docs/storage/web/handle-errors
-						switch (error.code) {
-							case "storage/unauthorized":
-								// User doesn't have permission to access the object
-								break;
-							case "storage/canceled":
-								// User canceled the upload
-								break;
-
-							// ...
-
-							case "storage/unknown":
-								// Unknown error occurred, inspect error.serverResponse
-								break;
-						}
-					},
-					async () => {
-						// Upload completed successfully, now we can get the download URL
-						const downloadURL = await getDownloadURL(
-							uploadTask.snapshot.ref,
-						);
-
-						await makePost({
-							authorUid: authUser?.uid || "",
-							imgUrl: downloadURL,
-							timeUTC: Date.now(),
-							uid: postUid as string,
-							comments: [],
-							likes: [],
-							caption: "",
-						});
-					},
-				);
-			} catch (err) {
-				return Promise.reject(err);
-			}
+			await makePost(uri);
 		}
 		if (!capturedImage?.uri) return;
 		uploadImageAsync(capturedImage.uri);
