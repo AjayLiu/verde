@@ -43,14 +43,14 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 				"https://img.freepik.com/free-icon/user_318-864557.jpg?w=2000";
 
 			updateProfile(auth.currentUser, {
-				displayName: "New User",
+				// displayName: "New User",
 				photoURL: defaultProfilePic,
 			});
 
 			await writeToUserFirestore({
 				uid: auth.currentUser?.uid || "ERROR",
 				email: value.email,
-				displayName: "New User",
+				displayName: "",
 				photoUrl: defaultProfilePic,
 				friendsUids: [],
 				postsUids: [],

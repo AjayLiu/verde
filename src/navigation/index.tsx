@@ -1,20 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import UserStack from "./userStack";
 import AuthStack from "./authStack";
 import { useUser } from "@utils/hooks/useUser";
+import UsernameContext from "../contexts/UsernameContext";
 
 export default function RootNavigation() {
-	const { isSignedIn, authUser } = useUser();
+	const { isSignedIn } = useUser();
+	const [hasPickedUsername, setHasPickedUsername] = useState(false);
 
-	useEffect(() => {
-		console.log(authUser?.displayName);
-	}, [authUser?.displayName]);
-
-	return isSignedIn &&
-		authUser?.displayName &&
-		authUser.displayName != "New User" ? (
-		<UserStack />
-	) : (
-		<AuthStack />
-	);
+	if (!isSignedIn || !hasPickedUsername) {
+		return (
+			<UsernameContext.Provider
+				value={{ hasPickedUsername, setHasPickedUsername }}
+			>
+				<AuthStack />
+			</UsernameContext.Provider>
+		);
+	}
+	return <UserStack />;
 }

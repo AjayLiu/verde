@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
 	deleteUser,
@@ -95,7 +95,7 @@ export function useUser() {
 					const pfpToDelete = ref(storage, `avatars/${uid}`);
 					await deleteObject(pfpToDelete);
 				} catch (e) {
-					console.error("Error deleting user's profile picture: ", e);
+					console.log("Error deleting user's profile picture: ", e);
 				}
 
 				// Delete user's username from firestore
@@ -176,8 +176,8 @@ export function useUser() {
 				setUsernamesList(usernamesSnap.data()?.usernames as string[]);
 			}
 		};
-		fetchUsernames();
-	}, []);
+		if (isSignedIn) fetchUsernames();
+	}, [isSignedIn]);
 
 	const checkIfUsernameValid = (name: string) => {
 		if (usernamesList.includes(name)) {
@@ -209,6 +209,7 @@ export function useUser() {
 			console.error("Error removing username: ", e);
 		}
 	};
+
 	const updateUsername = async (username: string) => {
 		if (!authUser?.uid) {
 			console.error("No user logged in");
@@ -230,6 +231,7 @@ export function useUser() {
 		// Add username to firestore
 		await addUsernameToFirestore(username);
 	};
+
 	return {
 		authUser,
 		isSignedIn,

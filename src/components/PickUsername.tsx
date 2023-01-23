@@ -1,5 +1,5 @@
 import { useUser } from "@utils/hooks/useUser";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
 	Text,
@@ -10,8 +10,9 @@ import {
 	Button,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import UsernameContext from "../contexts/UsernameContext";
 
-const PickUsername = (successCallback?: any) => {
+const PickUsername = () => {
 	const { authUser, checkIfUsernameValid, updateUsername } = useUser();
 	const [usernameTaken, setUsernameTaken] = useState(false);
 
@@ -31,8 +32,12 @@ const PickUsername = (successCallback?: any) => {
 		if (!checkIfUsernameValid(username)) return;
 
 		await updateUsername(username);
-		() => successCallback();
+
+		setHasPickedUsername(true);
 	};
+
+	const { hasPickedUsername, setHasPickedUsername } =
+		useContext(UsernameContext);
 
 	return (
 		<View>
