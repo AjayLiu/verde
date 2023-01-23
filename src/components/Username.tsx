@@ -1,18 +1,18 @@
 import { useUser } from "@utils/hooks/useUser";
 import React from "react";
 import { Text, StyleSheet } from "react-native";
+import { FirestoreUser } from "src/types";
 
 type UsernameProps = {
-	uid?: string;
+	user?: FirestoreUser;
 	style?: any;
 };
 
 export const Username = (props: UsernameProps) => {
-	const { authUser } = useUser();
 	return (
 		// stub
 		<Text style={[styles.username, props.style]}>
-			{authUser?.displayName}
+			{props.user?.displayName}
 		</Text>
 	);
 };

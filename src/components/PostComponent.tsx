@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
 import Username from "@components/Username";
 import ProfilePicture from "@components/ProfilePicture";
-import { Post } from "src/types";
+import { FirestoreUser, Post } from "src/types";
+import { useUser } from "@utils/hooks/useUser";
 
 const dimensions = Dimensions.get("window");
 
@@ -11,11 +12,23 @@ type PostProps = {
 };
 
 const PostComponent = (props: PostProps) => {
+	const { getUserFromFirestore } = useUser();
+	const [author, setAuthor] = useState<FirestoreUser>();
+
+	useEffect(() => {
+		const getAuthorInfo = async () => {
+			const result = await getUserFromFirestore(props.post.authorUid);
+			setAuthor(result);
+		};
+
+		getAuthorInfo();
+	}, []);
+
 	return (
 		<View style={styles.outer}>
 			<View style={styles.inner}>
-				<ProfilePicture />
-				<Username style={styles.username} />
+				<ProfilePicture user={author} />
+				<Username user={author} style={styles.username} />
 			</View>
 			<Image
 				style={styles.image}

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import { deleteUser, getAuth, onAuthStateChanged, User } from "firebase/auth";
+import {
+	deleteUser,
+	getAuth,
+	onAuthStateChanged,
+	updateProfile,
+	User,
+} from "firebase/auth";
 import { FirestoreUser } from "src/types";
 import {
 	getDoc,
@@ -9,9 +15,11 @@ import {
 	updateDoc,
 	deleteDoc,
 	arrayRemove,
+	arrayUnion,
 } from "firebase/firestore";
 import { db } from "@config/firebase";
 import { getStorage, ref, deleteObject } from "firebase/storage";
+import { useUpload } from "./useUpload";
 
 const storage = getStorage();
 
@@ -19,6 +27,7 @@ const auth = getAuth();
 
 export function useUser() {
 	const [authUser, setAuthUser] = useState<User>();
+	const { uploadImageToStorage } = useUpload();
 
 	// Auth changes
 	useEffect(() => {
@@ -68,6 +77,8 @@ export function useUser() {
 			// doc.data() will be undefined in this case
 			console.log("Can't find user data!");
 		}
+
+		return docSnap.data() as FirestoreUser;
 	};
 
 	const deleteUserFromFirestore = async (uid: string) => {
@@ -118,6 +129,61 @@ export function useUser() {
 		if (authUser) deleteUser(authUser);
 	};
 
+	// Update the user's displayName and/or photoURL
+	const updateUserProfile = async (
+		displayName = "New User",
+		photoURL = "https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=",
+	) => {
+		if (!authUser?.uid) {
+			console.error("No user logged in");
+			return;
+		}
+
+		const callback = async (downloadURL: string) => {
+			// Update this user's profile
+			await updateProfile(authUser, {
+				displayName: displayName,
+				photoURL: downloadURL,
+			});
+
+			// Update the changes to user's collection
+			await updateUserFirestore(authUser?.uid, {
+				displayName: displayName || authUser?.displayName,
+				photoUrl: downloadURL || authUser?.photoURL,
+			});
+		};
+
+		uploadImageToStorage(photoURL, "avatars/" + authUser.uid, callback);
+	};
+
+	const [usernamesList, setUsernamesList] = useState<string[]>([]);
+
+	useEffect(() => {
+		const fetchUsernames = async () => {
+			const usernamesSnap = await getDoc(doc(db, "users/usernames"));
+
+			if (usernamesSnap.exists()) {
+				setUsernamesList(usernamesSnap.data()?.usernames as string[]);
+			}
+		};
+		fetchUsernames();
+	}, []);
+
+	const checkIfUsernameValid = async () => {
+		return !usernamesList.includes(authUser?.displayName as string);
+	};
+
+	const addUsernameToFirestore = async (username: string) => {
+		try {
+			const docRef = await updateDoc(doc(db, "users/usernames"), {
+				usernames: arrayUnion(username),
+			});
+			console.log("Username added: ", docRef);
+		} catch (e) {
+			console.error("Error adding username: ", e);
+		}
+	};
+
 	return {
 		authUser,
 		isSignedIn,
@@ -125,5 +191,8 @@ export function useUser() {
 		getUserFromFirestore,
 		updateUserFirestore,
 		deleteUserFromFirestore,
+		updateUserProfile,
+		checkIfUsernameValid,
+		addUsernameToFirestore,
 	};
 }
