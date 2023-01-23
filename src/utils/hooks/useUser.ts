@@ -72,7 +72,7 @@ export function useUser() {
 	const getUserFromFirestore = async (uid: string) => {
 		const docSnap = await getDoc(doc(db, "users", uid));
 		if (docSnap.exists()) {
-			console.log("User data:", docSnap.data());
+			// console.log("User data:", docSnap.data());
 		} else {
 			// doc.data() will be undefined in this case
 			console.log("Can't find user data!");
@@ -89,6 +89,19 @@ export function useUser() {
 			if (usersSnap.exists()) {
 				const postsUidsList = usersSnap.data()?.postsUids as string[];
 				const friendsList = usersSnap.data()?.friendsUids as string[];
+
+				// Delete user's profile picture
+				try {
+					const pfpToDelete = ref(storage, `avatars/${uid}`);
+					await deleteObject(pfpToDelete);
+				} catch (e) {
+					console.error("Error deleting user's profile picture: ", e);
+				}
+
+				// Delete user's username from firestore
+				await removeUsernameFromFirestore(
+					usersSnap.data()?.displayName as string,
+				);
 
 				// Delete user's posts
 				postsUidsList?.forEach(async (postUid: string) => {
@@ -121,7 +134,7 @@ export function useUser() {
 			const deleteUserRef = await deleteDoc(doc(db, "users", uid));
 			console.log("User deleted: ", deleteUserRef);
 		} catch (e) {
-			console.error("Error deleting user: , e");
+			console.error("Error deleting user: ", e);
 		}
 
 		// Delete user's account (has to be logged in recently)
@@ -129,9 +142,8 @@ export function useUser() {
 		if (authUser) deleteUser(authUser);
 	};
 
-	// Update the user's displayName and/or photoURL
-	const updateUserProfile = async (
-		displayName = "New User",
+	// Update the user's photoURL
+	const updateProfilePicture = async (
 		photoURL = "https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=",
 	) => {
 		if (!authUser?.uid) {
@@ -142,13 +154,11 @@ export function useUser() {
 		const callback = async (downloadURL: string) => {
 			// Update this user's profile
 			await updateProfile(authUser, {
-				displayName: displayName,
 				photoURL: downloadURL,
 			});
 
 			// Update the changes to user's collection
 			await updateUserFirestore(authUser?.uid, {
-				displayName: displayName || authUser?.displayName,
 				photoUrl: downloadURL || authUser?.photoURL,
 			});
 		};
@@ -169,11 +179,17 @@ export function useUser() {
 		fetchUsernames();
 	}, []);
 
-	const checkIfUsernameValid = async () => {
-		return !usernamesList.includes(authUser?.displayName as string);
+	const checkIfUsernameValid = (name: string) => {
+		if (usernamesList.includes(name)) {
+			console.log("Username already taken");
+			return false;
+		}
+		return true;
 	};
 
 	const addUsernameToFirestore = async (username: string) => {
+		if (!checkIfUsernameValid(username)) return;
+
 		try {
 			const docRef = await updateDoc(doc(db, "users/usernames"), {
 				usernames: arrayUnion(username),
@@ -183,7 +199,37 @@ export function useUser() {
 			console.error("Error adding username: ", e);
 		}
 	};
+	const removeUsernameFromFirestore = async (username: string) => {
+		try {
+			const docRef = await updateDoc(doc(db, "users/usernames"), {
+				usernames: arrayRemove(username),
+			});
+			console.log("Username removed: ", docRef);
+		} catch (e) {
+			console.error("Error removing username: ", e);
+		}
+	};
+	const updateUsername = async (username: string) => {
+		if (!authUser?.uid) {
+			console.error("No user logged in");
+			return;
+		}
+		if (!checkIfUsernameValid(username)) return;
 
+		// delete old username from firestore
+		await removeUsernameFromFirestore(authUser?.displayName as string);
+
+		// Update this user's profile
+		await updateProfile(authUser, { displayName: username });
+
+		// Update the changes to user's collection
+		await updateUserFirestore(authUser?.uid, {
+			displayName: username || authUser?.displayName,
+		});
+
+		// Add username to firestore
+		await addUsernameToFirestore(username);
+	};
 	return {
 		authUser,
 		isSignedIn,
@@ -191,8 +237,8 @@ export function useUser() {
 		getUserFromFirestore,
 		updateUserFirestore,
 		deleteUserFromFirestore,
-		updateUserProfile,
+		updateProfilePicture,
+		updateUsername,
 		checkIfUsernameValid,
-		addUsernameToFirestore,
 	};
 }

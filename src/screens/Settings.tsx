@@ -5,17 +5,11 @@ import { RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import * as imagePicker from "expo-image-picker";
 import { FlipType, manipulateAsync, SaveFormat } from "expo-image-manipulator";
+import PickUsername from "@components/PickUsername";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { authUser, deleteUserFromFirestore, updateUserProfile } = useUser();
-
-	// Username
-	const [username, setUsername] = useState(
-		authUser?.displayName || "New User",
-	);
-	useEffect(() => {
-		if (authUser?.displayName) setUsername(authUser?.displayName);
-	}, [authUser?.displayName]);
+	const { authUser, deleteUserFromFirestore, updateProfilePicture } =
+		useUser();
 
 	// The path of the picked image
 	const [pickedImagePath, setPickedImagePath] = useState("");
@@ -73,9 +67,6 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			<Text>!!THIS IS A STUB!!</Text>
 			<Text>Settings for {authUser?.email}!</Text>
 
-			<Text>Username:</Text>
-			<TextInput onChangeText={setUsername} value={username}></TextInput>
-
 			<Image
 				source={{
 					uri:
@@ -85,6 +76,8 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				}}
 				style={{ width: 200, height: 200 }}
 			></Image>
+
+			<PickUsername></PickUsername>
 
 			<Button
 				title="Profile"
@@ -105,7 +98,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			<Button
 				title="Confirm changes"
 				style={styles.button}
-				onPress={() => updateUserProfile(username, pickedImagePath)}
+				onPress={() => updateProfilePicture(pickedImagePath)}
 			/>
 
 			<Button
