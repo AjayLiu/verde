@@ -16,7 +16,7 @@ module.exports = {
 	},
 	plugins: ["react", "@typescript-eslint", "react-hooks", "prettier"],
 	rules: {
-		"prettier/prettier": ["error", { endOfLine: "auto" }],
+		"prettier/prettier": ["warn", { endOfLine: "auto" }],
 		"react/react-in-jsx-scope": "off",
 	},
 };

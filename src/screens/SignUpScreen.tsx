@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
@@ -43,21 +43,21 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 				"https://img.freepik.com/free-icon/user_318-864557.jpg?w=2000";
 
 			updateProfile(auth.currentUser, {
-				displayName: "New User",
+				// displayName: "New User",
 				photoURL: defaultProfilePic,
 			});
 
 			await writeToUserFirestore({
 				uid: auth.currentUser?.uid || "ERROR",
 				email: value.email,
-				displayName: "New User",
+				displayName: "",
 				photoUrl: defaultProfilePic,
 				friendsUids: [],
 				postsUids: [],
 			});
 			console.log("User created successfully.");
 
-			// navigation.navigate("Sign In");
+			navigation.navigate("PickUsername");
 		} catch (error: any) {
 			setValue({
 				...value,
