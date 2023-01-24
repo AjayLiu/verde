@@ -14,7 +14,7 @@ const PostComponent = (props: PostProps) => {
 	return (
 		<View style={styles.outer}>
 			<View style={styles.inner}>
-				<ProfilePicture />
+				<ProfilePicture size={35} />
 				<Username style={styles.username} />
 			</View>
 			<Image
