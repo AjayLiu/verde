@@ -7,9 +7,13 @@ import PostComponent from "@components/PostComponent";
 import { Post, RouterProps } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+
 import UsernameContext from "../contexts/UsernameContext";
 
+import Swiper from 'react-native-swiper'
+
 export default function HomeScreen({ navigation }: RouterProps) {
+
 	const { authUser } = useUser();
 	const auth = getAuth();
 	const { getAllPosts } = usePost();
@@ -31,6 +35,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 		await fetchAllPosts();
 		setRefreshing(false);
 	}, []);
+
 
 	const { hasPickedUsername, setHasPickedUsername } =
 		useContext(UsernameContext);
@@ -77,6 +82,15 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				{posts.map((post: Post) => {
 					return <PostComponent key={post.uid} post={post} />;
 				})}
+				<Swiper
+					horizontal={false}
+					loop={false}
+					showsPagination={false}
+					index={1}>
+					<View style={styles.button}>
+						<Text>here</Text>
+					</View>
+				</Swiper>
 			</View>
 		</ScrollView>
 	);
