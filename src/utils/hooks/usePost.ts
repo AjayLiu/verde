@@ -12,20 +12,12 @@ import {
 import { db } from "@config/firebase";
 import { useUser } from "./useUser";
 import { uuidv4 } from "@firebase/util";
-import {
-	getDownloadURL,
-	getStorage,
-	ref,
-	uploadBytesResumable,
-} from "firebase/storage";
 import { useUpload } from "./useUpload";
-
-const storage = getStorage();
 
 export function usePost() {
 	const { updateUserFirestore, authUser } = useUser();
 	const { uploadImageToStorage } = useUpload();
-	const makePost = async (photoUri: string) => {
+	const makePost = async (photoUri: string, challengeUid: string) => {
 		const postUid = uuidv4();
 		const onlineImageFileName = "posts/" + postUid;
 
@@ -39,6 +31,7 @@ export function usePost() {
 				comments: [],
 				likes: [],
 				caption: "",
+				challengeUid: challengeUid,
 			} as Post;
 			// First add post to posts collection
 			const postDocRef = await setDoc(

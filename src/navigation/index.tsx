@@ -6,16 +6,11 @@ import UsernameContext from "../contexts/UsernameContext";
 
 export default function RootNavigation() {
 	const { isSignedIn } = useUser();
-	const [hasPickedUsername, setHasPickedUsername] = useState(false);
+	const { hasPickedUsername, setHasPickedUsername } =
+		useContext(UsernameContext);
 
 	if (!isSignedIn || !hasPickedUsername) {
-		return (
-			<UsernameContext.Provider
-				value={{ hasPickedUsername, setHasPickedUsername }}
-			>
-				<AuthStack />
-			</UsernameContext.Provider>
-		);
+		return <AuthStack />;
 	}
 	return <UserStack />;
 }

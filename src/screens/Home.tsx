@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useEffect } from "react";
+import React, { Component, useCallback, useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useUser } from "@hooks/useUser";
 import { Button } from "react-native-elements";
@@ -7,6 +7,7 @@ import PostComponent from "@components/PostComponent";
 import { Post, RouterProps } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import UsernameContext from "../contexts/UsernameContext";
 
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser } = useUser();
@@ -30,6 +31,10 @@ export default function HomeScreen({ navigation }: RouterProps) {
 		await fetchAllPosts();
 		setRefreshing(false);
 	}, []);
+
+	const { hasPickedUsername, setHasPickedUsername } =
+		useContext(UsernameContext);
+
 	return (
 		<ScrollView
 			refreshControl={
@@ -45,7 +50,10 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				<Button
 					title="Sign Out"
 					style={styles.button}
-					onPress={() => signOut(auth)}
+					onPress={() => {
+						setHasPickedUsername(false);
+						signOut(auth);
+					}}
 				/>
 
 				<Button
