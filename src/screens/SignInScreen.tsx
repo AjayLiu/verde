@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { StackScreenProps } from "@react-navigation/stack";
+import UsernameContext from "../contexts/UsernameContext";
 
 const auth = getAuth();
 
@@ -13,6 +14,9 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 		password: "",
 		error: "",
 	});
+
+	const { hasPickedUsername, setHasPickedUsername } =
+		useContext(UsernameContext);
 
 	async function signIn() {
 		if (value.email === "" || value.password === "") {
@@ -25,6 +29,7 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 
 		try {
 			await signInWithEmailAndPassword(auth, value.email, value.password);
+			setHasPickedUsername(true);
 		} catch (error: any) {
 			setValue({
 				...value,

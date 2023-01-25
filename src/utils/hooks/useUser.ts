@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
 	deleteUser,
@@ -20,6 +20,7 @@ import {
 import { db } from "@config/firebase";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { useUpload } from "./useUpload";
+import UsernameContext from "../../contexts/UsernameContext";
 
 const storage = getStorage();
 
@@ -28,6 +29,9 @@ const auth = getAuth();
 export function useUser() {
 	const [authUser, setAuthUser] = useState<User>();
 	const { uploadImageToStorage } = useUpload();
+
+	const { hasPickedUsername, setHasPickedUsername } =
+		useContext(UsernameContext);
 
 	// Auth changes
 	useEffect(() => {
@@ -38,6 +42,9 @@ export function useUser() {
 					// User is signed in, see docs for a list of available properties
 					// https://firebase.google.com/docs/reference/js/firebase.User
 					setAuthUser(user);
+					if (user.displayName && user.displayName != "New User") {
+						setHasPickedUsername(true);
+					}
 				} else {
 					// User is signed out
 					setAuthUser(undefined);
@@ -76,6 +83,7 @@ export function useUser() {
 		} else {
 			// doc.data() will be undefined in this case
 			console.log("Can't find user data!");
+			return -1;
 		}
 
 		return docSnap.data() as FirestoreUser;
@@ -133,6 +141,7 @@ export function useUser() {
 
 			const deleteUserRef = await deleteDoc(doc(db, "users", uid));
 			console.log("User deleted: ", deleteUserRef);
+			setHasPickedUsername(false);
 		} catch (e) {
 			console.error("Error deleting user: ", e);
 		}
@@ -224,9 +233,37 @@ export function useUser() {
 		await updateProfile(authUser, { displayName: username });
 
 		// Update the changes to user's collection
-		await updateUserFirestore(authUser?.uid, {
-			displayName: username || authUser?.displayName,
-		});
+		const user = await getUserFromFirestore(authUser.uid);
+		// if user is new
+		if (user == -1) {
+			const createUser = async () => {
+				// Some default user values
+				const defaultProfilePic =
+					"https://img.freepik.com/free-icon/user_318-864557.jpg?w=2000";
+
+				updateProfile(authUser, {
+					// displayName: "New User",
+					photoURL: defaultProfilePic,
+				});
+
+				await writeToUserFirestore({
+					uid: authUser?.uid || "ERROR",
+					email: authUser?.email || "ERROR",
+					displayName: username,
+					photoUrl: defaultProfilePic,
+					friendsUids: [],
+					postsUids: [],
+					challengesCompletedUids: [],
+				});
+				console.log("User created successfully.");
+			};
+
+			await createUser();
+		} else {
+			await updateUserFirestore(authUser?.uid, {
+				displayName: username || authUser?.displayName,
+			});
+		}
 
 		// Add username to firestore
 		await addUsernameToFirestore(username);

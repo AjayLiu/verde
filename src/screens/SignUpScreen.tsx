@@ -38,25 +38,6 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 			);
 			if (auth.currentUser === null) throw new Error("User is null");
 
-			// Some default user values
-			const defaultProfilePic =
-				"https://img.freepik.com/free-icon/user_318-864557.jpg?w=2000";
-
-			updateProfile(auth.currentUser, {
-				// displayName: "New User",
-				photoURL: defaultProfilePic,
-			});
-
-			await writeToUserFirestore({
-				uid: auth.currentUser?.uid || "ERROR",
-				email: value.email,
-				displayName: "",
-				photoUrl: defaultProfilePic,
-				friendsUids: [],
-				postsUids: [],
-			});
-			console.log("User created successfully.");
-
 			navigation.navigate("PickUsername");
 		} catch (error: any) {
 			setValue({
