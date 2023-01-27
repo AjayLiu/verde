@@ -8,6 +8,7 @@ type UsernameProps = {
 	style?: any;
 };
 
+// unused component, consider deleting
 export const Username = (props: UsernameProps) => {
 	return (
 		// stub
