@@ -8,6 +8,7 @@ import {
 	collection,
 	query,
 	orderBy,
+	Timestamp,
 } from "firebase/firestore";
 import { db } from "@config/firebase";
 import { useUser } from "./useUser";
@@ -26,7 +27,7 @@ export function usePost() {
 			const newPost = {
 				authorUid: authUser?.uid || "",
 				imgUrl: downloadURL,
-				timeUTC: Date.now(),
+				timestamp: Timestamp.now(),
 				uid: postUid as string,
 				comments: [],
 				likes: [],
@@ -62,7 +63,7 @@ export function usePost() {
 
 	const getAllPosts = async () => {
 		const querySnapshot = await getDocs(
-			query(collection(db, "posts"), orderBy("timeUTC", "desc")),
+			query(collection(db, "posts"), orderBy("timestamp", "desc")),
 		);
 		return querySnapshot.docs.map((doc) => doc.data()) as Post[];
 	};

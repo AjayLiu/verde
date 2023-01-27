@@ -1,4 +1,5 @@
 import { NavigationProp } from "@react-navigation/native";
+import { Timestamp } from "firebase/firestore";
 
 export interface RouterProps {
 	navigation: NavigationProp<any>;
@@ -19,7 +20,7 @@ export interface Post {
 	imgUrl: string;
 	caption: string;
 	authorUid: string;
-	timeUTC: number;
+	timestamp: Timestamp;
 	comments: Comment[];
 	likes: Like[];
 	challengeUid: string;
@@ -29,7 +30,7 @@ export interface Comment {
 	uid: string;
 	authorUid: string;
 	postUid: string;
-	timeUTC: number;
+	timestamp: Timestamp;
 	text: string;
 }
 
@@ -37,7 +38,7 @@ export interface Like {
 	uid: string;
 	authorUid: string;
 	postUid: string;
-	timeUTC: number;
+	timestamp: Timestamp;
 }
 
 export interface Challenge {
@@ -45,4 +46,5 @@ export interface Challenge {
 	title: string;
 	description: string;
 	points: number;
+	timestamp: Timestamp;
 }

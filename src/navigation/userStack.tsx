@@ -8,54 +8,60 @@ import Friends from "@screens/Friends";
 import Calendar from "@screens/Calendar";
 import Challenges from "@screens/Challenges";
 import Settings from "@screens/Settings";
-import HomeSwipe from "@screens/HomeSwiper"
+import HomeSwipe from "@screens/HomeSwiper";
 
 const Stack = createStackNavigator();
 
 export default function UserStack() {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name="HomeSwiper" component={HomeSwipe}/>
-			<Stack.Screen name="Home" component={FeedScreen}/>
+			<Stack.Screen name="HomeSwiper" component={HomeSwipe} />
+			<Stack.Screen name="Home" component={FeedScreen} />
 			<Stack.Screen
 				name="Profile"
 				component={Profile}
-				options={{title: "Profile"}}/>
+				options={{ title: "Profile" }}
+			/>
 			<Stack.Screen
 				name="Friends"
 				component={Friends}
-				options={{title: "Friends"}}/>
+				options={{ title: "Friends" }}
+			/>
 			<Stack.Screen
 				name="Camera"
 				component={CameraScreen}
-				options={{title: "Camera"}}/>
+				options={{ title: "Camera" }}
+			/>
 			<Stack.Screen
 				name="Calendar"
 				component={Calendar}
-				options={{title: "Calendar"}}/>
+				options={{ title: "Calendar" }}
+			/>
 			<Stack.Screen
 				name="Challenges"
 				component={Challenges}
-				options={{title: "Challenges"}}/>
+				options={{ title: "Challenges" }}
+			/>
 			<Stack.Screen
 				name="Settings"
 				component={Settings}
-				options={{title: "Settings"}}/>
+				options={{ title: "Settings" }}
+			/>
 		</Stack.Navigator>
 	);
 }
 
 const styles_2 = {
 	pillButton: {
-		backgroundColor: 'white',
+		backgroundColor: "white",
 	},
 	pillActive: {
-		backgroundColor: 'yellow',
+		backgroundColor: "yellow",
 	},
 	pillLabel: {
-		color: 'gray',
+		color: "gray",
 	},
 	activeLabel: {
-		color: 'white',
+		color: "white",
 	},
 };
