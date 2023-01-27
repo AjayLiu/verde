@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
 import ProfilePicture from "@components/ProfilePicture";
+import Points from "@components/Points";
 import { FirestoreUser, Post } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 
@@ -78,7 +79,7 @@ const PostComponent = (props: PostProps) => {
 					</View>
 					<View>
 						{/* TODO: pull actual points */}
-						<Text>total: 75</Text>
+						<Points user={author} />
 					</View>
 				</View>
 				<View

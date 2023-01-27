@@ -22,8 +22,7 @@ const ProfilePicture = (props: ProfilePictureProps) => {
 				{
 					height: props.size,
 					width: props.size,
-					borderRadius:
-						typeof props.size == "undefined" ? 20 : props.size / 2,
+					borderRadius: (props.size || 40) / 2,
 				},
 				props.style,
 			]}
@@ -31,8 +30,6 @@ const ProfilePicture = (props: ProfilePictureProps) => {
 	);
 };
 
-const styles = StyleSheet.create({
-	image: {},
-});
+const styles = StyleSheet.create({});
 
 export default ProfilePicture;

@@ -10,7 +10,7 @@ const AuthPoints = () => {
 		<View>
 			{/* TODO: get actual points from auth and display them here */}
 			{/* <Text>{authUser?.points}</Text> */}
-			<Text>stub, remove please!</Text>
+			<Text>total auth points</Text>
 		</View>
 	);
 };
