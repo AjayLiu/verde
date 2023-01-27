@@ -11,6 +11,7 @@ export interface FirestoreUser {
 	email: string;
 	friendsUids: string[];
 	postsUids: string[];
+	challengesCompletedUids: string[];
 }
 
 export interface Post {
@@ -21,6 +22,7 @@ export interface Post {
 	timeUTC: number;
 	comments: Comment[];
 	likes: Like[];
+	challengeUid: string;
 }
 
 export interface Comment {
@@ -36,4 +38,11 @@ export interface Like {
 	authorUid: string;
 	postUid: string;
 	timeUTC: number;
+}
+
+export interface Challenge {
+	uid: string;
+	title: string;
+	description: string;
+	points: number;
 }

@@ -1,32 +1,18 @@
 import React, { Component, useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { Button } from "react-native-elements";
 import { RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import * as imagePicker from "expo-image-picker";
+import { FlipType, manipulateAsync, SaveFormat } from "expo-image-manipulator";
+import PickUsername from "@components/PickUsername";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { authUser, deleteUserFromFirestore, updateUserFirestore } =
+	const { authUser, deleteUserFromFirestore, updateProfilePicture } =
 		useUser();
 
 	// The path of the picked image
 	const [pickedImagePath, setPickedImagePath] = useState("");
-
-	// Update the user's displayName and/or photoURL
-	const updateUserProfile = async (
-		displayName?: string,
-		photoURL?: string,
-	) => {
-		if (!authUser?.uid) {
-			console.error("No user logged in");
-			return;
-		}
-
-		await updateUserFirestore(authUser?.uid, {
-			displayName: displayName || authUser?.displayName,
-			photoURL: photoURL || authUser?.photoURL,
-		});
-	};
 
 	const deleteAccount = async () => {
 		console.log("Deleting account");
@@ -58,19 +44,24 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			return;
 		}
 
-		const result = await imagePicker.launchCameraAsync();
+		const result = await imagePicker.launchCameraAsync({
+			quality: 0,
+		});
 
 		// Explore the result
 		console.log(result);
 
+		const photo = await manipulateAsync(
+			result.assets?.at(0)?.uri || "",
+			[{ rotate: 180 }, { flip: FlipType.Vertical }],
+			{ compress: 0, format: SaveFormat.JPEG },
+		);
+
 		if (!result.canceled) {
-			setPickedImagePath(result.assets[0].uri);
+			setPickedImagePath(photo.uri);
 		}
 	};
 
-	useEffect(() => {
-		console.log("Picked image path: " + pickedImagePath);
-	}, [pickedImagePath]);
 	return (
 		<View style={styles.container}>
 			<Text>!!THIS IS A STUB!!</Text>
@@ -86,6 +77,8 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				style={{ width: 200, height: 200 }}
 			></Image>
 
+			<PickUsername></PickUsername>
+
 			<Button
 				title="Profile"
 				style={styles.button}
@@ -96,6 +89,16 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				title="Change Profile Picture"
 				style={styles.button}
 				onPress={showImagePicker}
+			/>
+			<Button
+				title="Take profile picture"
+				style={styles.button}
+				onPress={openCamera}
+			/>
+			<Button
+				title="Confirm changes"
+				style={styles.button}
+				onPress={() => updateProfilePicture(pickedImagePath)}
 			/>
 
 			<Button

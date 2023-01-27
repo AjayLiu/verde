@@ -1,36 +1,38 @@
 import { useUser } from "@utils/hooks/useUser";
 import React from "react";
 import { Image, StyleSheet } from "react-native";
+import { FirestoreUser } from "src/types";
 
 type ProfilePictureProps = {
-	uid?: string;
+	user?: FirestoreUser;
 	style?: any;
+	size?: number;
 };
 
-const size = 35;
-
 const ProfilePicture = (props: ProfilePictureProps) => {
-	const { authUser } = useUser();
 	return (
-		// stub
 		<Image
 			source={{
 				uri:
-					authUser?.photoURL ||
+					props.user?.photoUrl ||
 					// loading image
 					"https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=", // loading image,
 			}}
-			style={[styles.image, props.style]}
+			style={[
+				{
+					height: props.size,
+					width: props.size,
+					borderRadius:
+						typeof props.size == "undefined" ? 20 : props.size / 2,
+				},
+				props.style,
+			]}
 		/>
 	);
 };
 
 const styles = StyleSheet.create({
-	image: {
-		height: size,
-		width: size,
-		borderRadius: size / 2,
-	},
+	image: {},
 });
 
 export default ProfilePicture;

@@ -64,7 +64,7 @@ export default function CameraScreen() {
 
 	const __savePhoto = async () => {
 		async function uploadImageAsync(uri: string) {
-			await makePost(uri);
+			await makePost(uri, "TO BE ADDED!!!!");
 		}
 		if (!capturedImage?.uri) return;
 		uploadImageAsync(capturedImage.uri);
