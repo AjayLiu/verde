@@ -70,32 +70,54 @@ export default function FeedScreen({ navigation }: RouterProps) {
 			<View style={styles.container}>
 				<Text>Welcome {authUser?.displayName}!</Text>
 
-				<Button
-					title="Sign Out"
-					style={styles.button}
-					onPress={() => {
-						setHasPickedUsername(false);
-						signOut(auth);
-					}}
-				/>
+{/*<<<<<<< HEAD*/}
+{/*				<Button*/}
+{/*					title="Sign Out"*/}
+{/*					style={styles.button}*/}
+{/*					onPress={() => {*/}
+{/*						setHasPickedUsername(false);*/}
+{/*						signOut(auth);*/}
+{/*					}}*/}
+{/*				/>*/}
+{/*=======*/}
+				{/*<Button*/}
+				{/*	title="Sign Out"*/}
+				{/*	style={styles.button}*/}
+				{/*	onPress={() => {*/}
+				{/*		setHasPickedUsername(false);*/}
+				{/*		signOut(auth);*/}
+				{/*	}}/>*/}
+{/*>>>>>>> 4d8f9f6 (fix camera)*/}
 
 				<Button
-					title="Camera"
+					title="CAMERA"
 					style={styles.button}
 					onPress={() => navigation.navigate("Camera")}
 				/>
 
-				<Button
-					title="Challenges"
-					style={styles.button}
-					onPress={() => navigation.navigate("Challenges")}
-				/>
+{/*<<<<<<< HEAD*/}
+{/*				<Button*/}
+{/*					title="Challenges"*/}
+{/*					style={styles.button}*/}
+{/*					onPress={() => navigation.navigate("Challenges")}*/}
+{/*				/>*/}
 
-				<Button
-					title="Profile"
-					style={styles.button}
-					onPress={() => navigation.navigate("Profile")}
-				/>
+{/*				<Button*/}
+{/*					title="Profile"*/}
+{/*					style={styles.button}*/}
+{/*					onPress={() => navigation.navigate("Profile")}*/}
+{/*				/>*/}
+{/*=======*/}
+				{/*<Button*/}
+				{/*	title="Challenges"*/}
+				{/*	style={styles.button}*/}
+				{/*	onPress={() => navigation.navigate("Challenges")}/>*/}
+
+				{/*<Button*/}
+				{/*	title="Profile"*/}
+				{/*	style={styles.button}*/}
+				{/*	onPress={() => navigation.navigate("Profile")}/>*/}
+{/*>>>>>>> 4d8f9f6 (fix camera)*/}
 
 				{allPosts.slice(0, numPostsToShow).map((post: Post) => {
 					return <PostComponent key={post.uid} post={post} />;

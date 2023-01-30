@@ -8,11 +8,15 @@ import AuthPoints from "@components/AuthPoints";
 import { Post } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
 import { Calendar } from "react-native-calendars";
+<<<<<<< HEAD
 import { MarkedDates } from "react-native-calendars/src/types";
 import { getCalendarDateString } from "react-native-calendars/src/services";
 import { Timestamp } from "firebase/firestore";
+=======
+import Ionicons from '@expo/vector-icons/Ionicons';
+>>>>>>> ca16e87 (fix camera)
 
-export default function HomeScreen({ navigation }: RouterProps) {
+export default function Profile({ navigation }: RouterProps) {
 	const { authUser, fireUser } = useUser();
 	const { getAllPosts } = usePost();
 	const [posts, setPosts] = React.useState<Post[]>([]);
@@ -76,7 +80,14 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	return (
 		<View style={styles.container}>
-			<Text>{authUser?.displayName}</Text>
+
+			<Ionicons
+				name="settings-outline"
+				iconStyle = {styles.icon}
+				size={32}
+				color={"#00CC4B"}
+				onPress={() => navigation.navigate("Settings")}
+			/>
 
 			<ProfilePicture size={150} />
 			<Text>Score: {fireUser?.score}</Text>
@@ -97,11 +108,19 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				/>
 			</View>
 
+<<<<<<< HEAD
 			{/* <Button
 				title="Home"
 				style={styles.button}
 				onPress={() => navigation.navigate("Home")}
 			/> */}
+=======
+			{/*<Button*/}
+			{/*	title="Home"*/}
+			{/*	style={styles.button}*/}
+			{/*	onPress={() => navigation.navigate("Home")}*/}
+			{/*/>*/}
+>>>>>>> ca16e87 (fix camera)
 
 			{/* <Button
 				title="Calendar"
@@ -114,12 +133,15 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				style={styles.button}
 				onPress={() => navigation.navigate("Friends")}
 			/> */}
+<<<<<<< HEAD
 
 			{/* <Button
 				title="Settings"
 				style={styles.button}
 				onPress={() => navigation.navigate("Settings")}
 			/> */}
+=======
+>>>>>>> ca16e87 (fix camera)
 		</View>
 	);
 }
@@ -136,6 +158,7 @@ const styles = StyleSheet.create({
 	},
 	pfp: {
 		marginTop: 30,
+		marginBottom: 15,
 	},
 	calendarContainer: {
 		width: "100%",
@@ -144,5 +167,8 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 		paddingLeft: 0,
 		paddingRight: 0,
+	},
+	icon: {
+
 	},
 });

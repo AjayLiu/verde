@@ -6,21 +6,22 @@ import { RouterProps } from "../types";
 import Feed from "@screens/Feed";
 import Profile from "@screens/Profile";
 import Challenges from "@screens/Challenges";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function HomeSwipe({ navigation }: RouterProps) {
 	const data = [
 		{
-			tabLabel: "Challenges",
+			tabLabel: <Ionicons name="checkmark-done-outline"/>,
 			component: Challenges,
 			props: { navigation },
 		},
 		{
-			tabLabel: "Feed",
+			tabLabel: <Ionicons name="albums-outline"/>,
 			component: Feed,
 			props: { navigation },
 		},
 		{
-			tabLabel: "Profile",
+			tabLabel: <Ionicons name="person-circle-outline"/>,
 			component: Profile,
 			props: { navigation },
 		},
@@ -30,23 +31,25 @@ export default function HomeSwipe({ navigation }: RouterProps) {
 		<Swiper
 			data={data}
 			isStaticPills={true}
-			style={styles_2}
+			style={styles}
 			initialScrollIndex={1}
 		/>
 	);
 }
 
-const styles_2 = {
-	pillButton: {
-		backgroundColor: "white",
+const styles = {
+	container: {
+		padding: 50,
+		backgroundColor: "#fff",
 	},
-	pillActive: {
-		backgroundColor: "yellow",
+
+	borderActive: {
+		borderColor: '#00CC4B',
 	},
 	pillLabel: {
-		color: "gray",
+		color: 'gray',
 	},
 	activeLabel: {
-		color: "white",
+		color: '#ba2d65',
 	},
 };
