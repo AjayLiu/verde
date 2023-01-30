@@ -83,7 +83,7 @@ export default function Profile({ navigation }: RouterProps) {
 
 			<Ionicons
 				name="settings-outline"
-				iconStyle = {styles.icon}
+				iconStyle = {styles}
 				size={32}
 				color={"#00CC4B"}
 				onPress={() => navigation.navigate("Settings")}
