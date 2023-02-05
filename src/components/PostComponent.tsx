@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
 import ProfilePicture from "@components/ProfilePicture";
-import { FirestoreUser, Post } from "src/types";
+import { Challenge, FirestoreUser, Post } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
+import { useChallenge } from "@utils/hooks/useChallenge";
 
 const dimensions = Dimensions.get("window");
 
@@ -12,15 +13,23 @@ type PostProps = {
 
 const PostComponent = (props: PostProps) => {
 	const { getUserFromFirestore } = useUser();
+	const { getChallenge } = useChallenge();
 	const [author, setAuthor] = useState<FirestoreUser>();
+	const [challenge, setChallenge] = useState<Challenge>();
 
 	useEffect(() => {
 		const getAuthorInfo = async () => {
 			const result = await getUserFromFirestore(props.post.authorUid);
-			setAuthor(result);
+			if (result != -1) setAuthor(result);
+		};
+
+		const getChallengeInfo = async () => {
+			const result = await getChallenge(props.post.challengeUid);
+			setChallenge(result);
 		};
 
 		getAuthorInfo();
+		getChallengeInfo();
 	}, []);
 
 	function getPostTime(): string {
@@ -77,8 +86,7 @@ const PostComponent = (props: PostProps) => {
 						</Text>
 					</View>
 					<View>
-						{/* TODO: pull actual points */}
-						<Text>total: 75</Text>
+						<Text>total: {author?.score}</Text>
 					</View>
 				</View>
 				<View
@@ -88,8 +96,7 @@ const PostComponent = (props: PostProps) => {
 						styles.justifyCenter,
 					]}
 				>
-					{/* TODO: pull post challenge's points */}
-					<Text>post: 10</Text>
+					<Text>post: {challenge?.points}</Text>
 				</View>
 			</View>
 			<View style={[styles.marB]}>

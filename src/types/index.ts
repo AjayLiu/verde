@@ -13,6 +13,7 @@ export interface FirestoreUser {
 	friendsUids: string[];
 	postsUids: string[];
 	challengesCompletedUids: string[];
+	score: number;
 }
 
 export interface Post {

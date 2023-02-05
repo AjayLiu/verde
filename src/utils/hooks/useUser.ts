@@ -28,6 +28,7 @@ const auth = getAuth();
 
 export function useUser() {
 	const [authUser, setAuthUser] = useState<User>();
+	const [fireUser, setFireUser] = useState<FirestoreUser>();
 	const { uploadImageToStorage } = useUpload();
 
 	const { hasPickedUsername, setHasPickedUsername } =
@@ -88,6 +89,16 @@ export function useUser() {
 
 		return docSnap.data() as FirestoreUser;
 	};
+
+	const fetchFireUser = async () => {
+		if (authUser) {
+			const user = await getUserFromFirestore(authUser.uid);
+			if (user != -1) setFireUser(user);
+		}
+	};
+	useEffect(() => {
+		fetchFireUser();
+	}, [authUser]);
 
 	const deleteUserFromFirestore = async (uid: string) => {
 		try {
@@ -254,6 +265,7 @@ export function useUser() {
 					friendsUids: [],
 					postsUids: [],
 					challengesCompletedUids: [],
+					score: 0,
 				});
 				console.log("User created successfully.");
 			};
@@ -279,5 +291,6 @@ export function useUser() {
 		updateProfilePicture,
 		updateUsername,
 		checkIfUsernameValid,
+		fireUser,
 	};
 }

@@ -64,7 +64,7 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 					value={value.email}
 					onChangeText={(text) => setValue({ ...value, email: text })}
 					leftIcon={<Icon name="envelope" size={16} />}
-					autoCompleteType="email"
+					autoComplete="email"
 				/>
 
 				<Input
@@ -76,7 +76,7 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 					}
 					secureTextEntry={true}
 					leftIcon={<Icon name="key" size={16} />}
-					autoCompleteType="password"
+					autoComplete="password"
 				/>
 
 				<Button

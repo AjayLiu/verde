@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
-import { RouterProps } from "src/types";
+import { FirestoreUser, RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import ProfilePicture from "@components/ProfilePicture";
-import AuthPoints from "@components/AuthPoints";
 import { Calendar } from "react-native-calendars";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { authUser } = useUser();
+	const { authUser, fireUser } = useUser();
 
 	return (
 		<View style={styles.container}>
 			<Text>{authUser?.displayName}</Text>
 
 			<ProfilePicture size={150} style={styles.pfp} />
-
-			<AuthPoints />
+			<Text>Score: {fireUser?.score}</Text>
 
 			<View style={styles.calendarContainer}>
 				<Calendar

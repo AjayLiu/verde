@@ -46,7 +46,7 @@ const PickUsername = () => {
 			{usernameTaken && (
 				<Text style={{ color: "red" }}>Username taken!</Text>
 			)}
-			<Button title="Submit" onPress={() => submitUsername()} />
+			<Button title="Confirm username" onPress={() => submitUsername()} />
 		</View>
 	);
 };
