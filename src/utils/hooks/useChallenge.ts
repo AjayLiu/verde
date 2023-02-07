@@ -21,7 +21,7 @@ export function useChallenge() {
 			// console.log("Challenge data:", docSnap.data());
 		} else {
 			// doc.data() will be undefined in this case
-			console.log("No such document!");
+			console.log("No such challenge!");
 		}
 		return docSnap.data() as Challenge;
 	};
@@ -30,11 +30,16 @@ export function useChallenge() {
 		const querySnapshot = await getDocs(
 			query(
 				collection(db, "challenges"),
-				where("startTime", ">=", Timestamp.now()),
-				where("expirationTime", "<=", Timestamp.now()),
+				// where("startTime", "<=", Timestamp.now()),
+				where("expirationTime", ">=", Timestamp.now()),
 			),
 		);
-		return querySnapshot.docs.map((doc) => doc.data()) as Challenge[];
+		const unexpiredChallenges = querySnapshot.docs.map((doc) =>
+			doc.data(),
+		) as Challenge[];
+		return unexpiredChallenges.filter((thisChallenge) => {
+			return thisChallenge.startTime <= Timestamp.now();
+		});
 	};
 
 	const completeChallenge = async (challengeUid: string) => {

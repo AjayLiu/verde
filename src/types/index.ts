@@ -2,6 +2,7 @@ import { NavigationProp } from "@react-navigation/native";
 import { Timestamp } from "firebase/firestore";
 
 export interface RouterProps {
+	route?: any;
 	navigation: NavigationProp<any>;
 }
 

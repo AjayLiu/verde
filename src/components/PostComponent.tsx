@@ -86,7 +86,7 @@ const PostComponent = (props: PostProps) => {
 						</Text>
 					</View>
 					<View>
-						<Text>total: {author?.score}</Text>
+						<Text>total: {author?.score || 0}</Text>
 					</View>
 				</View>
 				<View
@@ -96,7 +96,7 @@ const PostComponent = (props: PostProps) => {
 						styles.justifyCenter,
 					]}
 				>
-					<Text>post: {challenge?.points}</Text>
+					<Text>post: {challenge?.points || 0}</Text>
 				</View>
 			</View>
 			<View style={[styles.marB]}>
