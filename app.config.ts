@@ -18,6 +18,7 @@ export default {
 		assetBundlePatterns: ["**/*"],
 		ios: {
 			supportsTablet: true,
+			bundleIdentifier: "com.verde.verde",
 		},
 		android: {
 			adaptiveIcon: {
@@ -35,6 +36,9 @@ export default {
 			firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 			firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
 			firebaseAppId: process.env.FIREBASE_APP_ID,
+			eas: {
+				projectId: "81d943a8-c204-440a-98a9-df836b76e31c",
+			},
 		},
 	},
 };
