@@ -47,5 +47,6 @@ export interface Challenge {
 	title: string;
 	description: string;
 	points: number;
-	timestamp: Timestamp;
+	startTime: Timestamp;
+	expirationTime: Timestamp;
 }

@@ -26,16 +26,12 @@ export function useChallenge() {
 		return docSnap.data() as Challenge;
 	};
 
-	const getTodaysChallenges = async () => {
+	const getActiveChallenges = async () => {
 		const querySnapshot = await getDocs(
 			query(
 				collection(db, "challenges"),
-				where("timestamp", "<=", Timestamp.now()),
-				where(
-					"timestamp",
-					">=",
-					new Timestamp(Timestamp.now().seconds - 24 * 60 * 60, 0),
-				),
+				where("startTime", ">=", Timestamp.now()),
+				where("expirationTime", "<=", Timestamp.now()),
 			),
 		);
 		return querySnapshot.docs.map((doc) => doc.data()) as Challenge[];
@@ -49,5 +45,9 @@ export function useChallenge() {
 		});
 	};
 
-	return { getChallenge, getTodaysChallenges, completeChallenge };
+	return {
+		getChallenge,
+		getActiveChallenges,
+		completeChallenge,
+	};
 }

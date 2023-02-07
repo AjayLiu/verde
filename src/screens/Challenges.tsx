@@ -7,12 +7,12 @@ import { useChallenge } from "@utils/hooks/useChallenge";
 
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser } = useUser();
-	const { getTodaysChallenges } = useChallenge();
+	const { getActiveChallenges } = useChallenge();
 	const [challenges, setChallenges] = useState<Challenge[]>([]);
 
 	useEffect(() => {
 		const getChallenges = async () => {
-			const result = await getTodaysChallenges();
+			const result = await getActiveChallenges();
 			setChallenges(result);
 		};
 
