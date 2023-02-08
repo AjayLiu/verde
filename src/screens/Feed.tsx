@@ -1,5 +1,5 @@
 import React, { Component, useCallback, useContext, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { NativeScrollEvent, StyleSheet, Text, View } from "react-native";
 import { useUser } from "@hooks/useUser";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
@@ -14,11 +14,12 @@ export default function FeedScreen({ navigation }: RouterProps) {
 	const auth = getAuth();
 	const { getAllPosts } = usePost();
 
-	const [posts, setPosts] = React.useState<Post[]>([]);
+	const [allPosts, setAllPosts] = React.useState<Post[]>([]);
+	const [numPostsToShow, setNumPostsToShow] = React.useState(5);
 
 	const fetchAllPosts = async () => {
-		const allPosts = await getAllPosts();
-		setPosts(allPosts);
+		const allPostsResult = await getAllPosts();
+		setAllPosts(allPostsResult);
 	};
 
 	useEffect(() => {
@@ -35,6 +36,22 @@ export default function FeedScreen({ navigation }: RouterProps) {
 	const { hasPickedUsername, setHasPickedUsername } =
 		useContext(UsernameContext);
 
+	const isCloseToBottom = ({
+		layoutMeasurement,
+		contentOffset,
+		contentSize,
+	}: NativeScrollEvent) => {
+		const paddingToBottom = 20;
+		return (
+			layoutMeasurement.height + contentOffset.y >=
+			contentSize.height - paddingToBottom
+		);
+	};
+
+	const fetchMorePosts = () => {
+		setNumPostsToShow(numPostsToShow + 5);
+	};
+
 	return (
 		<ScrollView
 			refreshControl={
@@ -43,6 +60,12 @@ export default function FeedScreen({ navigation }: RouterProps) {
 					onRefresh={onRefresh}
 				></RefreshControl>
 			}
+			onScroll={({ nativeEvent }) => {
+				if (isCloseToBottom(nativeEvent)) {
+					fetchMorePosts();
+				}
+			}}
+			scrollEventThrottle={400}
 		>
 			<View style={styles.container}>
 				<Text>Welcome {authUser?.displayName}!</Text>
@@ -74,7 +97,7 @@ export default function FeedScreen({ navigation }: RouterProps) {
 					onPress={() => navigation.navigate("Profile")}
 				/>
 
-				{posts.map((post: Post) => {
+				{allPosts.slice(0, numPostsToShow).map((post: Post) => {
 					return <PostComponent key={post.uid} post={post} />;
 				})}
 			</View>

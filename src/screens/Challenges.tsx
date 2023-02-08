@@ -35,7 +35,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				// if the user has already completed this challenge
 				if (fireUser?.completedChallengesUids.includes(challenge.uid))
 					return (
-						<View>
+						<View key={idx}>
 							<Text>COMPLETED:</Text>
 							<Text>{challenge.title}</Text>
 							<Text>{challenge.description}</Text>
