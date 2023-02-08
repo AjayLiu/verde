@@ -13,7 +13,7 @@ export interface FirestoreUser {
 	email: string;
 	friendsUids: string[];
 	postsUids: string[];
-	challengesCompletedUids: string[];
+	completedChallengesUids: string[];
 	score: number;
 }
 

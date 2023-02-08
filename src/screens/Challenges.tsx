@@ -7,7 +7,7 @@ import { useChallenge } from "@utils/hooks/useChallenge";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { authUser } = useUser();
+	const { authUser, fireUser } = useUser();
 	const { getActiveChallenges } = useChallenge();
 	const [challenges, setChallenges] = useState<Challenge[]>([]);
 
@@ -18,6 +18,8 @@ export default function HomeScreen({ navigation }: RouterProps) {
 		};
 
 		getChallenges();
+
+		console.log(fireUser?.completedChallengesUids);
 	}, []);
 
 	const challengeSelected = (challenge: Challenge) => {
@@ -30,6 +32,23 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			<Text>Challenges for {authUser?.email}!</Text>
 
 			{challenges.map((challenge, idx) => {
+				// if the user has already completed this challenge
+				if (fireUser?.completedChallengesUids.includes(challenge.uid))
+					return (
+						<View>
+							<Text>COMPLETED:</Text>
+							<Text>{challenge.title}</Text>
+							<Text>{challenge.description}</Text>
+							<Text>Points: {challenge.points}</Text>
+							<Text>
+								Expires on:{" "}
+								{challenge.expirationTime
+									.toDate()
+									.toLocaleString()}
+							</Text>
+						</View>
+					);
+
 				return (
 					<TouchableOpacity
 						key={idx}
