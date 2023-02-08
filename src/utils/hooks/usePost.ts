@@ -20,7 +20,11 @@ export function usePost() {
 	const { updateUserFirestore, authUser } = useUser();
 	const { uploadImageToStorage } = useUpload();
 	const { completeChallenge } = useChallenge();
-	const makePost = async (photoUri: string, challengeUid: string) => {
+	const makePost = async (
+		photoUri: string,
+		challengeUid: string,
+		successCallback: () => void,
+	) => {
 		const postUid = uuidv4();
 		const onlineImageFileName = "posts/" + postUid;
 
@@ -50,6 +54,8 @@ export function usePost() {
 			await updateUserFirestore(newPost.authorUid, {
 				postsUids: arrayUnion(newPost.uid),
 			});
+
+			successCallback();
 		};
 
 		await uploadImageToStorage(photoUri, onlineImageFileName, callback);

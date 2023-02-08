@@ -66,11 +66,11 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 	const { makePost } = usePost();
 
 	const __savePhoto = async () => {
-		async function uploadImageAsync(uri: string) {
-			await makePost(uri, challenge.uid);
-		}
 		if (!capturedImage?.uri) return;
-		uploadImageAsync(capturedImage.uri);
+		const successCallback = () => {
+			navigation.navigate("SuccessPost", { challenge });
+		};
+		await makePost(capturedImage.uri, challenge.uid, successCallback);
 	};
 	const __retakePicture = () => {
 		setCapturedImage(null);

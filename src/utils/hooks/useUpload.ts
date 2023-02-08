@@ -15,7 +15,7 @@ export function useUpload() {
 	const uploadImageToStorage = async (
 		localPhotoURI: string,
 		imageFilePath: string,
-		uploadSuccessCallback: (downloadURL: string) => void,
+		uploadSuccessCallback: (downloadURL: string) => Promise<void>,
 	) => {
 		// Upload the photo to storage
 		const response = await fetch(localPhotoURI);
@@ -71,7 +71,7 @@ export function useUpload() {
 					uploadTask.snapshot.ref,
 				);
 
-				uploadSuccessCallback(downloadURL);
+				await uploadSuccessCallback(downloadURL);
 			},
 		);
 	};
