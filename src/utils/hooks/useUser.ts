@@ -264,7 +264,7 @@ export function useUser() {
 					photoUrl: defaultProfilePic,
 					friendsUids: [],
 					postsUids: [],
-					challengesCompletedUids: [],
+					completedChallengesUids: [],
 					score: 0,
 				});
 				console.log("User created successfully.");
