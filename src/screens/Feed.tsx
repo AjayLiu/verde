@@ -1,5 +1,5 @@
 import React, { Component, useCallback, useContext, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { NativeScrollEvent, StyleSheet, Text, View } from "react-native";
 import { useUser } from "@hooks/useUser";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
@@ -9,17 +9,17 @@ import { usePost } from "@utils/hooks/usePost";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import UsernameContext from "../contexts/UsernameContext";
 
-export default function FeedScreen({ navigation } : RouterProps) {
-
+export default function FeedScreen({ navigation }: RouterProps) {
 	const { authUser } = useUser();
 	const auth = getAuth();
 	const { getAllPosts } = usePost();
 
-	const [posts, setPosts] = React.useState<Post[]>([]);
+	const [allPosts, setAllPosts] = React.useState<Post[]>([]);
+	const [numPostsToShow, setNumPostsToShow] = React.useState(5);
 
 	const fetchAllPosts = async () => {
-		const allPosts = await getAllPosts();
-		setPosts(allPosts);
+		const allPostsResult = await getAllPosts();
+		setAllPosts(allPostsResult);
 	};
 
 	useEffect(() => {
@@ -36,15 +36,38 @@ export default function FeedScreen({ navigation } : RouterProps) {
 	const { hasPickedUsername, setHasPickedUsername } =
 		useContext(UsernameContext);
 
+	const isCloseToBottom = ({
+		layoutMeasurement,
+		contentOffset,
+		contentSize,
+	}: NativeScrollEvent) => {
+		const paddingToBottom = 20;
+		return (
+			layoutMeasurement.height + contentOffset.y >=
+			contentSize.height - paddingToBottom
+		);
+	};
+
+	const fetchMorePosts = () => {
+		setNumPostsToShow(numPostsToShow + 5);
+	};
+
 	return (
 		<ScrollView
-			refreshControl={<RefreshControl
-				refreshing={refreshing}
-				onRefresh={onRefresh}
-			></RefreshControl>}
+			refreshControl={
+				<RefreshControl
+					refreshing={refreshing}
+					onRefresh={onRefresh}
+				></RefreshControl>
+			}
+			onScroll={({ nativeEvent }) => {
+				if (isCloseToBottom(nativeEvent)) {
+					fetchMorePosts();
+				}
+			}}
+			scrollEventThrottle={400}
 		>
 			<View style={styles.container}>
-
 				<Text>Welcome {authUser?.displayName}!</Text>
 
 				<Button
@@ -53,28 +76,31 @@ export default function FeedScreen({ navigation } : RouterProps) {
 					onPress={() => {
 						setHasPickedUsername(false);
 						signOut(auth);
-					}}/>
+					}}
+				/>
 
 				<Button
 					title="Camera"
 					style={styles.button}
-					onPress={() => navigation.navigate("Camera")}/>
+					onPress={() => navigation.navigate("Camera")}
+				/>
 
 				<Button
 					title="Challenges"
 					style={styles.button}
-					onPress={() => navigation.navigate("Challenges")}/>
+					onPress={() => navigation.navigate("Challenges")}
+				/>
 
 				<Button
 					title="Profile"
 					style={styles.button}
-					onPress={() => navigation.navigate("Profile")}/>
+					onPress={() => navigation.navigate("Profile")}
+				/>
 
-				{posts.map((post: Post) => {
-					return <PostComponent key={post.uid} post={post}/>;
+				{allPosts.slice(0, numPostsToShow).map((post: Post) => {
+					return <PostComponent key={post.uid} post={post} />;
 				})}
 			</View>
-
 		</ScrollView>
 	);
 }

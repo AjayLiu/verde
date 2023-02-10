@@ -14,11 +14,17 @@ import { db } from "@config/firebase";
 import { useUser } from "./useUser";
 import { uuidv4 } from "@firebase/util";
 import { useUpload } from "./useUpload";
+import { useChallenge } from "./useChallenge";
 
 export function usePost() {
 	const { updateUserFirestore, authUser } = useUser();
 	const { uploadImageToStorage } = useUpload();
-	const makePost = async (photoUri: string, challengeUid: string) => {
+	const { completeChallenge } = useChallenge();
+	const makePost = async (
+		photoUri: string,
+		challengeUid: string,
+		successCallback: () => void,
+	) => {
 		const postUid = uuidv4();
 		const onlineImageFileName = "posts/" + postUid;
 
@@ -41,10 +47,15 @@ export function usePost() {
 			);
 			console.log("Post made: ", postDocRef);
 
+			// Add to user's completed challenges list
+			await completeChallenge(challengeUid);
+
 			// Then add post to user's data
-			updateUserFirestore(newPost.authorUid, {
+			await updateUserFirestore(newPost.authorUid, {
 				postsUids: arrayUnion(newPost.uid),
 			});
+
+			successCallback();
 		};
 
 		await uploadImageToStorage(photoUri, onlineImageFileName, callback);

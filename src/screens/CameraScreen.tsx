@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -17,10 +17,13 @@ import {
 } from "expo-camera";
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 import { usePost } from "@hooks/usePost";
+import { Challenge, RouterProps } from "src/types";
 
 let camera: Camera | null;
 
-export default function CameraScreen() {
+export default function CameraScreen({ route, navigation }: RouterProps) {
+	const challenge = route.params.challenge as Challenge;
+
 	const [startCamera, setStartCamera] = React.useState(false);
 	const [previewVisible, setPreviewVisible] = React.useState(false);
 	const [capturedImage, setCapturedImage] = React.useState<
@@ -63,11 +66,11 @@ export default function CameraScreen() {
 	const { makePost } = usePost();
 
 	const __savePhoto = async () => {
-		async function uploadImageAsync(uri: string) {
-			await makePost(uri, "TO BE ADDED!!!!");
-		}
 		if (!capturedImage?.uri) return;
-		uploadImageAsync(capturedImage.uri);
+		const successCallback = () => {
+			navigation.navigate("SuccessPost", { challenge });
+		};
+		await makePost(capturedImage.uri, challenge.uid, successCallback);
 	};
 	const __retakePicture = () => {
 		setCapturedImage(null);
@@ -125,69 +128,37 @@ export default function CameraScreen() {
 								<View
 									style={{
 										position: "absolute",
-										left: "5%",
-										top: "10%",
-										flexDirection: "column",
-										justifyContent: "space-between",
+										bottom: 0,
+										flexDirection: "row",
+										flex: 1,
+										width: "100%",
+										padding: 20,
+										justifyContent: "space-evenly",
 									}}
 								>
-									<TouchableOpacity
-										onPress={__handleFlashMode}
-										// @ts-ignore
-										style={{
-											backgroundColor:
-												flashMode === "off"
-													? "#000"
-													: "#fff",
-											borderRadius: "50%",
-											height: 25,
-											width: 25,
-										}}
-									>
-										<Text
-											style={{
-												fontSize: 20,
-											}}
-										>
-											⚡️
-										</Text>
-									</TouchableOpacity>
 									<TouchableOpacity
 										onPress={__switchCamera}
 										// @ts-ignore
 										style={{
 											marginTop: 20,
 											borderRadius: "50%",
-											height: 25,
-											width: 25,
+											height: 50,
+											width: 50,
 										}}
 									>
 										<Text
 											style={{
-												fontSize: 20,
+												fontSize: 40,
+												height: 50,
+												width: 50,
 											}}
 										>
-											{cameraType === "front"
-												? "🤳"
-												: "📷"}
+											🔄
 										</Text>
 									</TouchableOpacity>
-								</View>
-								<View
-									style={{
-										position: "absolute",
-										bottom: 0,
-										flexDirection: "row",
-										flex: 1,
-										width: "100%",
-										padding: 20,
-										justifyContent: "space-between",
-									}}
-								>
 									<View
 										style={{
 											alignSelf: "center",
-											flex: 1,
 											alignItems: "center",
 										}}
 									>
@@ -202,6 +173,30 @@ export default function CameraScreen() {
 											}}
 										/>
 									</View>
+									<TouchableOpacity
+										onPress={__handleFlashMode}
+										// @ts-ignore
+										style={{
+											marginTop: 20,
+											borderRadius: "50%",
+											height: 50,
+											width: 50,
+											backgroundColor:
+												flashMode === "off"
+													? "#000"
+													: "#fff",
+										}}
+									>
+										<Text
+											style={{
+												fontSize: 40,
+												height: 50,
+												width: 50,
+											}}
+										>
+											⚡
+										</Text>
+									</TouchableOpacity>
 								</View>
 							</View>
 						</Camera>
@@ -216,6 +211,7 @@ export default function CameraScreen() {
 						alignItems: "center",
 					}}
 				>
+					<Text>Your challenge: {challenge.description}</Text>
 					<TouchableOpacity
 						onPress={__startCamera}
 						style={{
