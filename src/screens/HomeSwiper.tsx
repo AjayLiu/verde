@@ -6,32 +6,31 @@ import { RouterProps } from "../types";
 import Feed from "@screens/Feed";
 import Profile from "@screens/Profile";
 import Challenges from "@screens/Challenges";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import {View} from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { View } from "react-native";
 
 export default function HomeSwipe({ navigation }: RouterProps) {
 	const data = [
 		{
-			tabLabel: <Ionicons name="checkmark-done-outline"/>,
+			tabLabel: <Ionicons name="checkmark-done-outline" />,
 			component: Challenges,
 			props: { navigation },
 		},
 		{
-			tabLabel: <Ionicons name="albums-outline"/>,
+			tabLabel: <Ionicons name="albums-outline" />,
 			component: Feed,
 			props: { navigation },
 		},
 		{
-			tabLabel: <Ionicons name="person-circle-outline"/>,
+			tabLabel: <Ionicons name="person-circle-outline" />,
 			component: Profile,
 			props: { navigation },
 		},
 	];
 
 	return (
-		<View
-			style={styles.marTop}
-		>
+		<View style={styles.h100}>
+			<View style={[styles.h5, styles.bgWhite]}></View>
 			<Swiper
 				data={data}
 				isStaticPills={true}
@@ -45,27 +44,20 @@ export default function HomeSwipe({ navigation }: RouterProps) {
 const swipe_styles = {
 	container: {
 		padding: 50,
-		backgroundColor: "red",
 	},
 	pillContainer: {
-		height: 10,
+		display: "none",
 	},
-	borderActive: {
-		borderColor: '#00CC4B',
-	},
-	pillLabel: {
-		color: '#00CC4B',
-	},
-	activeLabel: {
-		color: '#ba2d65',
-	},
-
-
 };
 
 const styles = {
-	marTop: {
-		marginTop: 25,
+	h100: {
 		height: "100%",
-	}
-}
+	},
+	h5: {
+		height: "5%",
+	},
+	bgWhite: {
+		backgroundColor: "white",
+	},
+};
