@@ -84,16 +84,20 @@ const PostComponent = (props: PostProps) => {
 				</View>
 				<View style={[flex.column, flex.growTen]}>
 					<View>
-						<Text style={font.fontBold}>{author?.displayName}</Text>
+						<Text style={[font.fontBold, colors.offWhite]}>
+							{author?.displayName}
+						</Text>
 					</View>
 					<View>
-						<Text>{author?.score || 0} points</Text>
+						<Text style={colors.offWhite}>
+							{author?.score || 0} points
+						</Text>
 					</View>
 				</View>
 				<View
 					style={[flex.growOne, flex.alignCenter, flex.justifyCenter]}
 				>
-					<Text style={[colors.darkGreen, font.fontBold]}>
+					<Text style={[colors.lightGreen, font.fontBold]}>
 						+{challenge?.points || 0}
 					</Text>
 				</View>
@@ -119,7 +123,13 @@ const PostComponent = (props: PostProps) => {
 							flex.justifyCenter,
 						]}
 					>
-						<Text style={[font.sizeXL, font.textCenter]}>
+						<Text
+							style={[
+								font.sizeXL,
+								font.textCenter,
+								colors.offWhite,
+							]}
+						>
 							<Text style={font.fontBold}>
 								{author?.displayName}
 							</Text>{" "}
@@ -131,7 +141,7 @@ const PostComponent = (props: PostProps) => {
 						</Text>
 					</View>
 					<View style={[flex.basis15, flex.row, flex.justifyCenter]}>
-						<Text style={[font.sizeXL]}>
+						<Text style={[font.sizeXL, colors.offWhite]}>
 							{props.post.likes.length}
 						</Text>
 						<Text style={[font.sizeXL]}>🌲</Text>

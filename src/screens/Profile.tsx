@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-elements";
-import { FirestoreUser, RouterProps } from "src/types";
+import { Post, RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import ProfilePicture from "@components/ProfilePicture";
-import { Post } from "src/types";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import UserCalendar from "@components/UserCalendar";
+import font from "@styles/font";
+import flex from "@styles/flexbox";
+import colors from "@styles/colors";
 import { usePost } from "@utils/hooks/usePost";
-import { Calendar } from "react-native-calendars";
-import { MarkedDates } from "react-native-calendars/src/types";
-import { getCalendarDateString } from "react-native-calendars/src/services";
-import { Timestamp } from "firebase/firestore";
-import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function Profile({ navigation }: RouterProps) {
-	const { authUser, fireUser } = useUser();
+	const { fireUser } = useUser();
 	const { getAllPosts } = usePost();
 	const [posts, setPosts] = React.useState<Post[]>([]);
 
@@ -26,140 +24,91 @@ export default function Profile({ navigation }: RouterProps) {
 		fetchAllPosts();
 	}, []);
 
-	function getDates() {
-		const authPosts: Post[] = [];
+	function getNumPosts() {
+		let num = 0;
 		posts.forEach((post) => {
-			if (post.authorUid === authUser?.uid) {
-				authPosts.push(post);
+			if (post.authorUid === fireUser?.uid) {
+				num++;
 			}
 		});
-
-		// Uncomment for testing
-		// authPosts.push({
-		// 	timestamp: Timestamp.fromDate(new Date(2023, 0, 1)),
-		// } as Post);
-		// authPosts.reverse();
-
-		const dates: MarkedDates = {};
-		let starting = false;
-		let ending = false;
-
-		authPosts.reverse().forEach((post, index) => {
-			const timestamp = post.timestamp.toDate();
-
-			if (index === 0) {
-				starting = true;
-			} else {
-				starting =
-					timestamp.getDate() - 1 !==
-					authPosts[index - 1].timestamp.toDate().getDate();
-			}
-			if (index === authPosts.length - 1) {
-				ending = true;
-			} else {
-				ending =
-					timestamp.getDate() + 1 !==
-					authPosts[index + 1].timestamp.toDate().getDate();
-			}
-
-			const date: string = getCalendarDateString(timestamp);
-
-			dates[date] = {
-				color: "#A7E0A2",
-				startingDay: starting,
-				endingDay: ending,
-			};
-		});
-
-		return dates;
+		return num;
 	}
 
 	return (
-		<View style={styles.container}>
-
+		<View
+			style={[
+				styles.height100,
+				colors.offBlackBG,
+				flex.column,
+				flex.alignCenter,
+				flex.justifyStart,
+			]}
+		>
 			<Ionicons
 				name="settings-outline"
-				iconStyle = {styles}
+				iconStyle={styles}
 				size={32}
 				color={"#00CC4B"}
 				onPress={() => navigation.navigate("Settings")}
 			/>
+			<ProfilePicture size={100} style={[styles.marB, styles.marT]} />
+			<Text
+				style={[
+					font.fontBold,
+					font.sizeXL,
+					styles.marB,
+					colors.offWhite,
+				]}
+			>
+				{fireUser?.displayName}
+			</Text>
 
-			<ProfilePicture size={150} />
-			<Text>Score: {fireUser?.score}</Text>
-
-			<View style={styles.calendarContainer}>
-				<Calendar
-					// initialDate={"2023-01-12"}
-					maxDate={getCalendarDateString(new Date())}
-					hideArrows={true}
-					disableMonthChange={true}
-					hideDayNames={true}
-					// renderHeader={() => {
-					// 	return null;
-					// }}
-					markingType={"period"}
-					markedDates={getDates()}
-					style={styles.calendar}
-				/>
+			<View
+				style={[
+					styles.width100,
+					flex.row,
+					flex.justifyEvenly,
+					styles.marT,
+				]}
+			>
+				<View style={flex.column}>
+					<Text
+						style={[font.textCenter, font.sizeXL, colors.offWhite]}
+					>
+						{fireUser?.score}
+					</Text>
+					<Text style={[font.sizeL, colors.offWhite]}>points</Text>
+				</View>
+				<View style={flex.column}>
+					<Text
+						style={[font.textCenter, font.sizeXL, colors.offWhite]}
+					>
+						{getNumPosts()}
+					</Text>
+					<Text style={[font.sizeL, colors.offWhite]}>
+						{getNumPosts() == 1 ? "post" : "posts"}
+					</Text>
+				</View>
 			</View>
 
-			{/* <Button
-				title="Home"
-				style={styles.button}
-				onPress={() => navigation.navigate("Home")}
-			/> */}
-
-			{/*<Button*/}
-			{/*	title="Home"*/}
-			{/*	style={styles.button}*/}
-			{/*	onPress={() => navigation.navigate("Home")}*/}
-			{/*/>*/}
-
-			{/* <Button
-				title="Calendar"
-				style={styles.button}
-				onPress={() => navigation.navigate("Calendar")}
-			/> */}
-
-			{/* <Button
-				title="Friends"
-				style={styles.button}
-				onPress={() => navigation.navigate("Friends")}
-			/> */}
-
-			{/* <Button
-				title="Settings"
-				style={styles.button}
-				onPress={() => navigation.navigate("Settings")}
-			/> */}
+			<View style={[styles.width100, styles.marT]}>
+				<UserCalendar posts={posts} />
+			</View>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "flex-start",
+	marB: {
+		marginBottom: 5,
 	},
-	button: {
-		marginTop: 10,
+	marT: {
+		marginTop: 5,
 	},
-	pfp: {
-		marginTop: 30,
-		marginBottom: 15,
-	},
-	calendarContainer: {
+	width100: {
 		width: "100%",
 	},
-	calendar: {
-		marginTop: 30,
-		paddingLeft: 0,
-		paddingRight: 0,
-	},
-	icon: {
-
+	height100: {
+		height: "100%",
 	},
 });
