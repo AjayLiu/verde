@@ -4,17 +4,13 @@ import { Button } from "react-native-elements";
 import { FirestoreUser, RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import ProfilePicture from "@components/ProfilePicture";
-import AuthPoints from "@components/AuthPoints";
 import { Post } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
 import { Calendar } from "react-native-calendars";
-<<<<<<< HEAD
 import { MarkedDates } from "react-native-calendars/src/types";
 import { getCalendarDateString } from "react-native-calendars/src/services";
 import { Timestamp } from "firebase/firestore";
-=======
 import Ionicons from '@expo/vector-icons/Ionicons';
->>>>>>> ca16e87 (fix camera)
 
 export default function Profile({ navigation }: RouterProps) {
 	const { authUser, fireUser } = useUser();
@@ -108,19 +104,17 @@ export default function Profile({ navigation }: RouterProps) {
 				/>
 			</View>
 
-<<<<<<< HEAD
 			{/* <Button
 				title="Home"
 				style={styles.button}
 				onPress={() => navigation.navigate("Home")}
 			/> */}
-=======
+
 			{/*<Button*/}
 			{/*	title="Home"*/}
 			{/*	style={styles.button}*/}
 			{/*	onPress={() => navigation.navigate("Home")}*/}
 			{/*/>*/}
->>>>>>> ca16e87 (fix camera)
 
 			{/* <Button
 				title="Calendar"
@@ -133,15 +127,12 @@ export default function Profile({ navigation }: RouterProps) {
 				style={styles.button}
 				onPress={() => navigation.navigate("Friends")}
 			/> */}
-<<<<<<< HEAD
 
 			{/* <Button
 				title="Settings"
 				style={styles.button}
 				onPress={() => navigation.navigate("Settings")}
 			/> */}
-=======
->>>>>>> ca16e87 (fix camera)
 		</View>
 	);
 }
