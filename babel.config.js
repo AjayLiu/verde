@@ -22,6 +22,7 @@ module.exports = function (api) {
 					"@screens": "./src/screens",
 					"@utils": "./src/utils",
 					"@hooks": "./src/utils/hooks",
+					"@styles": "./src/styles",
 				},
 			},
 		],
