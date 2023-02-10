@@ -86,4 +86,41 @@ export default StyleSheet.create({
 	growTen: {
 		flexGrow: 10,
 	},
+	// flex-basis properties in %s
+	basis10: {
+		flexBasis: "10%",
+	},
+	basis15: {
+		flexBasis: "15%",
+	},
+	basis20: {
+		flexBasis: "20%",
+	},
+	basis30: {
+		flexBasis: "30%",
+	},
+	basis40: {
+		flexBasis: "40%",
+	},
+	basis50: {
+		flexBasis: "50%",
+	},
+	basis60: {
+		flexBasis: "60%",
+	},
+	basis70: {
+		flexBasis: "70%",
+	},
+	basis80: {
+		flexBasis: "80%",
+	},
+	basis85: {
+		flexBasis: "85%",
+	},
+	basis90: {
+		flexBasis: "90%",
+	},
+	basis100: {
+		flexBasis: "100%",
+	},
 });

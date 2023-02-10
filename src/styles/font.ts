@@ -1,13 +1,20 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-	fontSmall: {
+	sizeS: {
 		fontSize: 11,
 	},
-	fontLarge: {
+	sizeL: {
+		fontSize: 15,
+	},
+	sizeXL: {
 		fontSize: 20,
 	},
 	fontBold: {
 		fontWeight: "bold",
+	},
+	// ONLY USE ON <Text> COMPONENTS TO CENTER TEXT
+	textCenter: {
+		textAlign: "center",
 	},
 });

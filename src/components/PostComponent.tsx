@@ -111,25 +111,28 @@ const PostComponent = (props: PostProps) => {
 				<View style={flex.row}>
 					<View
 						style={[
-							flex.growFive,
+							flex.basis85,
 							styles.marB,
 							flex.alignCenter,
 							flex.justifyCenter,
 						]}
 					>
-						<Text style={font.fontLarge}>
+						<Text style={[font.sizeXL, font.textCenter]}>
 							<Text style={font.fontBold}>
 								{author?.displayName}
 							</Text>{" "}
 							completed a challenge!
 						</Text>
 					</View>
-					<View style={flex.growOne}>
-						<Text style={font.fontLarge}>🌲</Text>
+					<View style={[flex.basis15, flex.row, flex.justifyCenter]}>
+						<Text style={[font.sizeXL]}>
+							{props.post.likes.length}
+						</Text>
+						<Text style={[font.sizeXL]}>🌲</Text>
 					</View>
 				</View>
 				<View style={[styles.marB, flex.alignCenter]}>
-					<Text style={[styles.marB, font.fontSmall, colors.gray]}>
+					<Text style={[styles.marB, font.sizeS, colors.gray]}>
 						{getPostTime()}
 					</Text>
 				</View>
