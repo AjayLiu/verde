@@ -4,6 +4,9 @@ import ProfilePicture from "@components/ProfilePicture";
 import { Challenge, FirestoreUser, Post } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import { useChallenge } from "@utils/hooks/useChallenge";
+import colors from "@styles/colors";
+import flex from "@styles/flexbox";
+import font from "@styles/font";
 
 const dimensions = Dimensions.get("window");
 
@@ -74,29 +77,25 @@ const PostComponent = (props: PostProps) => {
 	}
 
 	return (
-		<View style={[styles.column, styles.marB]}>
-			<View style={[styles.row, styles.marB]}>
-				<View style={[styles.growOne, styles.alignCenter]}>
+		<View style={[flex.column, styles.marB]}>
+			<View style={[flex.row, styles.marB]}>
+				<View style={[flex.growOne, flex.alignCenter]}>
 					<ProfilePicture size={35} user={author} />
 				</View>
-				<View style={[styles.column, styles.growTen]}>
+				<View style={[flex.column, flex.growTen]}>
 					<View>
-						<Text style={styles.fontBold}>
-							{author?.displayName}
-						</Text>
+						<Text style={font.fontBold}>{author?.displayName}</Text>
 					</View>
 					<View>
-						<Text>total: {author?.score || 0}</Text>
+						<Text>{author?.score || 0} points</Text>
 					</View>
 				</View>
 				<View
-					style={[
-						styles.growOne,
-						styles.alignCenter,
-						styles.justifyCenter,
-					]}
+					style={[flex.growOne, flex.alignCenter, flex.justifyCenter]}
 				>
-					<Text>post: {challenge?.points || 0}</Text>
+					<Text style={[colors.darkGreen, font.fontBold]}>
+						+{challenge?.points || 0}
+					</Text>
 				</View>
 			</View>
 			<View style={[styles.marB]}>
@@ -110,31 +109,36 @@ const PostComponent = (props: PostProps) => {
 					}}
 				/>
 			</View>
-			<View style={styles.column}>
-				<View style={styles.row}>
+			<View style={flex.column}>
+				<View style={flex.row}>
 					<View
 						style={[
-							styles.growFive,
+							flex.basis85,
 							styles.marB,
-							styles.alignCenter,
-							styles.justifyCenter,
+							flex.alignCenter,
+							flex.justifyCenter,
 						]}
 					>
-						<Text style={styles.fontLarge}>
-							<Text style={styles.fontBold}>
+						<Text style={[font.sizeXL, font.textCenter]}>
+							<Text style={font.fontBold}>
 								{author?.displayName}
 							</Text>{" "}
-							completed a challenge!
+							completed{" "}
+							<Text style={font.fontBold}>
+								{challenge?.title || "a challenge"}
+							</Text>
+							!
 						</Text>
 					</View>
-					<View style={styles.growOne}>
-						<Text style={styles.fontLarge}>🌲</Text>
+					<View style={[flex.basis15, flex.row, flex.justifyCenter]}>
+						<Text style={[font.sizeXL]}>
+							{props.post.likes.length}
+						</Text>
+						<Text style={[font.sizeXL]}>🌲</Text>
 					</View>
 				</View>
-				<View style={[styles.marB, styles.alignCenter]}>
-					<Text
-						style={[styles.marB, styles.fontSmall, styles.fontGray]}
-					>
+				<View style={[styles.marB, flex.alignCenter]}>
+					<Text style={[styles.marB, font.sizeS, colors.gray]}>
 						{getPostTime()}
 					</Text>
 				</View>
@@ -144,34 +148,6 @@ const PostComponent = (props: PostProps) => {
 };
 
 const styles = StyleSheet.create({
-	// flex direction (controls main axis)
-	column: {
-		flexDirection: "column",
-	},
-	row: {
-		flexDirection: "row",
-	},
-	// main axis
-	justifyCenter: {
-		justifyContent: "center",
-	},
-	// cross axis
-	alignCenter: {
-		alignItems: "center",
-	},
-	alignEnd: {
-		alignItems: "flex-end",
-	},
-	// flex-grow properties
-	growOne: {
-		flexGrow: 1,
-	},
-	growFive: {
-		flexGrow: 5,
-	},
-	growTen: {
-		flexGrow: 10,
-	},
 	// use this for all margins
 	marB: {
 		marginBottom: 5,
@@ -180,19 +156,6 @@ const styles = StyleSheet.create({
 	image: {
 		width: dimensions.width,
 		height: dimensions.width,
-	},
-	// text
-	fontSmall: {
-		fontSize: 11,
-	},
-	fontLarge: {
-		fontSize: 20,
-	},
-	fontGray: {
-		color: "gray",
-	},
-	fontBold: {
-		fontWeight: "bold",
 	},
 });
 
