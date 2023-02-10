@@ -8,6 +8,8 @@ import { Post, RouterProps } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import UsernameContext from "../contexts/UsernameContext";
+import flex from "@styles/flexbox";
+import colors from "@styles/colors";
 
 export default function FeedScreen({ navigation }: RouterProps) {
 	const { authUser } = useUser();
@@ -67,8 +69,16 @@ export default function FeedScreen({ navigation }: RouterProps) {
 			}}
 			scrollEventThrottle={400}
 		>
-			<View style={styles.container}>
-				<Text>Welcome {authUser?.displayName}!</Text>
+			<View
+				style={[
+					flex.alignCenter,
+					flex.justifyCenter,
+					colors.offBlackBG,
+				]}
+			>
+				<Text style={[colors.offWhite]}>
+					Welcome {authUser?.displayName}!
+				</Text>
 
 				{allPosts.slice(0, numPostsToShow).map((post: Post) => {
 					return <PostComponent key={post.uid} post={post} />;
@@ -77,15 +87,3 @@ export default function FeedScreen({ navigation }: RouterProps) {
 		</ScrollView>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	button: {
-		marginTop: 10,
-	},
-});

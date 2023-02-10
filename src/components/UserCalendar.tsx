@@ -1,30 +1,21 @@
-import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import React from "react";
 import { Post } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
-import { usePost } from "@utils/hooks/usePost";
 import { getCalendarDateString } from "react-native-calendars/src/services";
 import { MarkedDates } from "react-native-calendars/src/types";
 import { Calendar } from "react-native-calendars";
 
-const UserCalendar = () => {
-	const { authUser, fireUser } = useUser();
-	const { getAllPosts } = usePost();
-	const [posts, setPosts] = React.useState<Post[]>([]);
+type UserCalendarProps = {
+	posts: Post[];
+};
 
-	const fetchAllPosts = async () => {
-		const allPosts = await getAllPosts();
-		setPosts(allPosts);
-	};
-
-	useEffect(() => {
-		fetchAllPosts();
-	}, []);
+const UserCalendar = (props: UserCalendarProps) => {
+	const { fireUser } = useUser();
 
 	function getDates() {
 		const authPosts: Post[] = [];
-		posts.forEach((post) => {
-			if (post.authorUid === authUser?.uid) {
+		props.posts.forEach((post) => {
+			if (post.authorUid === fireUser?.uid) {
 				authPosts.push(post);
 			}
 		});
@@ -60,7 +51,7 @@ const UserCalendar = () => {
 			const date: string = getCalendarDateString(timestamp);
 
 			dates[date] = {
-				color: "#A7E0A2",
+				color: "#138a36", // dark green (hard coded from colors.ts)
 				startingDay: starting,
 				endingDay: ending,
 			};
@@ -71,7 +62,6 @@ const UserCalendar = () => {
 
 	return (
 		<Calendar
-			// initialDate={"2023-01-12"}
 			maxDate={getCalendarDateString(new Date())}
 			// hideArrows={true}
 			disableMonthChange={true}
@@ -81,10 +71,16 @@ const UserCalendar = () => {
 			// }}
 			markingType={"period"}
 			markedDates={getDates()}
+			// hard coding colors from colors.ts because not sure what else to do
+			theme={{
+				calendarBackground: "#232020", // off black
+				dayTextColor: "#e2e4f6", // off white
+				textDisabledColor: "gray",
+				arrowColor: "#138a36", // dark green
+				monthTextColor: "#e2e4f6", // off white
+			}}
 		/>
 	);
 };
-
-const styles = StyleSheet.create({});
 
 export default UserCalendar;

@@ -8,6 +8,7 @@ import Profile from "@screens/Profile";
 import Challenges from "@screens/Challenges";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from "react-native";
+import colors from "@styles/colors";
 
 export default function HomeSwipe({ navigation }: RouterProps) {
 	const data = [
@@ -29,8 +30,8 @@ export default function HomeSwipe({ navigation }: RouterProps) {
 	];
 
 	return (
-		<View style={styles.h100}>
-			<View style={[styles.h5, styles.bgWhite]}></View>
+		<View style={[styles.h100, colors.offBlackBG]}>
+			<View style={[styles.h5, colors.offBlackBG]}></View>
 			<Swiper
 				data={data}
 				isStaticPills={true}
@@ -56,8 +57,5 @@ const styles = {
 	},
 	h5: {
 		height: "5%",
-	},
-	bgWhite: {
-		backgroundColor: "white",
 	},
 };

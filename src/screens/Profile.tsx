@@ -7,6 +7,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import UserCalendar from "@components/UserCalendar";
 import font from "@styles/font";
 import flex from "@styles/flexbox";
+import colors from "@styles/colors";
 import { usePost } from "@utils/hooks/usePost";
 
 export default function Profile({ navigation }: RouterProps) {
@@ -36,7 +37,8 @@ export default function Profile({ navigation }: RouterProps) {
 	return (
 		<View
 			style={[
-				styles.container,
+				styles.height100,
+				colors.offBlackBG,
 				flex.column,
 				flex.alignCenter,
 				flex.justifyStart,
@@ -50,7 +52,14 @@ export default function Profile({ navigation }: RouterProps) {
 				onPress={() => navigation.navigate("Settings")}
 			/>
 			<ProfilePicture size={100} style={[styles.marB, styles.marT]} />
-			<Text style={[font.fontBold, font.sizeXL, styles.marB]}>
+			<Text
+				style={[
+					font.fontBold,
+					font.sizeXL,
+					styles.marB,
+					colors.offWhite,
+				]}
+			>
 				{fireUser?.displayName}
 			</Text>
 
@@ -63,23 +72,27 @@ export default function Profile({ navigation }: RouterProps) {
 				]}
 			>
 				<View style={flex.column}>
-					<Text style={[font.textCenter, font.sizeXL]}>
+					<Text
+						style={[font.textCenter, font.sizeXL, colors.offWhite]}
+					>
 						{fireUser?.score}
 					</Text>
-					<Text style={[font.sizeL]}>points</Text>
+					<Text style={[font.sizeL, colors.offWhite]}>points</Text>
 				</View>
 				<View style={flex.column}>
-					<Text style={[font.textCenter, font.sizeXL]}>
+					<Text
+						style={[font.textCenter, font.sizeXL, colors.offWhite]}
+					>
 						{getNumPosts()}
 					</Text>
-					<Text style={[font.sizeL]}>
+					<Text style={[font.sizeL, colors.offWhite]}>
 						{getNumPosts() == 1 ? "post" : "posts"}
 					</Text>
 				</View>
 			</View>
 
 			<View style={[styles.width100, styles.marT]}>
-				<UserCalendar />
+				<UserCalendar posts={posts} />
 			</View>
 		</View>
 	);
@@ -92,11 +105,10 @@ const styles = StyleSheet.create({
 	marT: {
 		marginTop: 5,
 	},
-	container: {
-		backgroundColor: "#fff",
-		height: "100%",
-	},
 	width100: {
 		width: "100%",
+	},
+	height100: {
+		height: "100%",
 	},
 });
