@@ -17,8 +17,8 @@ export default function UserStack() {
 	return (
 		<Stack.Navigator
 			screenOptions={{
-				// headerShown: false,
-				headerBackTitleVisible: false
+				headerShown: false,
+				headerBackTitleVisible: false,
 			}}
 		>
 			<Stack.Screen name="HomeSwiper" component={HomeSwipe} />

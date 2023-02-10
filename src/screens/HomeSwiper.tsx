@@ -7,6 +7,7 @@ import Feed from "@screens/Feed";
 import Profile from "@screens/Profile";
 import Challenges from "@screens/Challenges";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import {View} from "react-native";
 
 export default function HomeSwipe({ navigation }: RouterProps) {
 	const data = [
@@ -28,28 +29,43 @@ export default function HomeSwipe({ navigation }: RouterProps) {
 	];
 
 	return (
-		<Swiper
-			data={data}
-			isStaticPills={true}
-			style={styles}
-			initialScrollIndex={1}
-		/>
+		<View
+			style={styles.marTop}
+		>
+			<Swiper
+				data={data}
+				isStaticPills={true}
+				style={swipe_styles}
+				initialScrollIndex={1}
+			/>
+		</View>
 	);
 }
 
-const styles = {
+const swipe_styles = {
 	container: {
 		padding: 50,
-		backgroundColor: "#fff",
+		backgroundColor: "red",
 	},
-
+	pillContainer: {
+		height: 10,
+	},
 	borderActive: {
 		borderColor: '#00CC4B',
 	},
 	pillLabel: {
-		color: 'gray',
+		color: '#00CC4B',
 	},
 	activeLabel: {
 		color: '#ba2d65',
 	},
+
+
 };
+
+const styles = {
+	marTop: {
+		marginTop: 25,
+		height: "100%",
+	}
+}
