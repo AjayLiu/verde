@@ -15,9 +15,14 @@ const Stack = createStackNavigator();
 
 export default function UserStack() {
 	return (
-		<Stack.Navigator>
+		<Stack.Navigator
+			screenOptions={{
+				headerShown: false,
+				headerBackTitleVisible: false,
+			}}
+		>
 			<Stack.Screen name="HomeSwiper" component={HomeSwipe} />
-			<Stack.Screen name="Home" component={FeedScreen} />
+			<Stack.Screen name="Feed" component={FeedScreen} />
 			<Stack.Screen
 				name="Profile"
 				component={Profile}
@@ -56,18 +61,3 @@ export default function UserStack() {
 		</Stack.Navigator>
 	);
 }
-
-const styles_2 = {
-	pillButton: {
-		backgroundColor: "white",
-	},
-	pillActive: {
-		backgroundColor: "yellow",
-	},
-	pillLabel: {
-		color: "gray",
-	},
-	activeLabel: {
-		color: "white",
-	},
-};

@@ -70,33 +70,6 @@ export default function FeedScreen({ navigation }: RouterProps) {
 			<View style={styles.container}>
 				<Text>Welcome {authUser?.displayName}!</Text>
 
-				<Button
-					title="Sign Out"
-					style={styles.button}
-					onPress={() => {
-						setHasPickedUsername(false);
-						signOut(auth);
-					}}
-				/>
-
-				<Button
-					title="Camera"
-					style={styles.button}
-					onPress={() => navigation.navigate("Camera")}
-				/>
-
-				<Button
-					title="Challenges"
-					style={styles.button}
-					onPress={() => navigation.navigate("Challenges")}
-				/>
-
-				<Button
-					title="Profile"
-					style={styles.button}
-					onPress={() => navigation.navigate("Profile")}
-				/>
-
 				{allPosts.slice(0, numPostsToShow).map((post: Post) => {
 					return <PostComponent key={post.uid} post={post} />;
 				})}

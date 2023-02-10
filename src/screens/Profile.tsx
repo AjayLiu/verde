@@ -4,15 +4,15 @@ import { Button } from "react-native-elements";
 import { FirestoreUser, RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import ProfilePicture from "@components/ProfilePicture";
-import AuthPoints from "@components/AuthPoints";
 import { Post } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
 import { Calendar } from "react-native-calendars";
 import { MarkedDates } from "react-native-calendars/src/types";
 import { getCalendarDateString } from "react-native-calendars/src/services";
 import { Timestamp } from "firebase/firestore";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-export default function HomeScreen({ navigation }: RouterProps) {
+export default function Profile({ navigation }: RouterProps) {
 	const { authUser, fireUser } = useUser();
 	const { getAllPosts } = usePost();
 	const [posts, setPosts] = React.useState<Post[]>([]);
@@ -76,7 +76,14 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	return (
 		<View style={styles.container}>
-			<Text>{authUser?.displayName}</Text>
+
+			<Ionicons
+				name="settings-outline"
+				iconStyle = {styles}
+				size={32}
+				color={"#00CC4B"}
+				onPress={() => navigation.navigate("Settings")}
+			/>
 
 			<ProfilePicture size={150} />
 			<Text>Score: {fireUser?.score}</Text>
@@ -102,6 +109,12 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				style={styles.button}
 				onPress={() => navigation.navigate("Home")}
 			/> */}
+
+			{/*<Button*/}
+			{/*	title="Home"*/}
+			{/*	style={styles.button}*/}
+			{/*	onPress={() => navigation.navigate("Home")}*/}
+			{/*/>*/}
 
 			{/* <Button
 				title="Calendar"
@@ -136,6 +149,7 @@ const styles = StyleSheet.create({
 	},
 	pfp: {
 		marginTop: 30,
+		marginBottom: 15,
 	},
 	calendarContainer: {
 		width: "100%",
@@ -144,5 +158,8 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 		paddingLeft: 0,
 		paddingRight: 0,
+	},
+	icon: {
+
 	},
 });
