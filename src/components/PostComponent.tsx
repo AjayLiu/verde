@@ -87,13 +87,15 @@ const PostComponent = (props: PostProps) => {
 						<Text style={font.fontBold}>{author?.displayName}</Text>
 					</View>
 					<View>
-						<Text>total: {author?.score || 0}</Text>
+						<Text>{author?.score || 0} points</Text>
 					</View>
 				</View>
 				<View
 					style={[flex.growOne, flex.alignCenter, flex.justifyCenter]}
 				>
-					<Text>post: {challenge?.points || 0}</Text>
+					<Text style={[colors.darkGreen, font.fontBold]}>
+						+{challenge?.points || 0}
+					</Text>
 				</View>
 			</View>
 			<View style={[styles.marB]}>
@@ -121,7 +123,11 @@ const PostComponent = (props: PostProps) => {
 							<Text style={font.fontBold}>
 								{author?.displayName}
 							</Text>{" "}
-							completed a challenge!
+							completed{" "}
+							<Text style={font.fontBold}>
+								{challenge?.title || "a challenge"}
+							</Text>
+							!
 						</Text>
 					</View>
 					<View style={[flex.basis15, flex.row, flex.justifyCenter]}>
