@@ -7,6 +7,7 @@ import { useChallenge } from "@utils/hooks/useChallenge";
 import colors from "@styles/colors";
 import flex from "@styles/flexbox";
 import font from "@styles/font";
+import { usePost } from "@utils/hooks/usePost";
 
 const dimensions = Dimensions.get("window");
 
@@ -15,8 +16,9 @@ type PostProps = {
 };
 
 const PostComponent = (props: PostProps) => {
-	const { getUserFromFirestore } = useUser();
+	const { getUserFromFirestore, authUser } = useUser();
 	const { getChallenge } = useChallenge();
+	const { likePost } = usePost();
 	const [author, setAuthor] = useState<FirestoreUser>();
 	const [challenge, setChallenge] = useState<Challenge>();
 
@@ -76,6 +78,38 @@ const PostComponent = (props: PostProps) => {
 		}
 	}
 
+	// Double tap detection
+	let lastPress = 0;
+	const onPostPress = () => {
+		const time = new Date().getTime();
+		const delta = time - lastPress;
+
+		const DOUBLE_PRESS_DELAY = 400;
+		if (delta < DOUBLE_PRESS_DELAY) {
+			// Success double press
+			likeThePost();
+		}
+		lastPress = time;
+		return true;
+	};
+
+	const [justLiked, setJustLiked] = useState(false);
+	const likeThePost = async () => {
+		if (alreadyLiked || justLiked) return;
+		await likePost(props.post.uid);
+		setJustLiked(true);
+	};
+
+	const [alreadyLiked, setAlreadyLiked] = useState(false);
+	useEffect(() => {
+		props.post.likes.forEach((like) => {
+			if (like.authorUid == authUser?.uid) {
+				setAlreadyLiked(true);
+				return;
+			}
+		});
+	}, [props.post, authUser]);
+
 	return (
 		<View style={[flex.column, styles.marB]}>
 			<View style={[flex.row, styles.marB]}>
@@ -102,7 +136,7 @@ const PostComponent = (props: PostProps) => {
 					</Text>
 				</View>
 			</View>
-			<View style={[styles.marB]}>
+			<View style={[styles.marB]} onStartShouldSetResponder={onPostPress}>
 				<Image
 					style={[styles.image, styles.marB]}
 					source={{
@@ -142,9 +176,17 @@ const PostComponent = (props: PostProps) => {
 					</View>
 					<View style={[flex.basis15, flex.row, flex.justifyCenter]}>
 						<Text style={[font.sizeXL, colors.offWhite]}>
-							{props.post.likes.length}
+							{props.post.likes.length + (justLiked ? 1 : 0)}
 						</Text>
-						<Text style={[font.sizeXL]}>🌲</Text>
+						{alreadyLiked || justLiked ? (
+							// ALREADY LIKED
+							<Text style={[font.sizeXL]}>🌲</Text>
+						) : (
+							// HAVEN'T LIKED YET (slightly transparent)
+							<Text style={[font.sizeXL, { opacity: 0.5 }]}>
+								🌲
+							</Text>
+						)}
 					</View>
 				</View>
 				<View style={[styles.marB, flex.alignCenter]}>

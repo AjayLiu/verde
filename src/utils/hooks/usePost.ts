@@ -1,4 +1,4 @@
-import { Post } from "src/types";
+import { Post, Like } from "src/types";
 import {
 	getDoc,
 	doc,
@@ -9,6 +9,7 @@ import {
 	query,
 	orderBy,
 	Timestamp,
+	updateDoc,
 } from "firebase/firestore";
 import { db } from "@config/firebase";
 import { useUser } from "./useUser";
@@ -79,5 +80,37 @@ export function usePost() {
 		return querySnapshot.docs.map((doc) => doc.data()) as Post[];
 	};
 
-	return { makePost, getPost, getAllPosts };
+	const updatePost = async (postUid: string, data: any) => {
+		try {
+			const docRef = await updateDoc(doc(db, "posts", postUid), data);
+			console.log("Post updated: ", docRef);
+		} catch (e) {
+			console.error("Error updating post: ", e);
+		}
+	};
+
+	const likePost = async (postUid: string) => {
+		// Check if post is already liked
+		const post = await getPost(postUid);
+		let alreadyLiked = false;
+		post.likes.forEach((like) => {
+			if (like.authorUid === authUser?.uid) {
+				alreadyLiked = true;
+				return;
+			}
+		});
+		if (alreadyLiked) return;
+
+		const newLike: Like = {
+			uid: uuidv4(),
+			authorUid: authUser?.uid || "",
+			postUid: postUid,
+			timestamp: Timestamp.now(),
+		};
+		await updatePost(postUid, {
+			likes: arrayUnion(newLike),
+		});
+	};
+
+	return { makePost, getPost, getAllPosts, likePost };
 }

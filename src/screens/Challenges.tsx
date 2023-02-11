@@ -19,7 +19,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 		getChallenges();
 
-		console.log(fireUser?.completedChallengesUids);
+		// console.log(fireUser?.completedChallengesUids);
 	}, []);
 
 	const challengeSelected = (challenge: Challenge) => {

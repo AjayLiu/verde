@@ -11,7 +11,13 @@ const SuccessPostScreen = ({ route, navigation }: RouterProps) => {
 			<Text>Post Successful!</Text>
 			<Button
 				title={"Return home"}
-				onPress={() => navigation.navigate("Home")}
+				// onPress={() => navigation.navigate("HomeSwiper")}
+				onPress={() =>
+					navigation.reset({
+						index: 0,
+						routes: [{ name: "HomeSwiper" }],
+					})
+				}
 			></Button>
 		</View>
 	);
