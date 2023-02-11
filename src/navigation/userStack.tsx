@@ -1,4 +1,6 @@
 import React from "react";
+import { StyleSheet, View } from "react-native";
+
 import { createStackNavigator } from "@react-navigation/stack";
 
 import FeedScreen from "@screens/Feed";
@@ -14,7 +16,6 @@ import SuccessPostScreen from "@screens/SuccessPostScreen";
 const Stack = createStackNavigator();
 
 export default function UserStack() {
-
 	return (
 		<Stack.Navigator
 			screenOptions={{
@@ -22,16 +23,19 @@ export default function UserStack() {
 				headerBackTitleVisible: false,
 			}}
 		>
-			<Stack.Screen name="HomeSwiper" component={HomeSwipe}
-			options={{
-				gestureDirection: "horizontal-inverted",
-			}} />
+			<Stack.Screen
+				name="HomeSwiper"
+				component={HomeSwipe}
+				options={{
+					gestureDirection: "horizontal-inverted",
+				}}
+			/>
 			<Stack.Screen name="Feed" component={FeedScreen} />
 			<Stack.Screen
 				name="Profile"
 				component={Profile}
 				options={{
-					title: "Profile"
+					title: "Profile",
 				}}
 			/>
 			<Stack.Screen
