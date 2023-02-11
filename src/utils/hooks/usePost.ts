@@ -10,6 +10,7 @@ import {
 	orderBy,
 	Timestamp,
 	updateDoc,
+	increment,
 } from "firebase/firestore";
 import { db } from "@config/firebase";
 import { useUser } from "./useUser";
@@ -101,6 +102,7 @@ export function usePost() {
 		});
 		if (alreadyLiked) return;
 
+		// Add like to post
 		const newLike: Like = {
 			uid: uuidv4(),
 			authorUid: authUser?.uid || "",
@@ -109,6 +111,11 @@ export function usePost() {
 		};
 		await updatePost(postUid, {
 			likes: arrayUnion(newLike),
+		});
+
+		// Add one point to poster's score
+		await updateUserFirestore(post.authorUid, {
+			score: increment(1),
 		});
 	};
 

@@ -124,7 +124,7 @@ const PostComponent = (props: PostProps) => {
 					</View>
 					<View>
 						<Text style={colors.offWhite}>
-							{author?.score || 0} points
+							{(author?.score || 0) + (justLiked ? 1 : 0)} points
 						</Text>
 					</View>
 				</View>
