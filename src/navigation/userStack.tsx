@@ -14,6 +14,7 @@ import SuccessPostScreen from "@screens/SuccessPostScreen";
 const Stack = createStackNavigator();
 
 export default function UserStack() {
+
 	return (
 		<Stack.Navigator
 			screenOptions={{
@@ -21,12 +22,17 @@ export default function UserStack() {
 				headerBackTitleVisible: false,
 			}}
 		>
-			<Stack.Screen name="HomeSwiper" component={HomeSwipe} />
+			<Stack.Screen name="HomeSwiper" component={HomeSwipe}
+			options={{
+				gestureDirection: "horizontal-inverted",
+			}} />
 			<Stack.Screen name="Feed" component={FeedScreen} />
 			<Stack.Screen
 				name="Profile"
 				component={Profile}
-				options={{ title: "Profile" }}
+				options={{
+					title: "Profile"
+				}}
 			/>
 			<Stack.Screen
 				name="Friends"

@@ -5,6 +5,7 @@ import { Challenge, RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import { useChallenge } from "@utils/hooks/useChallenge";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser, fireUser } = useUser();

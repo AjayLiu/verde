@@ -6,6 +6,7 @@ import { RouterProps } from "../types";
 import Feed from "@screens/Feed";
 import Profile from "@screens/Profile";
 import Challenges from "@screens/Challenges";
+import Settings from "@screens/Settings"
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from "react-native";
 import colors from "@styles/colors";
@@ -13,20 +14,21 @@ import colors from "@styles/colors";
 export default function HomeSwipe({ navigation }: RouterProps) {
 	const data = [
 		{
-			tabLabel: <Ionicons name="checkmark-done-outline" />,
 			component: Challenges,
 			props: { navigation },
 		},
 		{
-			tabLabel: <Ionicons name="albums-outline" />,
 			component: Feed,
 			props: { navigation },
 		},
 		{
-			tabLabel: <Ionicons name="person-circle-outline" />,
 			component: Profile,
 			props: { navigation },
 		},
+		// {
+		// 	component: Settings,
+		// 	props: { navigation },
+		// },
 	];
 
 	return (

@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import UsernameContext from "../contexts/UsernameContext";
+import font from "@styles/font";
+import colors from "@styles/colors";
 
 const PickUsername = () => {
 	const { authUser, checkIfUsernameValid, updateUsername } = useUser();
@@ -41,8 +43,9 @@ const PickUsername = () => {
 
 	return (
 		<View>
-			<Text>Username:</Text>
-			<TextInput onChangeText={setUsername} value={username}></TextInput>
+			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]} >Username:</Text>
+			<TextInput style={[font.textCenter, font.sizeXL, colors.offWhite]}
+					   onChangeText={setUsername} value={username}></TextInput>
 			{usernameTaken && (
 				<Text style={{ color: "red" }}>Username taken!</Text>
 			)}
