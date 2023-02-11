@@ -5,6 +5,7 @@ import { Challenge, RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import { useChallenge } from "@utils/hooks/useChallenge";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser, fireUser } = useUser();
@@ -28,6 +29,12 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	return (
 		<View style={styles.container}>
+			<Ionicons
+				name="chevron-forward"
+				iconStyle={styles}
+				size={32}
+				color={"#00CC4B"}
+			/>
 			<Text>!!THIS IS A STUB!!</Text>
 			<Text>Challenges for {authUser?.email}!</Text>
 
