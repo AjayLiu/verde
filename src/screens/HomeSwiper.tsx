@@ -25,10 +25,10 @@ export default function HomeSwipe({ navigation }: RouterProps) {
 			component: Profile,
 			props: { navigation },
 		},
-		{
-			component: Settings,
-			props: { navigation },
-		},
+		// {
+		// 	component: Settings,
+		// 	props: { navigation },
+		// },
 	];
 
 	return (

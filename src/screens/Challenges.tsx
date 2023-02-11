@@ -29,12 +29,6 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	return (
 		<View style={styles.container}>
-			<Ionicons
-				name="chevron-forward"
-				iconStyle={styles}
-				size={32}
-				color={"#00CC4B"}
-			/>
 			<Text>!!THIS IS A STUB!!</Text>
 			<Text>Challenges for {authUser?.email}!</Text>
 

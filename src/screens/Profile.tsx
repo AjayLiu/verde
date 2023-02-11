@@ -51,22 +51,20 @@ export default function Profile({navigation}: RouterProps) {
                     flex.justifyEvenly,
                 ]}
             >
-                <Ionicons
-                    name="albums"
-                    iconStyle={icon}
-                    size={22.5}
-                    color={"#00CC4B"}
-                    style={{opacity: 0.25}}
-                />
+                {/*<Ionicons*/}
+                {/*    name="albums"*/}
+                {/*    iconStyle={icon}*/}
+                {/*    size={22.5}*/}
+                {/*    color={"#00CC4B"}*/}
+                {/*    style={{opacity: 0.25}}*/}
+                {/*/>*/}
 
                 <Ionicons
                     name="settings-outline"
                     iconStyle={styles}
                     size={22.5}
                     color={"#00CC4B"}
-                    style={{
-                        opacity: 0.25,
-                    }}
+                    onPress={() => navigation.navigate("Settings")}
                 />
 
             </View>
@@ -135,6 +133,7 @@ const styles = StyleSheet.create({
 
 const icon = StyleSheet.create({
     space: {
-        width: "247.5%",
+        position: "relative",
+        right: -165,
     },
 })

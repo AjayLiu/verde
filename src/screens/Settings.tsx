@@ -67,20 +67,12 @@ export default function HomeScreen({navigation}: RouterProps) {
     };
 
     return (
-        <View style={[
-            styles.height100,
-            colors.offBlackBG,
-            flex.column,
-            flex.alignCenter,
-            flex.justifyStart,
-        ]}
-
-        >
+        <View style={styles.container}>
             <View
                 style={[
-                icon.space,
-                flex.row,
-                flex.justifyEvenly,
+                    icon.space,
+                    flex.row,
+                    flex.justifyEvenly,
                 ]}
             >
                 <Ionicons
@@ -88,20 +80,14 @@ export default function HomeScreen({navigation}: RouterProps) {
                     iconStyle={styles}
                     size={22.5}
                     color={"#00CC4B"}
-                    style={{
-                        opacity: 0.25,
-                    }}
-                    // onPress={() => navigation.reset({
-                    // 	index: 0,
-                    // 	routes: [{ name: "HomeSwiper" }],
-                    // })}
+                    onPress={() => navigation.navigate("HomeSwiper")}
                 />
 
             </View>
 
 
-            <Text style={[font.textCenter, font.sizeXL, colors.offWhite]} >!!THIS IS A STUB!!</Text>
-            <Text style={[font.textCenter, font.sizeXL, colors.offWhite]} >Settings for {authUser?.email}!</Text>
+            <Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>!!THIS IS A STUB!!</Text>
+            <Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>Settings for {authUser?.email}!</Text>
 
             <Image
                 source={{
@@ -143,6 +129,7 @@ export default function HomeScreen({navigation}: RouterProps) {
                 onPress={deleteAccount}
             />
         </View>
+
     );
 }
 
@@ -159,6 +146,9 @@ const styles = StyleSheet.create({
     height100: {
         height: "100%",
     },
+    h100: {
+        height: "100%",
+    }
 });
 
 const icon = StyleSheet.create({
