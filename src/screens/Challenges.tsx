@@ -29,6 +29,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	return (
 		<View style={styles.container}>
+
 			<Text>!!THIS IS A STUB!!</Text>
 			<Text>Challenges for {authUser?.email}!</Text>
 
