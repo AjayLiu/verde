@@ -24,18 +24,17 @@ const Accordion = (props: AccordionProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 24,
+
       },
       title: {
         marginTop: 16,
         paddingVertical: 8,
         paddingHorizontal: 8,
-        borderWidth: 4,
-        borderColor: '#20232a',
-        borderRadius: 6,
-        backgroundColor: '#61dafb',
-        color: '#fff',
+        borderWidth: 1,
+        borderColor: '#E2E4F6',
+        borderRadius: 3,
+        backgroundColor: '#138A36',
+        color: '#E2E4F6',
         textAlign: 'center',
         fontSize: 30,
         fontWeight: 'bold',
