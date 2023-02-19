@@ -43,8 +43,7 @@ const PickUsername = () => {
 
 	return (
 		<View>
-			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]} >Username:</Text>
-			<TextInput style={[font.textCenter, font.sizeXL, colors.offWhite]}
+			<TextInput style={[font.textCenter, font.sizeTitle, colors.offWhite, textStyles.text]}
 					   onChangeText={setUsername} value={username}></TextInput>
 			{usernameTaken && (
 				<Text style={{ color: "red" }}>Username taken!</Text>
@@ -55,3 +54,9 @@ const PickUsername = () => {
 };
 
 export default PickUsername;
+
+const textStyles = {
+	text: {
+		paddingTop: 10,
+	}
+}

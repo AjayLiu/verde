@@ -67,12 +67,17 @@ export default function HomeScreen({navigation}: RouterProps) {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[
+            styles.height100,
+            colors.offBlackBG,
+            flex.column,
+            flex.alignCenter,
+            flex.justifyStart,
+        ]}>
             <View
                 style={[
-                    icon.space,
                     flex.row,
-                    flex.justifyEvenly,
+                    flex.justifyEnd,
                 ]}
             >
                 <Ionicons
@@ -83,11 +88,16 @@ export default function HomeScreen({navigation}: RouterProps) {
                     onPress={() => navigation.navigate("HomeSwiper")}
                 />
 
+                <Text style={[
+                    font.sizeL,
+                    colors.lightGreen,
+                ]}
+                      onPress={() => updateProfilePicture(pickedImagePath)}
+                >
+                    SAVE
+                </Text>
+
             </View>
-
-
-            <Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>!!THIS IS A STUB!!</Text>
-            <Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>Settings for {authUser?.email}!</Text>
 
             <Image
                 source={{
@@ -96,38 +106,40 @@ export default function HomeScreen({navigation}: RouterProps) {
                         authUser?.photoURL ||
                         "https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=",
                 }}
-                style={{width: 200, height: 200}}
+                style={{width: 200, height: 200, borderRadius: 200 /2}}
             ></Image>
 
             <PickUsername></PickUsername>
 
-            <Button
-                title="Profile"
-                style={styles.button}
-                onPress={() => navigation.navigate("Profile")}
-            />
-
-            <Button
-                title="Change Profile Picture"
-                style={styles.button}
+            <Text style={[
+                font.fontBold,
+                font.sizeXL,
+                colors.offWhite,
+                ]}
                 onPress={showImagePicker}
-            />
-            <Button
-                title="Take profile picture"
-                style={styles.button}
-                onPress={openCamera}
-            />
-            <Button
-                title="Confirm changes"
-                style={styles.button}
-                onPress={() => updateProfilePicture(pickedImagePath)}
-            />
+            >
+                Change Profile Picture
+            </Text>
 
-            <Button
-                title="Delete account"
-                style={styles.button}
-                onPress={deleteAccount}
-            />
+            <Text style={[
+                font.fontBold,
+                font.sizeXL,
+                colors.offWhite,
+                ]}
+                  onPress={openCamera}
+            >
+                Take Profile Picture
+            </Text>
+
+            <Text style={[
+                font.fontBold,
+                font.sizeXL,
+                colors.offWhite,
+            ]}
+                  onPress={deleteAccount}
+            >
+                Take Profile Picture
+            </Text>
         </View>
 
     );
@@ -145,10 +157,11 @@ const styles = StyleSheet.create({
     },
     height100: {
         height: "100%",
+        padding: 50,
     },
     h100: {
         height: "100%",
-    }
+    },
 });
 
 const icon = StyleSheet.create({
