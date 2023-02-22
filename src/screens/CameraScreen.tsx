@@ -73,7 +73,15 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 				routes: [{ name: "SuccessPost", params: { challenge } }],
 			});
 		};
-		await makePost(capturedImage.uri, challenge.uid, successCallback);
+		const progressCallback = (progress: number) => {
+			console.log(progress);
+		};
+		await makePost(
+			capturedImage.uri,
+			challenge.uid,
+			successCallback,
+			progressCallback,
+		);
 	};
 	const __retakePicture = () => {
 		setCapturedImage(null);
