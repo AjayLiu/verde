@@ -10,9 +10,11 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "@styles/colors";
 import flex from "@styles/flexbox";
 import font from "@styles/font";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth/react-native";
+import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
+
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser, deleteUserFromFirestore, updateProfilePicture } =
 		useUser();
@@ -91,7 +93,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 					style={[font.sizeL, colors.lightGreen]}
 					onPress={() => updateProfilePicture(pickedImagePath)}
 				>
-					SAVE
+					Save profile picture
 				</Text>
 			</View>
 

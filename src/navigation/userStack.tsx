@@ -9,12 +9,10 @@ import Calendar from "@screens/Calendar";
 import Challenges from "@screens/Challenges";
 import Settings from "@screens/Settings";
 import HomeSwipe from "@screens/HomeSwiper";
-import SuccessPostScreen from "@screens/SuccessPostScreen";
 
 const Stack = createStackNavigator();
 
 export default function UserStack() {
-
 	return (
 		<Stack.Navigator
 			screenOptions={{
@@ -22,27 +20,25 @@ export default function UserStack() {
 				headerBackTitleVisible: false,
 			}}
 		>
-			<Stack.Screen name="HomeSwiper" component={HomeSwipe}
-			options={{
-				gestureDirection: "horizontal-inverted",
-			}} />
+			<Stack.Screen
+				name="HomeSwiper"
+				component={HomeSwipe}
+				options={{
+					gestureDirection: "horizontal-inverted",
+				}}
+			/>
 			<Stack.Screen name="Feed" component={FeedScreen} />
 			<Stack.Screen
 				name="Profile"
 				component={Profile}
 				options={{
-					title: "Profile"
+					title: "Profile",
 				}}
 			/>
 			<Stack.Screen
 				name="Friends"
 				component={Friends}
 				options={{ title: "Friends" }}
-			/>
-			<Stack.Screen
-				name="SuccessPost"
-				component={SuccessPostScreen}
-				options={{ title: "Success!" }}
 			/>
 			<Stack.Screen
 				name="Camera"

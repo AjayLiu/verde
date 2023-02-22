@@ -17,6 +17,8 @@ import {
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 import { usePost } from "@hooks/usePost";
 import { Challenge, RouterProps } from "src/types";
+import * as Progress from "react-native-progress";
+import colors from "@styles/colors";
 
 let camera: Camera | null;
 
@@ -64,17 +66,22 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 
 	const { makePost } = usePost();
 
+	const [progress, setProgress] = React.useState(0);
+	const [isUploading, setIsUploading] = React.useState(false);
+
 	const __savePhoto = async () => {
 		if (!capturedImage?.uri) return;
+		setIsUploading(true);
 		const successCallback = () => {
 			// navigation.navigate("SuccessPost", { challenge });
+			setIsUploading(false);
 			navigation.reset({
 				index: 0,
-				routes: [{ name: "SuccessPost", params: { challenge } }],
+				routes: [{ name: "HomeSwiper" }],
 			});
 		};
 		const progressCallback = (progress: number) => {
-			console.log(progress);
+			setProgress(progress / 100);
 		};
 		await makePost(
 			capturedImage.uri,
@@ -104,6 +111,7 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 			setCameraType(CameraType.back);
 		}
 	};
+
 	return (
 		<View style={styles.container}>
 			{startCamera ? (
@@ -118,6 +126,8 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 							photo={capturedImage}
 							savePhoto={__savePhoto}
 							retakePicture={__retakePicture}
+							progress={progress}
+							isUploading={isUploading}
 						/>
 					) : (
 						<Camera
@@ -262,7 +272,13 @@ const styles = StyleSheet.create({
 	},
 });
 
-const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
+const CameraPreview = ({
+	photo,
+	retakePicture,
+	savePhoto,
+	progress,
+	isUploading,
+}: any) => {
 	return (
 		<View
 			style={{
@@ -308,7 +324,7 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
 									fontSize: 20,
 								}}
 							>
-								Re-take
+								Re-take photo
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
@@ -327,12 +343,35 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
 									fontSize: 20,
 								}}
 							>
-								save photo
+								Confirm photo
 							</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
 			</ImageBackground>
+			{isUploading && (
+				<View
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Progress.Circle
+						size={100}
+						showsText
+						unfilledColor={"white"}
+						progress={progress}
+					/>
+					<Text style={[colors.offWhite, { marginTop: 10 }]}>
+						Uploading...
+					</Text>
+				</View>
+			)}
 		</View>
 	);
 };

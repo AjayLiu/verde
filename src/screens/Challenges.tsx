@@ -31,41 +31,73 @@ export default function HomeScreen({ navigation }: RouterProps) {
 	};
 
 	return (
-		<View style={[
-			styles.height100,
-			colors.offBlackBG,
-			flex.column,
-			flex.alignCenter,
-			flex.justifyStart,
-		]}>
-
-			<Text
-				style={[font.textCenter, font.sizeXL, colors.offWhite]}
-			>!!THIS IS A STUB!!</Text>
-			<Text
-				style={[font.textCenter, font.sizeXL, colors.offWhite]}
-			>Challenges for {authUser?.email}!</Text>
+		<View
+			style={[
+				styles.height100,
+				colors.offBlackBG,
+				flex.column,
+				flex.alignCenter,
+				flex.justifyStart,
+			]}
+		>
+			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
+				!!THIS IS A STUB!!
+			</Text>
+			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
+				Challenges for {authUser?.email}!
+			</Text>
 
 			{challenges.map((challenge, idx) => {
 				// if the user has already completed this challenge
 				if (fireUser?.completedChallengesUids.includes(challenge.uid))
 					return (
 						<View key={idx}>
-							<Accordion label={challenge.title} expanded={challenge.description}></Accordion>
+							<Accordion
+								label={challenge.title}
+								expanded={challenge.description}
+							></Accordion>
 							<Text
-								style={[font.textCenter, font.sizeXL, colors.offWhite]}
-							>COMPLETED:</Text>
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								COMPLETED:
+							</Text>
 							<Text
-								style={[font.textCenter, font.sizeXL, colors.offWhite]}
-							>{challenge.title}</Text>
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								{challenge.title}
+							</Text>
 							<Text
-								style={[font.textCenter, font.sizeXL, colors.offWhite]}
-							>{challenge.description}</Text>
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								{challenge.description}
+							</Text>
 							<Text
-								style={[font.textCenter, font.sizeXL, colors.offWhite]}
-							>Points: {challenge.points}</Text>
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								Points: {challenge.points}
+							</Text>
 							<Text
-								style={[font.textCenter, font.sizeXL, colors.offWhite]}
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
 							>
 								Expires on:{" "}
 								{challenge.expirationTime
