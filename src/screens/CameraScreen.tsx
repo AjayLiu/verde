@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -18,6 +18,7 @@ import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 import { usePost } from "@hooks/usePost";
 import { Challenge, RouterProps } from "src/types";
 import * as Progress from "react-native-progress";
+import ConfettiCannon from "react-native-confetti-cannon";
 import colors from "@styles/colors";
 
 let camera: Camera | null;
@@ -68,6 +69,7 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 
 	const [progress, setProgress] = React.useState(0);
 	const [isUploading, setIsUploading] = React.useState(false);
+	const [showConfetti, setShowConfetti] = React.useState(false);
 
 	const __savePhoto = async () => {
 		if (!capturedImage?.uri) return;
@@ -75,10 +77,16 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 		const successCallback = () => {
 			// navigation.navigate("SuccessPost", { challenge });
 			setIsUploading(false);
-			navigation.reset({
-				index: 0,
-				routes: [{ name: "HomeSwiper" }],
-			});
+
+			setShowConfetti(true);
+
+			// Redirect back to home after 2 seconds
+			setTimeout(() => {
+				navigation.reset({
+					index: 0,
+					routes: [{ name: "HomeSwiper" }],
+				});
+			}, 2000);
 		};
 		const progressCallback = (progress: number) => {
 			setProgress(progress / 100);
@@ -128,6 +136,7 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 							retakePicture={__retakePicture}
 							progress={progress}
 							isUploading={isUploading}
+							showConfetti={showConfetti}
 						/>
 					) : (
 						<Camera
@@ -278,6 +287,7 @@ const CameraPreview = ({
 	savePhoto,
 	progress,
 	isUploading,
+	showConfetti,
 }: any) => {
 	return (
 		<View
@@ -367,8 +377,40 @@ const CameraPreview = ({
 						unfilledColor={"white"}
 						progress={progress}
 					/>
-					<Text style={[colors.offWhite, { marginTop: 10 }]}>
+					<Text
+						style={[
+							colors.offWhite,
+							colors.offBlackBG,
+							{ padding: 10 },
+							{ marginTop: 10 },
+						]}
+					>
 						Uploading...
+					</Text>
+				</View>
+			)}
+			{showConfetti && (
+				<View
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
+					<Text
+						style={[
+							colors.offWhite,
+							colors.offBlackBG,
+							{ padding: 10 },
+							{ marginTop: 10 },
+						]}
+					>
+						Your post is now live!
 					</Text>
 				</View>
 			)}
