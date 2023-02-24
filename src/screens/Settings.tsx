@@ -38,6 +38,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 		if (!result.canceled) {
 			setPickedImagePath(result.assets[0].uri);
 			// console.log(result.assets[0]);
+			updateProfilePicture(result.assets[0].uri);
 		}
 	};
 
@@ -67,6 +68,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 		if (!result.canceled) {
 			setPickedImagePath(photo.uri);
+			updateProfilePicture(photo.uri);
 		}
 	};
 
@@ -76,67 +78,155 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			<View style={[flex.row, flex.justifyStart, styles.width100]}>
 				<Ionicons
 					name="arrow-back-outline"
-					style={styles.marL}
-					size={25}
+					style={[styles.marL]}
+					size={35}
 					color={"#00CC4B"}
 					onPress={() => navigation.navigate("HomeSwiper")}
 				/>
 			</View>
-			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
-				Settings for {authUser?.email}!
-			</Text>
-			<Text
-				style={[font.sizeL, colors.lightGreen]}
-				onPress={() => updateProfilePicture(pickedImagePath)}
+			<View
+				style={[
+					flex.row,
+					flex.justifyStart,
+					styles.width100,
+					styles.marL,
+				]}
 			>
-				SAVE
-			</Text>
-			<ProfilePicture size={200} />
+				<Text
+					style={[
+						font.sizeXXL,
+						font.fontBold,
+						colors.offWhite,
+						styles.marL,
+						styles.marB,
+					]}
+				>
+					Settings
+				</Text>
+			</View>
+			<ProfilePicture size={100} />
+			<View
+				style={[
+					flex.column,
+					flex.justifyStart,
+					flex.alignStart,
+					styles.width100,
+					styles.marL,
+					styles.marT,
+				]}
+			>
+				<Text
+					style={[
+						font.sizeXL,
+						colors.offWhite,
+						font.fontBold,
+						styles.marL,
+						styles.marB,
+					]}
+				>
+					Profile Picture
+				</Text>
+				<Text
+					style={[
+						font.sizeL,
+						colors.offWhite,
+						styles.marL,
+						styles.marB,
+					]}
+					onPress={showImagePicker}
+				>
+					Choose new profile picture from camera roll
+				</Text>
+				<Text
+					style={[
+						font.sizeL,
+						colors.offWhite,
+						styles.marL,
+						styles.marB,
+					]}
+					onPress={openCamera}
+				>
+					Take new profile picture from camera
+				</Text>
+			</View>
+			<View
+				style={[
+					flex.row,
+					flex.justifyStart,
+					styles.width100,
+					styles.marL,
+				]}
+			>
+				<Text
+					style={[
+						font.sizeXL,
+						colors.offWhite,
+						font.fontBold,
+						styles.marL,
+						styles.marB,
+						styles.marT,
+					]}
+				>
+					Change Username
+				</Text>
+			</View>
 			<PickUsername></PickUsername>
 
-			<Text
-				style={[font.fontBold, font.sizeXL, colors.offWhite]}
-				onPress={showImagePicker}
+			<View
+				style={[
+					flex.row,
+					flex.justifyStart,
+					styles.width100,
+					styles.marL,
+				]}
 			>
-				Change Profile Picture
-			</Text>
+				<Text
+					style={[
+						font.sizeXL,
+						colors.offWhite,
+						font.fontBold,
+						styles.marL,
+						styles.marB,
+						styles.marT,
+					]}
+				>
+					Other
+				</Text>
+			</View>
 
-			<Text
-				style={[font.fontBold, font.sizeXL, colors.offWhite]}
-				onPress={openCamera}
-			>
-				Take Profile Picture
-			</Text>
+			<View style={[styles.width100, styles.marL]}>
+				<Text
+					style={[
+						// font.fontBold,
+						font.sizeXL,
+						colors.offWhite,
+						styles.marL,
+						styles.marB,
+					]}
+					onPress={() => {
+						signOut(auth);
+					}}
+				>
+					Sign Out
+				</Text>
 
-			<Text
-				style={[font.fontBold, font.sizeXL, colors.offWhite]}
-				onPress={() => {
-					signOut(auth);
-				}}
-			>
-				Sign Out
-			</Text>
-
-			<Text
-				style={[font.fontBold, font.sizeXL, colors.offWhite]}
-				onPress={deleteAccount}
-			>
-				Delete Account
-			</Text>
+				<Text
+					style={[
+						// font.fontBold,
+						font.sizeXL,
+						colors.offWhite,
+						styles.marL,
+					]}
+					onPress={deleteAccount}
+				>
+					Delete Account
+				</Text>
+			</View>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	button: {
-		marginTop: 10,
-	},
 	height100: {
 		height: "100%",
 	},
@@ -147,9 +237,12 @@ const styles = StyleSheet.create({
 		width: "100%",
 	},
 	marL: {
-		marginLeft: 5,
+		marginLeft: 15,
 	},
-	bottom: {
-		paddingBottom: 20,
-	}
+	marB: {
+		marginBottom: 5,
+	},
+	marT: {
+		marginTop: 5,
+	},
 });

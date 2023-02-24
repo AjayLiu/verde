@@ -74,7 +74,7 @@ const textStyles = {
 		borderWidth: 3,
 	},
 	padding: {
-		paddingVertical: 20,
+		paddingVertical: 5,
 	},
 	textPadding: {
 		paddingHorizontal: 20,
