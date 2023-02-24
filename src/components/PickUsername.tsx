@@ -50,6 +50,7 @@ const PickUsername = () => {
 							font.sizeXL,
 							colors.offWhite,
 							textStyles.textPadding,
+							font.fontBold,
 						]}
 						onChangeText={setUsername}
 						value={username}

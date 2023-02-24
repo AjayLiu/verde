@@ -77,13 +77,12 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				colors.offBlackBG,
 				flex.column,
 				flex.alignCenter,
-				flex.justifyStart,
 			]}
 		>
-			<View style={[flex.row, flex.justifyEnd]}>
+			<View style={[flex.row, icon.bottom]}>
 				<Ionicons
 					name="person"
-					iconStyle={styles}
+					iconStyle={[styles]}
 					size={22.5}
 					color={"#00CC4B"}
 					onPress={() => navigation.navigate("HomeSwiper")}
@@ -104,7 +103,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 						authUser?.photoURL ||
 						"https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=",
 				}}
-				style={{ width: 200, height: 200, borderRadius: 200 / 2 }}
+				style={{width: 200, height: 200, borderRadius: 200 / 2 }}
 			></Image>
 
 			<PickUsername></PickUsername>
@@ -166,4 +165,7 @@ const icon = StyleSheet.create({
 		position: "relative",
 		left: -165,
 	},
+	bottom: {
+		paddingBottom: 20,
+	}
 });
