@@ -148,6 +148,7 @@ const Accordion = (props: AccordionProps) => {
 								style={[
 									font.textCenter,
 									font.sizeL,
+									font.fontBold,
 									colors.offWhite,
 									{ marginLeft: 8 },
 								]}

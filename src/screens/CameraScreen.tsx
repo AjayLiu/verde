@@ -246,10 +246,17 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 						colors.offBlackBG,
 					]}
 				>
-					<Text style={[font.sizeTitle, colors.white]}>
+					<Text style={[font.sizeXL, colors.white, font.fontBold]}>
 						Your challenge:
 					</Text>
-					<Text style={[font.sizeXL, colors.white, { margin: 10 }]}>
+					<Text
+						style={[
+							font.sizeXL,
+							colors.white,
+							{ margin: 10 },
+							font.textCenter,
+						]}
+					>
 						{"\n" + challenge.description}
 					</Text>
 					<TouchableOpacity

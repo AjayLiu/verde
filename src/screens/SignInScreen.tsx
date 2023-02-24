@@ -44,13 +44,12 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 	return (
 		<View style={[styles.container, colors.offBlackBG]}>
 			<View style={[styles.buttons, flexbox.row, flexbox.alignCenter]}>
-				{!!value.error && (
-					<View style={styles.error}>
-						<Text>{value.error}</Text>
-					</View>
-				)}
-
 				<View style={[styles.controls, flexbox.alignCenter]}>
+					{!!value.error && (
+						<View style={styles.error}>
+							<Text>{value.error}</Text>
+						</View>
+					)}
 					<Input
 						placeholder="EMAIL"
 						containerStyle={styles.control}

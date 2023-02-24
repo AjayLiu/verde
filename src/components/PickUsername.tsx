@@ -59,11 +59,26 @@ const PickUsername = () => {
 						placeholder="username"
 					></TextInput>
 				</View>
-				<Ionicons name="checkmark-outline" size={30} style={[colors.lightGreen, flexbox.justifyEnd, textStyles.iconPadding]} onPress={() => submitUsername()}/>
+				<Ionicons
+					name="checkmark-outline"
+					size={30}
+					style={[
+						colors.lightGreen,
+						flexbox.justifyEnd,
+						textStyles.iconPadding,
+					]}
+					onPress={() => submitUsername()}
+				/>
 			</View>
 			{usernameTaken && (
-				<Text style={[colors.lightGreen, textStyles.textPadding, textStyles.iconPadding]}>
-					USERNAME TAKEN!
+				<Text
+					style={[
+						{ color: "red" },
+						textStyles.textPadding,
+						textStyles.iconPadding,
+					]}
+				>
+					That username is taken.
 				</Text>
 			)}
 		</View>
@@ -75,6 +90,7 @@ export default PickUsername;
 const textStyles = {
 	container: {
 		borderRadius: 25,
+		width: 140,
 	},
 	padding: {
 		paddingVertical: 5,
@@ -89,5 +105,5 @@ const textStyles = {
 	},
 	width: {
 		width: "100%",
-	}
+	},
 };
