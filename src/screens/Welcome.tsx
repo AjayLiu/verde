@@ -10,7 +10,7 @@ const WelcomeScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 	return (
 		<View style={[styles.container, colors.offBlackBG]}>
 			<View style={[styles.buttons, flex.column, flex.justifyCenter]}>
-				<Text style={[colors.lightGreen, font.sizeTitle, font.textCenter, font.fontItalic]}>
+				<Text style={[colors.lightGreen, font.sizeXXL, font.textCenter, font.fontItalic, font.fontBold]}>
 					VERDE
 				</Text>
 				<Button
