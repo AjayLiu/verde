@@ -5,6 +5,7 @@ import WelcomeScreen from "@screens/Welcome";
 import SignInScreen from "@screens/SignInScreen";
 import SignUpScreen from "@screens/SignUpScreen";
 import PickUsernameScreen from "@screens/PickUsernameScreen";
+import ForgotPassword from "@screens/ForgotPassword";
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ export default function AuthStack() {
 			<Stack.Screen name="Welcome" component={WelcomeScreen} />
 			<Stack.Screen name="Sign In" component={SignInScreen} />
 			<Stack.Screen name="Sign Up" component={SignUpScreen} />
+			<Stack.Screen name="Forgot Password" component={ForgotPassword} />
 			<Stack.Screen
 				name="PickUsername"
 				component={PickUsernameScreen}

@@ -5,6 +5,7 @@ import { Input, Button } from "react-native-elements";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { StackScreenProps } from "@react-navigation/stack";
 import UsernameContext from "../contexts/UsernameContext";
+import flexbox from "@styles/flexbox";
 
 const auth = getAuth();
 
@@ -75,6 +76,13 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 					buttonStyle={styles.control}
 					onPress={signIn}
 				/>
+				<View style={[flexbox.alignCenter, { marginTop: 10 }]}>
+					<Text
+						onPress={() => navigation.navigate("Forgot Password")}
+					>
+						Forgot password?
+					</Text>
+				</View>
 			</View>
 		</View>
 	);
