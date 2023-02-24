@@ -39,7 +39,7 @@
 		"react-native-settings-components": "^0.0.2",
 		"react-native-settings-list": "^1.8.0",
 		"react-native-settings-screen": "^2.2.1",
-		"react-native-svg": "^13.8.0",
+		"react-native-svg": "13.4.0",
 		"react-native-swipe-navigation": "^1.0.0-beta",
 		"react-native-swiper": "^1.6.0",
 		"react-native-tab-view": "^3.3.4",

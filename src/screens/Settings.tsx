@@ -48,7 +48,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			await imagePicker.requestCameraPermissionsAsync();
 
 		if (permissionResult.granted === false) {
-			alert("You've refused to allow this appp to access your camera!");
+			alert("You've refused to allow this app to access your camera!");
 			return;
 		}
 
@@ -89,7 +89,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				style={[font.sizeL, colors.lightGreen]}
 				onPress={() => updateProfilePicture(pickedImagePath)}
 			>
-				Save profile picture
+				SAVE
 			</Text>
 			<ProfilePicture size={200} />
 			<PickUsername></PickUsername>
@@ -149,4 +149,7 @@ const styles = StyleSheet.create({
 	marL: {
 		marginLeft: 5,
 	},
+	bottom: {
+		paddingBottom: 20,
+	}
 });
