@@ -40,21 +40,26 @@ const PickUsername = () => {
 		useContext(UsernameContext);
 
 	return (
-		<View>
-			<TextInput
-				style={[
-					font.textCenter,
-					font.sizeTitle,
-					colors.offWhite,
-					textStyles.text,
-				]}
-				onChangeText={setUsername}
-				value={username}
-				maxLength={15}
-				placeholder="username"
-			></TextInput>
+		<View style={[textStyles.padding]}>
+			<View style={[textStyles.container, colors.darkGreenBG]}>
+				<TextInput
+					style={[
+						font.textCenter,
+						font.sizeXL,
+						colors.offWhite,
+						textStyles.textPadding,
+						font.fontBold,
+					]}
+					onChangeText={setUsername}
+					value={username}
+					maxLength={15}
+					placeholder="username"
+				></TextInput>
+			</View>
 			{usernameTaken && (
-				<Text style={{ color: "red" }}>Username taken!</Text>
+				<Text style={[colors.lightGreen, font.textCenter]}>
+					USERNAME TAKEN!
+				</Text>
 			)}
 			<Button title="Confirm username" onPress={() => submitUsername()} />
 		</View>
@@ -64,7 +69,15 @@ const PickUsername = () => {
 export default PickUsername;
 
 const textStyles = {
-	text: {
-		paddingTop: 10,
+	container: {
+		borderRadius: 25,
+		borderWidth: 3,
+	},
+	padding: {
+		paddingVertical: 20,
+	},
+	textPadding: {
+		paddingHorizontal: 20,
+		paddingVertical: 10,
 	},
 };
