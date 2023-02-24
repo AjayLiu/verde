@@ -78,13 +78,13 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			<View style={[flex.row, flex.justifyStart, styles.width100]}>
 				<Ionicons
 					name="arrow-back-outline"
-					style={[styles.marL]}
+					style={[styles.marR]}
 					size={35}
 					color={"#00CC4B"}
 					onPress={() => navigation.navigate("HomeSwiper")}
 				/>
 			</View>
-			<View
+			{/* <View
 				style={[
 					flex.row,
 					flex.justifyStart,
@@ -103,8 +103,8 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				>
 					Settings
 				</Text>
-			</View>
-			<ProfilePicture size={100} />
+			</View> */}
+			<ProfilePicture size={100}/>
 			<View
 				style={[
 					flex.column,
@@ -113,6 +113,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 					styles.width100,
 					styles.marL,
 					styles.marT,
+					styles.spacePadding
 				]}
 			>
 				<Text
@@ -129,24 +130,26 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				<Text
 					style={[
 						font.sizeL,
-						colors.offWhite,
+						colors.lightGreen,
 						styles.marL,
 						styles.marB,
+						font.fontBold,
 					]}
 					onPress={showImagePicker}
 				>
-					Choose new profile picture from camera roll
+					Choose Photo
 				</Text>
 				<Text
 					style={[
 						font.sizeL,
-						colors.offWhite,
+						colors.lightGreen,
 						styles.marL,
 						styles.marB,
+						font.fontBold,
 					]}
 					onPress={openCamera}
 				>
-					Take new profile picture from camera
+					Take Photo
 				</Text>
 			</View>
 			<View
@@ -165,12 +168,21 @@ export default function HomeScreen({ navigation }: RouterProps) {
 						styles.marL,
 						styles.marB,
 						styles.marT,
+						styles.spacePadding
 					]}
 				>
 					Change Username
 				</Text>
 			</View>
-			<PickUsername></PickUsername>
+			<View
+				style={[
+					styles.width100,
+					styles.marL,
+					styles.horMar
+				]}
+			>
+				<PickUsername></PickUsername>
+			</View>
 
 			<View
 				style={[
@@ -188,6 +200,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 						styles.marL,
 						styles.marB,
 						styles.marT,
+						styles.spacePadding,
 					]}
 				>
 					Other
@@ -198,10 +211,11 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				<Text
 					style={[
 						// font.fontBold,
-						font.sizeXL,
-						colors.offWhite,
+						font.sizeL,
+						colors.lightGreen,
 						styles.marL,
 						styles.marB,
+						font.fontBold,
 					]}
 					onPress={() => {
 						signOut(auth);
@@ -212,10 +226,11 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 				<Text
 					style={[
-						// font.fontBold,
-						font.sizeXL,
-						colors.offWhite,
+						font.sizeL,
+						colors.lightGreen,
 						styles.marL,
+						styles.marB,
+						font.fontBold,
 					]}
 					onPress={deleteAccount}
 				>
@@ -245,4 +260,13 @@ const styles = StyleSheet.create({
 	marT: {
 		marginTop: 5,
 	},
+	marR: {
+		paddingRight: 15,
+	},
+	horMar: {
+		paddingHorizontal: 10,
+	},
+	spacePadding : {
+        paddingTop: 20,
+	}
 });
