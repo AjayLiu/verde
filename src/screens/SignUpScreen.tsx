@@ -11,6 +11,8 @@ import {
 } from "firebase/auth";
 import { useUser } from "@utils/hooks/useUser";
 import flexbox from "@styles/flexbox";
+import colors from "@styles/colors";
+import font from "@styles/font";
 
 const auth = getAuth();
 
@@ -50,49 +52,79 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 	}
 
 	return (
-		<View style={styles.container}>
-			<Text>Signup screen!</Text>
+		<View style={[styles.container, colors.offBlackBG]}>
+			<View style={[styles.buttons, flexbox.row, flexbox.alignCenter]}>
+				{!!value.error && (
+					<View style={styles.error}>
+						<Text>{value.error}</Text>
+					</View>
+				)}
 
-			{!!value.error && (
-				<View style={styles.error}>
-					<Text>{value.error}</Text>
-				</View>
-			)}
+				<View style={[styles.controls, flexbox.alignCenter]}>
+					<Input
+						placeholder="EMAIL"
+						containerStyle={[styles.control]}
+						value={value.email}
+						onChangeText={(text) =>
+							setValue({ ...value, email: text })
+						}
+						leftIcon={
+							<Icon
+								name="envelope"
+								size={16}
+								color="#00cc4b"
+								style={styles.icon}
+							/>
+						}
+						inputStyle={[colors.offWhite, font.fontBold]}
+						autoComplete="email"
+						autoCapitalize="none"
+						autoCorrect={false}
+					/>
 
-			<View style={styles.controls}>
-				<Input
-					placeholder="Email"
-					containerStyle={styles.control}
-					value={value.email}
-					onChangeText={(text) => setValue({ ...value, email: text })}
-					leftIcon={<Icon name="envelope" size={16} />}
-					autoComplete="email"
-				/>
+					<Input
+						placeholder="PASSWORD"
+						containerStyle={styles.control}
+						value={value.password}
+						onChangeText={(text) =>
+							setValue({ ...value, password: text })
+						}
+						secureTextEntry={true}
+						inputStyle={[colors.offWhite, font.fontBold]}
+						leftIcon={
+							<Icon
+								name="key"
+								size={16}
+								color="#00cc4b"
+								style={styles.icon}
+							/>
+						}
+						autoComplete="password"
+						autoCapitalize="none"
+						autoCorrect={false}
+					/>
 
-				<Input
-					placeholder="Password"
-					containerStyle={styles.control}
-					value={value.password}
-					onChangeText={(text) =>
-						setValue({ ...value, password: text })
-					}
-					secureTextEntry={true}
-					leftIcon={<Icon name="key" size={16} />}
-					autoComplete="password"
-				/>
+					<Button
+						title="SIGN UP"
+						titleStyle={font.fontBold}
+						buttonStyle={[styles.button, colors.lightGreenBG]}
+						onPress={signUp}
+					/>
 
-				<Button
-					title="Sign up"
-					buttonStyle={styles.control}
-					onPress={signUp}
-				/>
-
-				<View style={[flexbox.alignCenter, { marginTop: 10 }]}>
-					<Text
-						onPress={() => navigation.navigate("Forgot Password")}
-					>
-						Forgot password?
-					</Text>
+					<View style={[flexbox.alignCenter, { marginTop: 10 }]}>
+						<Text
+							onPress={() =>
+								navigation.navigate("Forgot Password")
+							}
+							style={[
+								colors.white,
+								font.fontBold,
+								font.fontItalic,
+							]}
+						>
+							FORGOT PASSWORD?
+						</Text>
+					</View>
 				</View>
 			</View>
 		</View>
@@ -103,7 +135,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		paddingTop: 20,
-		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
 	},
@@ -115,6 +146,14 @@ const styles = StyleSheet.create({
 
 	control: {
 		marginTop: 10,
+		width: "80%",
+	},
+
+	button: {
+		marginTop: 8,
+		borderRadius: 10,
+		paddingHorizontal: 40,
+		height: 40,
 	},
 
 	error: {
@@ -122,6 +161,17 @@ const styles = StyleSheet.create({
 		padding: 10,
 		color: "#fff",
 		backgroundColor: "#D54826FF",
+	},
+	height100: {
+		height: 100,
+	},
+	buttons: {
+		flex: 1,
+		top: -25,
+	},
+
+	icon: {
+		paddingRight: 5,
 	},
 });
 
