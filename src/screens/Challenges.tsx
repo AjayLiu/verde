@@ -26,10 +26,6 @@ export default function HomeScreen({ navigation }: RouterProps) {
 		// console.log(fireUser?.completedChallengesUids);
 	}, []);
 
-	const challengeSelected = (challenge: Challenge) => {
-		navigation.navigate("Camera", { challenge });
-	};
-
 	return (
 		<View
 			style={[
@@ -41,88 +37,29 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			]}
 		>
 			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
-				!!THIS IS A STUB!!
-			</Text>
-			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
-				Challenges for {authUser?.email}!
+				Challenges for {fireUser?.displayName}!
 			</Text>
 
 			{challenges.map((challenge, idx) => {
 				// if the user has already completed this challenge
-				if (fireUser?.completedChallengesUids.includes(challenge.uid))
+				if (fireUser?.completedChallengesUids.includes(challenge.uid)) {
 					return (
-						<View key={idx}>
-							<Accordion
-								label={challenge.title}
-								expanded={challenge.description}
-							></Accordion>
-							<Text
-								style={[
-									font.textCenter,
-									font.sizeXL,
-									colors.offWhite,
-								]}
-							>
-								COMPLETED:
-							</Text>
-							<Text
-								style={[
-									font.textCenter,
-									font.sizeXL,
-									colors.offWhite,
-								]}
-							>
-								{challenge.title}
-							</Text>
-							<Text
-								style={[
-									font.textCenter,
-									font.sizeXL,
-									colors.offWhite,
-								]}
-							>
-								{challenge.description}
-							</Text>
-							<Text
-								style={[
-									font.textCenter,
-									font.sizeXL,
-									colors.offWhite,
-								]}
-							>
-								Points: {challenge.points}
-							</Text>
-							<Text
-								style={[
-									font.textCenter,
-									font.sizeXL,
-									colors.offWhite,
-								]}
-							>
-								Expires on:{" "}
-								{challenge.expirationTime
-									.toDate()
-									.toLocaleString()}
-							</Text>
-						</View>
+						<Accordion
+							key={idx}
+							navigation={navigation}
+							challenge={challenge}
+							isCompleted
+						></Accordion>
 					);
+				}
 
 				return (
-					<TouchableOpacity
+					<Accordion
 						key={idx}
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-						// @ts-ignore
-						style={{ borderColor: "red", borderWidth: "1" }} // STUB - SOMEONE PLEASE STYLE THIS
-						onPress={() => challengeSelected(challenge)}
-					>
-						<Text>{challenge.title}</Text>
-						<Text>{challenge.description}</Text>
-						<Text>Points: {challenge.points}</Text>
-						<Text>
-							Expires on:{" "}
-							{challenge.expirationTime.toDate().toLocaleString()}
-						</Text>
-					</TouchableOpacity>
+						navigation={navigation}
+						challenge={challenge}
+						isCompleted={false}
+					></Accordion>
 				);
 			})}
 		</View>
