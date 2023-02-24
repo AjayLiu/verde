@@ -7,8 +7,10 @@ import {
 	getAuth,
 	createUserWithEmailAndPassword,
 	updateProfile,
+	sendPasswordResetEmail,
 } from "firebase/auth";
 import { useUser } from "@utils/hooks/useUser";
+import flexbox from "@styles/flexbox";
 
 const auth = getAuth();
 
@@ -84,6 +86,14 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 					buttonStyle={styles.control}
 					onPress={signUp}
 				/>
+
+				<View style={[flexbox.alignCenter, { marginTop: 10 }]}>
+					<Text
+						onPress={() => navigation.navigate("Forgot Password")}
+					>
+						Forgot password?
+					</Text>
+				</View>
 			</View>
 		</View>
 	);

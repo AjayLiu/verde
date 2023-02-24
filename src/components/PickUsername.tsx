@@ -19,9 +19,7 @@ const PickUsername = () => {
 	const [usernameTaken, setUsernameTaken] = useState(false);
 
 	// Username
-	const [username, setUsername] = useState(
-		authUser?.displayName || "New User",
-	);
+	const [username, setUsername] = useState(authUser?.displayName || "");
 	useEffect(() => {
 		if (authUser?.displayName) setUsername(authUser?.displayName);
 	}, [authUser?.displayName]);
@@ -43,8 +41,18 @@ const PickUsername = () => {
 
 	return (
 		<View>
-			<TextInput style={[font.textCenter, font.sizeTitle, colors.offWhite, textStyles.text]}
-					   onChangeText={setUsername} value={username}></TextInput>
+			<TextInput
+				style={[
+					font.textCenter,
+					font.sizeTitle,
+					colors.offWhite,
+					textStyles.text,
+				]}
+				onChangeText={setUsername}
+				value={username}
+				maxLength={15}
+				placeholder="username"
+			></TextInput>
 			{usernameTaken && (
 				<Text style={{ color: "red" }}>Username taken!</Text>
 			)}
@@ -58,5 +66,5 @@ export default PickUsername;
 const textStyles = {
 	text: {
 		paddingTop: 10,
-	}
-}
+	},
+};
