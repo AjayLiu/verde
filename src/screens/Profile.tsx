@@ -48,7 +48,7 @@ export default function Profile({navigation}: RouterProps) {
                 style={[
                     icon.space,
                     flex.row,
-                    flex.justifyEvenly,
+                    flex.alignEnd,
                 ]}
             >
                 {/*<Ionicons*/}
