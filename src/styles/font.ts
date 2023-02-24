@@ -17,6 +17,9 @@ export default StyleSheet.create({
 	fontBold: {
 		fontWeight: "bold",
 	},
+	fontItalic: {
+		fontStyle: "italic",
+	},
 	// ONLY USE ON <Text> COMPONENTS TO CENTER TEXT
 	textCenter: {
 		textAlign: "center",
