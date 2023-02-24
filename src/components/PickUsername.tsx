@@ -19,9 +19,7 @@ const PickUsername = () => {
 	const [usernameTaken, setUsernameTaken] = useState(false);
 
 	// Username
-	const [username, setUsername] = useState(
-		authUser?.displayName || "New User",
-	);
+	const [username, setUsername] = useState(authUser?.displayName || "");
 	useEffect(() => {
 		if (authUser?.displayName) setUsername(authUser?.displayName);
 	}, [authUser?.displayName]);
@@ -44,20 +42,24 @@ const PickUsername = () => {
 	return (
 		<View style={[textStyles.padding]}>
 			<View style={[textStyles.container, colors.darkGreenBG]}>
-					<TextInput
-						style={[
-							font.textCenter,
-							font.sizeXL,
-							colors.offWhite,
-							textStyles.textPadding,
-							font.fontBold,
-						]}
-						onChangeText={setUsername}
-						value={username}
-					></TextInput>
+				<TextInput
+					style={[
+						font.textCenter,
+						font.sizeXL,
+						colors.offWhite,
+						textStyles.textPadding,
+						font.fontBold,
+					]}
+					onChangeText={setUsername}
+					value={username}
+					maxLength={15}
+					placeholder="username"
+				></TextInput>
 			</View>
 			{usernameTaken && (
-				<Text style={[colors.lightGreen, font.textCenter]}>USERNAME TAKEN!</Text>
+				<Text style={[colors.lightGreen, font.textCenter]}>
+					USERNAME TAKEN!
+				</Text>
 			)}
 			<Button title="Confirm username" onPress={() => submitUsername()} />
 		</View>
@@ -72,10 +74,10 @@ const textStyles = {
 		borderWidth: 3,
 	},
 	padding: {
-        paddingVertical: 20,
+		paddingVertical: 20,
 	},
 	textPadding: {
-		paddingHorizontal: 20,	
-		paddingVertical: 10,	
-	}
+		paddingHorizontal: 20,
+		paddingVertical: 10,
+	},
 };
