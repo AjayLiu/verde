@@ -5,7 +5,10 @@ import { Challenge, RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import { useChallenge } from "@utils/hooks/useChallenge";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Accordion from "@components/Accordion";
+import colors from "@styles/colors";
+import flex from "@styles/flexbox";
+import font from "@styles/font";
 
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser, fireUser } = useUser();
@@ -28,20 +31,74 @@ export default function HomeScreen({ navigation }: RouterProps) {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Text>!!THIS IS A STUB!!</Text>
-			<Text>Challenges for {authUser?.email}!</Text>
+		<View
+			style={[
+				styles.height100,
+				colors.offBlackBG,
+				flex.column,
+				flex.alignCenter,
+				flex.justifyStart,
+			]}
+		>
+			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
+				!!THIS IS A STUB!!
+			</Text>
+			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
+				Challenges for {authUser?.email}!
+			</Text>
 
 			{challenges.map((challenge, idx) => {
 				// if the user has already completed this challenge
 				if (fireUser?.completedChallengesUids.includes(challenge.uid))
 					return (
 						<View key={idx}>
-							<Text>COMPLETED:</Text>
-							<Text>{challenge.title}</Text>
-							<Text>{challenge.description}</Text>
-							<Text>Points: {challenge.points}</Text>
-							<Text>
+							<Accordion
+								label={challenge.title}
+								expanded={challenge.description}
+							></Accordion>
+							<Text
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								COMPLETED:
+							</Text>
+							<Text
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								{challenge.title}
+							</Text>
+							<Text
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								{challenge.description}
+							</Text>
+							<Text
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								Points: {challenge.points}
+							</Text>
+							<Text
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
 								Expires on:{" "}
 								{challenge.expirationTime
 									.toDate()
@@ -81,5 +138,8 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		marginTop: 10,
+	},
+	height100: {
+		height: "100%",
 	},
 });

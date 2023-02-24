@@ -11,6 +11,10 @@ import colors from "@styles/colors";
 import flex from "@styles/flexbox";
 import font from "@styles/font";
 import ProfilePicture from "@components/ProfilePicture";
+import { signOut } from "firebase/auth/react-native";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 export default function HomeScreen({ navigation }: RouterProps) {
 	const { authUser, deleteUserFromFirestore, updateProfilePicture } =
@@ -83,40 +87,95 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				Settings for {authUser?.email}!
 			</Text>
 			<ProfilePicture size={200} />
+	return (
+		<View
+			style={[
+				styles.height100,
+				colors.offBlackBG,
+				flex.column,
+				flex.alignCenter,
+				flex.justifyStart,
+			]}
+		>
+			<View style={[flex.row, flex.justifyEnd]}>
+				<Ionicons
+					name="person"
+					iconStyle={styles}
+					size={22.5}
+					color={"#00CC4B"}
+					onPress={() => navigation.navigate("HomeSwiper")}
+				/>
+
+				<Text
+					style={[font.sizeL, colors.lightGreen]}
+					onPress={() => updateProfilePicture(pickedImagePath)}
+				>
+					Save profile picture
+				</Text>
+			</View>
+
+			<Image
+				source={{
+					uri:
+						pickedImagePath ||
+						authUser?.photoURL ||
+						"https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=",
+				}}
+				style={{ width: 200, height: 200, borderRadius: 200 / 2 }}
+			></Image>
 
 			<PickUsername></PickUsername>
 
-			<Button
-				title="Profile"
-				style={styles.button}
-				onPress={() => navigation.navigate("Profile")}
-			/>
-
-			<Button
-				title="Change Profile Picture"
-				style={styles.button}
+			<Text
+				style={[font.fontBold, font.sizeXL, colors.offWhite]}
 				onPress={showImagePicker}
-			/>
-			<Button
-				title="Take profile picture"
-				style={styles.button}
+			>
+				Change Profile Picture
+			</Text>
+
+			<Text
+				style={[font.fontBold, font.sizeXL, colors.offWhite]}
 				onPress={openCamera}
-			/>
-			<Button
-				title="Confirm changes"
-				style={styles.button}
-				onPress={() => updateProfilePicture(pickedImagePath)}
-			/>
-			<Button
-				title="Delete account"
-				style={styles.button}
+			>
+				Take Profile Picture
+			</Text>
+
+			<Text
+				style={[font.fontBold, font.sizeXL, colors.offWhite]}
+				onPress={() => {
+					signOut(auth);
+				}}
+			>
+				Sign Out
+			</Text>
+
+			<Text
+				style={[font.fontBold, font.sizeXL, colors.offWhite]}
 				onPress={deleteAccount}
-			/>
+			>
+				Delete Account
+			</Text>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	button: {
+		marginTop: 10,
+	},
+	height100: {
+		height: "100%",
+		padding: 50,
+	},
+	h100: {
+		height: "100%",
+	},
 	button: {
 		marginTop: 10,
 	},
@@ -131,5 +190,12 @@ const styles = StyleSheet.create({
 	},
 	marL: {
 		marginLeft: 5,
+	},
+});
+
+const icon = StyleSheet.create({
+	space: {
+		position: "relative",
+		left: -165,
 	},
 });

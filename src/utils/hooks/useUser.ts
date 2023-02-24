@@ -4,6 +4,7 @@ import {
 	deleteUser,
 	getAuth,
 	onAuthStateChanged,
+	signOut,
 	updateProfile,
 	User,
 } from "firebase/auth";
@@ -153,6 +154,8 @@ export function useUser() {
 			const deleteUserRef = await deleteDoc(doc(db, "users", uid));
 			console.log("User deleted: ", deleteUserRef);
 			setHasPickedUsername(false);
+
+			signOut(auth);
 		} catch (e) {
 			console.error("Error deleting user: ", e);
 		}

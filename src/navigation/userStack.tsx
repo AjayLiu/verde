@@ -11,7 +11,6 @@ import Calendar from "@screens/Calendar";
 import Challenges from "@screens/Challenges";
 import Settings from "@screens/Settings";
 import HomeSwipe from "@screens/HomeSwiper";
-import SuccessPostScreen from "@screens/SuccessPostScreen";
 
 const Stack = createStackNavigator();
 
@@ -42,11 +41,6 @@ export default function UserStack() {
 				name="Friends"
 				component={Friends}
 				options={{ title: "Friends" }}
-			/>
-			<Stack.Screen
-				name="SuccessPost"
-				component={SuccessPostScreen}
-				options={{ title: "Success!" }}
 			/>
 			<Stack.Screen
 				name="Camera"

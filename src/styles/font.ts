@@ -10,6 +10,10 @@ export default StyleSheet.create({
 	sizeXL: {
 		fontSize: 20,
 	},
+	sizeTitle: {
+		fontSize: 30,
+		fontWeight: "bold",
+	},
 	fontBold: {
 		fontWeight: "bold",
 	},

@@ -16,6 +16,7 @@ export function useUpload() {
 		localPhotoURI: string,
 		imageFilePath: string,
 		uploadSuccessCallback: (downloadURL: string) => Promise<void>,
+		uploadProgressCallback: (progress: number) => void,
 	) => {
 		// Upload the photo to storage
 		const response = await fetch(localPhotoURI);
@@ -32,7 +33,7 @@ export function useUpload() {
 				// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 				const progress =
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				console.log("Upload is " + progress + "% done");
+				// console.log("Upload is " + progress + "% done");
 				switch (snapshot.state) {
 					case "paused":
 						console.log("Upload is paused");
@@ -44,6 +45,7 @@ export function useUpload() {
 					case "error":
 						console.error("Upload failed");
 				}
+				uploadProgressCallback(progress);
 			},
 			(error) => {
 				console.error(error);

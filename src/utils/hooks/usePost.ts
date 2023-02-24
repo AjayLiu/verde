@@ -26,6 +26,7 @@ export function usePost() {
 		photoUri: string,
 		challengeUid: string,
 		successCallback: () => void,
+		progressCallback: (progress: number) => void,
 	) => {
 		const postUid = uuidv4();
 		const onlineImageFileName = "posts/" + postUid;
@@ -60,7 +61,12 @@ export function usePost() {
 			successCallback();
 		};
 
-		await uploadImageToStorage(photoUri, onlineImageFileName, callback);
+		await uploadImageToStorage(
+			photoUri,
+			onlineImageFileName,
+			callback,
+			progressCallback,
+		);
 	};
 
 	const getPost = async (uid: string) => {

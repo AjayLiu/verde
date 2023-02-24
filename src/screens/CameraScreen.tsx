@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -17,6 +17,9 @@ import {
 import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 import { usePost } from "@hooks/usePost";
 import { Challenge, RouterProps } from "src/types";
+import * as Progress from "react-native-progress";
+import ConfettiCannon from "react-native-confetti-cannon";
+import colors from "@styles/colors";
 
 let camera: Camera | null;
 
@@ -64,16 +67,36 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 
 	const { makePost } = usePost();
 
+	const [progress, setProgress] = React.useState(0);
+	const [isUploading, setIsUploading] = React.useState(false);
+	const [showConfetti, setShowConfetti] = React.useState(false);
+
 	const __savePhoto = async () => {
 		if (!capturedImage?.uri) return;
+		setIsUploading(true);
 		const successCallback = () => {
 			// navigation.navigate("SuccessPost", { challenge });
-			navigation.reset({
-				index: 0,
-				routes: [{ name: "SuccessPost", params: { challenge } }],
-			});
+			setIsUploading(false);
+
+			setShowConfetti(true);
+
+			// Redirect back to home after 2 seconds
+			setTimeout(() => {
+				navigation.reset({
+					index: 0,
+					routes: [{ name: "HomeSwiper" }],
+				});
+			}, 2000);
 		};
-		await makePost(capturedImage.uri, challenge.uid, successCallback);
+		const progressCallback = (progress: number) => {
+			setProgress(progress / 100);
+		};
+		await makePost(
+			capturedImage.uri,
+			challenge.uid,
+			successCallback,
+			progressCallback,
+		);
 	};
 	const __retakePicture = () => {
 		setCapturedImage(null);
@@ -96,6 +119,7 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 			setCameraType(CameraType.back);
 		}
 	};
+
 	return (
 		<View style={styles.container}>
 			{startCamera ? (
@@ -110,6 +134,9 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 							photo={capturedImage}
 							savePhoto={__savePhoto}
 							retakePicture={__retakePicture}
+							progress={progress}
+							isUploading={isUploading}
+							showConfetti={showConfetti}
 						/>
 					) : (
 						<Camera
@@ -254,7 +281,14 @@ const styles = StyleSheet.create({
 	},
 });
 
-const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
+const CameraPreview = ({
+	photo,
+	retakePicture,
+	savePhoto,
+	progress,
+	isUploading,
+	showConfetti,
+}: any) => {
 	return (
 		<View
 			style={{
@@ -300,7 +334,7 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
 									fontSize: 20,
 								}}
 							>
-								Re-take
+								Re-take photo
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
@@ -319,12 +353,67 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }: any) => {
 									fontSize: 20,
 								}}
 							>
-								save photo
+								Confirm photo
 							</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
 			</ImageBackground>
+			{isUploading && (
+				<View
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Progress.Circle
+						size={100}
+						showsText
+						unfilledColor={"white"}
+						progress={progress}
+					/>
+					<Text
+						style={[
+							colors.offWhite,
+							colors.offBlackBG,
+							{ padding: 10 },
+							{ marginTop: 10 },
+						]}
+					>
+						Uploading...
+					</Text>
+				</View>
+			)}
+			{showConfetti && (
+				<View
+					style={{
+						position: "absolute",
+						top: 0,
+						left: 0,
+						right: 0,
+						bottom: 0,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
+					<Text
+						style={[
+							colors.offWhite,
+							colors.offBlackBG,
+							{ padding: 10 },
+							{ marginTop: 10 },
+						]}
+					>
+						Your post is now live!
+					</Text>
+				</View>
+			)}
 		</View>
 	);
 };
