@@ -13,6 +13,8 @@ import { TextInput } from "react-native-gesture-handler";
 import UsernameContext from "../contexts/UsernameContext";
 import font from "@styles/font";
 import colors from "@styles/colors";
+import flexbox from "@styles/flexbox";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const PickUsername = () => {
 	const { authUser, checkIfUsernameValid, updateUsername } = useUser();
@@ -40,28 +42,30 @@ const PickUsername = () => {
 		useContext(UsernameContext);
 
 	return (
-		<View style={[textStyles.padding]}>
-			<View style={[textStyles.container, colors.darkGreenBG]}>
-				<TextInput
-					style={[
-						font.textCenter,
-						font.sizeXL,
-						colors.offWhite,
-						textStyles.textPadding,
-						font.fontBold,
-					]}
-					onChangeText={setUsername}
-					value={username}
-					maxLength={15}
-					placeholder="username"
-				></TextInput>
+		<View style={[textStyles.padding, textStyles.width]}>
+			<View style={[flexbox.row]}>
+				<View style={[textStyles.container, colors.darkGreenBG]}>
+					<TextInput
+						style={[
+							font.textCenter,
+							font.sizeXL,
+							colors.offWhite,
+							textStyles.textPadding,
+							font.fontBold,
+						]}
+						onChangeText={setUsername}
+						value={username}
+						maxLength={15}
+						placeholder="username"
+					></TextInput>
+				</View>
+				<Ionicons name="checkmark-outline" size={30} style={[colors.lightGreen, flexbox.justifyEnd, textStyles.iconPadding]} onPress={() => submitUsername()}/>
 			</View>
 			{usernameTaken && (
-				<Text style={[colors.lightGreen, font.textCenter]}>
+				<Text style={[colors.lightGreen, textStyles.textPadding, textStyles.iconPadding]}>
 					USERNAME TAKEN!
 				</Text>
 			)}
-			<Button title="Confirm username" onPress={() => submitUsername()} />
 		</View>
 	);
 };
@@ -71,13 +75,19 @@ export default PickUsername;
 const textStyles = {
 	container: {
 		borderRadius: 25,
-		borderWidth: 3,
 	},
 	padding: {
-		paddingVertical: 20,
+		paddingVertical: 5,
 	},
 	textPadding: {
-		paddingHorizontal: 20,
-		paddingVertical: 10,
+		paddingHorizontal: 15,
+		paddingVertical: 7,
 	},
+	iconPadding: {
+		paddingTop: 3,
+		paddingLeft: 10,
+	},
+	width: {
+		width: "100%",
+	}
 };

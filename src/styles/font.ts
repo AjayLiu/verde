@@ -10,12 +10,14 @@ export default StyleSheet.create({
 	sizeXL: {
 		fontSize: 20,
 	},
-	sizeTitle: {
+	sizeXXL: {
 		fontSize: 30,
-		fontWeight: "bold",
 	},
 	fontBold: {
 		fontWeight: "bold",
+	},
+	fontItalic: {
+		fontStyle: "italic",
 	},
 	// ONLY USE ON <Text> COMPONENTS TO CENTER TEXT
 	textCenter: {
