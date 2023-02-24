@@ -20,6 +20,8 @@ import { Challenge, RouterProps } from "src/types";
 import * as Progress from "react-native-progress";
 import ConfettiCannon from "react-native-confetti-cannon";
 import colors from "@styles/colors";
+import font from "@styles/font";
+import { Icon } from "react-native-elements";
 
 let camera: Camera | null;
 
@@ -234,34 +236,44 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 				</View>
 			) : (
 				<View
-					style={{
-						flex: 1,
-						backgroundColor: "#fff",
-						justifyContent: "center",
-						alignItems: "center",
-					}}
-				>
-					<Text>Your challenge: {challenge.description}</Text>
-					<TouchableOpacity
-						onPress={__startCamera}
-						style={{
-							width: 130,
-							borderRadius: 4,
-							backgroundColor: "#14274e",
-							flexDirection: "row",
+					style={[
+						{
+							flex: 1,
 							justifyContent: "center",
 							alignItems: "center",
-							height: 40,
-						}}
+							width: "100%",
+						},
+						colors.offBlackBG,
+					]}
+				>
+					<Text style={[font.sizeTitle, colors.white]}>
+						Your challenge:
+					</Text>
+					<Text style={[font.sizeXL, colors.white, { margin: 10 }]}>
+						{"\n" + challenge.description}
+					</Text>
+					<TouchableOpacity
+						onPress={__startCamera}
+						style={[
+							{
+								width: 130,
+								borderRadius: 4,
+								flexDirection: "row",
+								justifyContent: "center",
+								alignItems: "center",
+								padding: 10,
+							},
+							{ marginTop: 100 },
+							colors.darkGreenBG,
+						]}
 					>
-						<Text
-							style={{
-								color: "#fff",
-								fontWeight: "bold",
-								textAlign: "center",
-							}}
-						>
-							Take picture
+						<Icon
+							type="font-awesome"
+							name="camera"
+							color="white"
+						></Icon>
+						<Text style={[colors.white, { marginLeft: 10 }]}>
+							Ready?
 						</Text>
 					</TouchableOpacity>
 				</View>

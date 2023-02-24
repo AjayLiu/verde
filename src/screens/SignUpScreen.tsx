@@ -3,12 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { StackScreenProps } from "@react-navigation/stack";
-import {
-	getAuth,
-	createUserWithEmailAndPassword,
-	updateProfile,
-	sendPasswordResetEmail,
-} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useUser } from "@utils/hooks/useUser";
 import flexbox from "@styles/flexbox";
 import colors from "@styles/colors";
