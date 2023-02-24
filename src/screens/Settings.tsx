@@ -1,6 +1,5 @@
-import React, { Component, useEffect, useState } from "react";
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button } from "react-native-elements";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import * as imagePicker from "expo-image-picker";
@@ -10,6 +9,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "@styles/colors";
 import flex from "@styles/flexbox";
 import font from "@styles/font";
+import ProfilePicture from "@components/ProfilePicture";
 import { signOut } from "firebase/auth/react-native";
 import { getAuth } from "firebase/auth";
 
@@ -71,41 +71,27 @@ export default function HomeScreen({ navigation }: RouterProps) {
 	};
 
 	return (
-		<View
-			style={[
-				styles.height100,
-				colors.offBlackBG,
-				flex.column,
-				flex.alignCenter,
-			]}
-		>
-			<View style={[flex.row, icon.bottom]}>
+		<View style={[colors.offBlackBG, flex.alignCenter, styles.height100]}>
+			<View style={[styles.height5, colors.offBlackBG]}></View>
+			<View style={[flex.row, flex.justifyStart, styles.width100]}>
 				<Ionicons
-					name="person"
-					iconStyle={[styles]}
-					size={22.5}
+					name="arrow-back-outline"
+					style={styles.marL}
+					size={25}
 					color={"#00CC4B"}
 					onPress={() => navigation.navigate("HomeSwiper")}
 				/>
-
-				<Text
-					style={[font.sizeL, colors.lightGreen]}
-					onPress={() => updateProfilePicture(pickedImagePath)}
-				>
-					SAVE
-				</Text>
 			</View>
-
-			<Image
-				source={{
-					uri:
-						pickedImagePath ||
-						authUser?.photoURL ||
-						"https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=",
-				}}
-				style={{width: 200, height: 200, borderRadius: 200 / 2 }}
-			></Image>
-
+			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
+				Settings for {authUser?.email}!
+			</Text>
+			<Text
+				style={[font.sizeL, colors.lightGreen]}
+				onPress={() => updateProfilePicture(pickedImagePath)}
+			>
+				SAVE
+			</Text>
+			<ProfilePicture size={200} />
 			<PickUsername></PickUsername>
 
 			<Text
@@ -153,17 +139,15 @@ const styles = StyleSheet.create({
 	},
 	height100: {
 		height: "100%",
-		padding: 50,
 	},
-	h100: {
-		height: "100%",
+	height5: {
+		height: "5%",
 	},
-});
-
-const icon = StyleSheet.create({
-	space: {
-		position: "relative",
-		left: -165,
+	width100: {
+		width: "100%",
+	},
+	marL: {
+		marginLeft: 5,
 	},
 	bottom: {
 		paddingBottom: 20,
