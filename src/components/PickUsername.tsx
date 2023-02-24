@@ -58,5 +58,11 @@ export default PickUsername;
 const textStyles = {
 	text: {
 		paddingTop: 10,
+	},
+
+	background: {
+		borderRadius: 25,
+		width: Dimensions.get("window").width / 2,
+        height: Dimensions.get("window").width / 2,
 	}
 }

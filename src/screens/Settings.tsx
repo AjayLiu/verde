@@ -93,7 +93,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 					style={[font.sizeL, colors.lightGreen]}
 					onPress={() => updateProfilePicture(pickedImagePath)}
 				>
-					Save profile picture
+					SAVE
 				</Text>
 			</View>
 
