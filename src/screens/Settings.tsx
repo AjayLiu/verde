@@ -1,6 +1,5 @@
-import React, { Component, useEffect, useState } from "react";
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button } from "react-native-elements";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { RouterProps } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import * as imagePicker from "expo-image-picker";
@@ -86,44 +85,13 @@ export default function HomeScreen({ navigation }: RouterProps) {
 			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
 				Settings for {authUser?.email}!
 			</Text>
+			<Text
+				style={[font.sizeL, colors.lightGreen]}
+				onPress={() => updateProfilePicture(pickedImagePath)}
+			>
+				Save profile picture
+			</Text>
 			<ProfilePicture size={200} />
-	return (
-		<View
-			style={[
-				styles.height100,
-				colors.offBlackBG,
-				flex.column,
-				flex.alignCenter,
-				flex.justifyStart,
-			]}
-		>
-			<View style={[flex.row, flex.justifyEnd]}>
-				<Ionicons
-					name="person"
-					iconStyle={styles}
-					size={22.5}
-					color={"#00CC4B"}
-					onPress={() => navigation.navigate("HomeSwiper")}
-				/>
-
-				<Text
-					style={[font.sizeL, colors.lightGreen]}
-					onPress={() => updateProfilePicture(pickedImagePath)}
-				>
-					Save profile picture
-				</Text>
-			</View>
-
-			<Image
-				source={{
-					uri:
-						pickedImagePath ||
-						authUser?.photoURL ||
-						"https://media.istockphoto.com/id/1288130003/vector/loading-progress-circle-in-black-and-white.jpg?s=612x612&w=0&k=20&c=eKCLbwdoJy5a7oofoh9AEt6Mp7dc1p79LCMmR-eNM0U=",
-				}}
-				style={{ width: 200, height: 200, borderRadius: 200 / 2 }}
-			></Image>
-
 			<PickUsername></PickUsername>
 
 			<Text
@@ -171,16 +139,6 @@ const styles = StyleSheet.create({
 	},
 	height100: {
 		height: "100%",
-		padding: 50,
-	},
-	h100: {
-		height: "100%",
-	},
-	button: {
-		marginTop: 10,
-	},
-	height100: {
-		height: "100%",
 	},
 	height5: {
 		height: "5%",
@@ -190,12 +148,5 @@ const styles = StyleSheet.create({
 	},
 	marL: {
 		marginLeft: 5,
-	},
-});
-
-const icon = StyleSheet.create({
-	space: {
-		position: "relative",
-		left: -165,
 	},
 });
