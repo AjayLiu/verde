@@ -76,9 +76,9 @@ export default function FeedScreen({ navigation }: RouterProps) {
 					colors.offBlackBG,
 				]}
 			>
-				<Text style={[colors.offWhite]}>
+				{/* <Text style={[colors.offWhite]}>
 					Welcome {authUser?.displayName}!
-				</Text>
+				</Text> */}
 
 				{allPosts.slice(0, numPostsToShow).map((post: Post) => {
 					return <PostComponent key={post.uid} post={post} />;

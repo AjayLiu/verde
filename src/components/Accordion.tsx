@@ -76,7 +76,7 @@ const Accordion = (props: AccordionProps) => {
 					flexbox.row,
 					flexbox.alignCenter,
 					flexbox.justifyEnd,
-					props.isCompleted ? colors.darkGreenBG : colors.blueBG,
+					props.isCompleted ? colors.blueBG : colors.darkGreenBG,
 				]}
 				onPress={() => {
 					setIsExpand(!isExpand);
@@ -131,7 +131,7 @@ const Accordion = (props: AccordionProps) => {
 							style={[
 								flexbox.row,
 								flexbox.alignCenter,
-								colors.darkGreenBG,
+								colors.blueBG,
 								{ paddingVertical: 10 },
 								{ paddingHorizontal: 16 },
 								{ borderRadius: 12 },
