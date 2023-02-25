@@ -55,7 +55,7 @@ export default function Profile({ navigation }: RouterProps) {
 				<Ionicons
 					name="settings-outline"
 					style={styles.marR}
-					size={25}
+					size={30}
 					color={"#00CC4B"}
 					onPress={() => navigation.navigate("Settings")}
 				/>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 	},
 	marR: {
-		marginRight: 5,
+		marginRight: 15,
 	},
 	width100: {
 		width: "100%",

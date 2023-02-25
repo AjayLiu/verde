@@ -74,11 +74,11 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	return (
 		<View style={[colors.offBlackBG, flex.alignCenter, styles.height100]}>
-			<View style={[styles.height5, colors.offBlackBG]}></View>
+			<View style={[styles.height6, colors.offBlackBG]}></View>
 			<View style={[flex.row, flex.justifyStart, styles.width100]}>
 				<Ionicons
 					name="arrow-back-outline"
-					style={[styles.marR]}
+					style={[styles.marL]}
 					size={35}
 					color={"#00CC4B"}
 					onPress={() => navigation.navigate("HomeSwiper")}
@@ -104,7 +104,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 					Settings
 				</Text>
 			</View> */}
-			<ProfilePicture size={100}/>
+			<ProfilePicture size={100} />
 			<View
 				style={[
 					flex.column,
@@ -113,7 +113,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 					styles.width100,
 					styles.marL,
 					styles.marT,
-					styles.spacePadding
+					styles.spacePadding,
 				]}
 			>
 				<Text
@@ -168,19 +168,13 @@ export default function HomeScreen({ navigation }: RouterProps) {
 						styles.marL,
 						styles.marB,
 						styles.marT,
-						styles.spacePadding
+						styles.spacePadding,
 					]}
 				>
 					Change Username
 				</Text>
 			</View>
-			<View
-				style={[
-					styles.width100,
-					styles.marL,
-					styles.horMar
-				]}
-			>
+			<View style={[styles.width100, styles.marL, styles.horMar]}>
 				<PickUsername></PickUsername>
 			</View>
 
@@ -245,8 +239,8 @@ const styles = StyleSheet.create({
 	height100: {
 		height: "100%",
 	},
-	height5: {
-		height: "5%",
+	height6: {
+		height: "6%",
 	},
 	width100: {
 		width: "100%",
@@ -266,7 +260,7 @@ const styles = StyleSheet.create({
 	horMar: {
 		paddingHorizontal: 10,
 	},
-	spacePadding : {
-        paddingTop: 20,
-	}
+	spacePadding: {
+		paddingTop: 20,
+	},
 });
