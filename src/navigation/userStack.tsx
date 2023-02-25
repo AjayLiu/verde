@@ -11,6 +11,7 @@ import Calendar from "@screens/Calendar";
 import Challenges from "@screens/Challenges";
 import Settings from "@screens/Settings";
 import HomeSwipe from "@screens/HomeSwiper";
+import DeleteAccountScreen from "@screens/DeleteAccount";
 
 const Stack = createStackNavigator();
 
@@ -61,6 +62,11 @@ export default function UserStack() {
 				name="Settings"
 				component={Settings}
 				options={{ title: "Settings" }}
+			/>
+			<Stack.Screen
+				name="DeleteAccount"
+				component={DeleteAccountScreen}
+				options={{ title: "Delete Account" }}
 			/>
 		</Stack.Navigator>
 	);

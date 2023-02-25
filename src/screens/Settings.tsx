@@ -22,12 +22,6 @@ export default function HomeScreen({ navigation }: RouterProps) {
 	// The path of the picked image
 	const [pickedImagePath, setPickedImagePath] = useState("");
 
-	const deleteAccount = async () => {
-		console.log("Deleting account");
-
-		await deleteUserFromFirestore(authUser?.uid || "");
-	};
-
 	// This function is triggered when the "Select an image" button pressed
 	const showImagePicker = async () => {
 		const result = await imagePicker.launchImageLibraryAsync({});
@@ -221,12 +215,12 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				<Text
 					style={[
 						font.sizeL,
-						colors.lightGreen,
 						styles.marL,
 						styles.marB,
 						font.fontBold,
+						colors.warningRed,
 					]}
-					onPress={deleteAccount}
+					onPress={() => navigation.navigate("DeleteAccount")}
 				>
 					Delete Account
 				</Text>

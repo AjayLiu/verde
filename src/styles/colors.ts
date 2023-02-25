@@ -47,4 +47,10 @@ export default StyleSheet.create({
 	grayBG: {
 		backgroundColor: "#A8A8A8",
 	},
+	warningRed: {
+		color: "#CA0B00",
+	},
+	warningRedBg: {
+		backgroundColor: "#CA0B00",
+	},
 });

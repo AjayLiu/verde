@@ -171,13 +171,14 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 										onPress={() =>
 											navigation.navigate("HomeSwiper")
 										}
-										// @ts-ignore
-										style={{
-											marginTop: 20,
-											borderRadius: "50%",
-											height: 50,
-											width: 50,
-										}}
+										style={[
+											{
+												marginTop: 20,
+												borderRadius: 50,
+												height: 50,
+												width: 50,
+											},
+										]}
 									>
 										<Ionicons
 											name="arrow-back-outline"
@@ -204,10 +205,9 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 								>
 									<TouchableOpacity
 										onPress={__switchCamera}
-										// @ts-ignore
 										style={{
 											marginTop: 20,
-											borderRadius: "50%",
+											borderRadius: 50,
 											height: 50,
 											width: 50,
 										}}
@@ -237,7 +237,6 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 									</View>
 									<TouchableOpacity
 										onPress={__handleFlashMode}
-										// @ts-ignore
 										style={{
 											marginTop: 20,
 											paddingLeft: 5,
@@ -280,7 +279,6 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 					>
 						<TouchableOpacity
 							onPress={() => navigation.navigate("HomeSwiper")}
-							// @ts-ignore
 							style={{}}
 						>
 							<Ionicons
@@ -354,6 +352,8 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 
 const styles = StyleSheet.create({
 	container: {
+		width: "100%",
+		height: "100%",
 		flex: 1,
 		backgroundColor: "#fff",
 		alignItems: "center",
