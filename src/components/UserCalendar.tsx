@@ -2,11 +2,13 @@ import React from "react";
 import { Post } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
 import { getCalendarDateString } from "react-native-calendars/src/services";
-import { MarkedDates } from "react-native-calendars/src/types";
+import { DateData, MarkedDates } from "react-native-calendars/src/types";
 import { Calendar } from "react-native-calendars";
 
 type UserCalendarProps = {
 	posts: Post[];
+	dayPress: (day: DateData) => void;
+	selected: DateData;
 };
 
 const UserCalendar = (props: UserCalendarProps) => {
@@ -54,8 +56,20 @@ const UserCalendar = (props: UserCalendarProps) => {
 				color: "#138a36", // dark green (hard coded from colors.ts)
 				startingDay: starting,
 				endingDay: ending,
+				dotColor: "#e2e4f6", // off white (hard coded from colors.ts)
+				marked: false,
 			};
 		});
+
+		if (dates[props.selected.dateString]) {
+			dates[props.selected.dateString].dotColor = "#e2e4f6"; // off white (hard coded from colors.ts)
+			dates[props.selected.dateString].marked = true;
+		} else {
+			dates[props.selected.dateString] = {
+				dotColor: "#e2e4f6", // off white (hard coded from colors.ts)
+				marked: true,
+			};
+		}
 
 		return dates;
 	}
@@ -71,6 +85,7 @@ const UserCalendar = (props: UserCalendarProps) => {
 			// }}
 			markingType={"period"}
 			markedDates={getDates()}
+			onDayPress={(day) => props.dayPress(day)}
 			// hard coding colors from colors.ts because not sure what else to do
 			theme={{
 				calendarBackground: "#232020", // off black
