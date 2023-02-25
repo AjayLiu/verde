@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -8,6 +8,7 @@ import { useUser } from "@utils/hooks/useUser";
 import flexbox from "@styles/flexbox";
 import colors from "@styles/colors";
 import font from "@styles/font";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const auth = getAuth();
 
@@ -48,6 +49,26 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 
 	return (
 		<View style={[styles.container, colors.offBlackBG]}>
+			<TouchableOpacity
+				onPress={() => navigation.goBack()}
+				style={[
+					{
+						marginTop: 30,
+						borderRadius: 50,
+						height: 50,
+						width: 50,
+					},
+				]}
+			>
+				<Ionicons
+					name="arrow-back-outline"
+					size={35}
+					color={"#00cc4b"}
+					style={{
+						marginLeft: 20,
+					}}
+				/>
+			</TouchableOpacity>
 			<View style={[styles.buttons, flexbox.row, flexbox.alignCenter]}>
 				<View style={[styles.controls, flexbox.alignCenter]}>
 					{!!value.error && (
@@ -129,7 +150,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		paddingTop: 20,
-		alignItems: "center",
 		justifyContent: "center",
 	},
 
