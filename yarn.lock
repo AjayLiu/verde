@@ -1077,6 +1077,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@expo-google-fonts/heebo@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/heebo/-/heebo-0.2.3.tgz#14db8ba90acc60ff3627b4906fd5f993ee248999"
+  integrity sha512-OcHS880/2o6m66Fw+w7PptjQEA938aiV2YjzKdJ6KZnG9XpSViqomztY+9Oi7vjy4ecmxlv+syMFyc9uM9hsOg==
+
 "@expo-google-fonts/playfair-display@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/playfair-display/-/playfair-display-0.2.3.tgz#892805793743fc5d110a39d31442ae269d43de47"

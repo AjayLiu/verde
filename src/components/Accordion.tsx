@@ -9,10 +9,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Challenge, RouterProps } from "src/types";
 import {
 	useFonts,
-	PlayfairDisplay_600SemiBold,
-	PlayfairDisplay_400Regular,
-	PlayfairDisplay_500Medium
-} from "@expo-google-fonts/playfair-display";
+	Heebo_400Regular,
+	Heebo_600SemiBold,
+} from "@expo-google-fonts/heebo";
 
 type AccordionProps = {
 	navigation: RouterProps["navigation"];
@@ -22,9 +21,8 @@ type AccordionProps = {
 
 const Accordion = (props: AccordionProps) => {
 	let [fontsLoaded] = useFonts({
-		PlayfairDisplay_400Regular,
-		PlayfairDisplay_600SemiBold,
-		PlayfairDisplay_500Medium,
+		Heebo_400Regular,
+		Heebo_600SemiBold,
 	});
 
 	const [isExpand, setIsExpand] = useState(false);
@@ -89,6 +87,7 @@ const Accordion = (props: AccordionProps) => {
 					flexbox.alignCenter,
 					flexbox.justifyEnd,
 					props.isCompleted ? colors.blueBG : colors.darkGreenBG,
+					isExpand ? styles.open : styles.closed,
 				]}
 				onPress={() => {
 					setIsExpand(!isExpand);
@@ -104,6 +103,7 @@ const Accordion = (props: AccordionProps) => {
 				<Text
 					style={[
 						styles.title,
+						font.sizeXL,
 						{ width: "80%" },
 						props.isCompleted && {
 							textDecorationLine: "line-through",
@@ -117,16 +117,24 @@ const Accordion = (props: AccordionProps) => {
 				</Text>
 			</TouchableOpacity>
 			{isExpand && (
-				<View style={[styles.expanded, flexbox.alignCenter]}>
+				<View
+					style={[
+						styles.expanded,
+						// flexbox.alignCenter,
+						props.isCompleted
+							? { borderColor: "#427aa1" }
+							: { borderColor: "#138a36" },
+					]}
+				>
 					{props.isCompleted && (
 						<Text
 							style={[
 								font.textCenter,
-								font.sizeL,
+								font.sizeXL,
 								colors.offWhite,
 								{
 									marginHorizontal: 5,
-									fontFamily: "PlayfairDisplay_500Medium",
+									fontFamily: "Heebo_600SemiBold",
 								},
 							]}
 						>
@@ -136,57 +144,63 @@ const Accordion = (props: AccordionProps) => {
 					<Text
 						style={[
 							font.textCenter,
-							font.sizeL,
+							{ fontSize: 17.5 },
 							colors.offWhite,
 							{ marginHorizontal: 30 },
-							{ fontFamily: "PlayfairDisplay_500Medium" },
+							{ fontFamily: "Heebo_400Regular" },
 						]}
 					>
 						{props.challenge.description}
 					</Text>
-					{!props.isCompleted && (
-						<TouchableOpacity
-							style={[
-								flexbox.row,
-								flexbox.alignCenter,
-								colors.blueBG,
-								{ paddingVertical: 10 },
-								{ paddingHorizontal: 16 },
-								{ borderRadius: 12 },
-								{ marginTop: 15 },
-							]}
-							onPress={() => challengeSelected(props.challenge)}
-						>
-							<Icon
-								type="font-awesome"
-								name="camera"
-								color="white"
-							></Icon>
-							<Text
+					<View style={[flexbox.row, flexbox.justifyCenter]}>
+						{!props.isCompleted && (
+							<TouchableOpacity
 								style={[
-									font.textCenter,
-									font.sizeL,
-									font.fontBold,
-									colors.offWhite,
-									{ marginLeft: 8 },
+									flexbox.row,
+									flexbox.alignCenter,
+									colors.blueBG,
+									{ paddingVertical: 10 },
+									{ paddingHorizontal: 16 },
+									{ borderRadius: 12 },
+									{ marginTop: 8 },
+									{ width: "100%" },
 								]}
+								onPress={() =>
+									challengeSelected(props.challenge)
+								}
 							>
-								DO CHALLENGE
-							</Text>
-						</TouchableOpacity>
-					)}
-					<Text
-						style={[
-							{ marginTop: 10 },
-							font.textCenter,
-							colors.offWhite,
-							font.fontBold,
-						]}
-					>
-						{getTimeRemainingStr(
-							props.challenge.expirationTime.toDate(),
+								<Icon
+									type="font-awesome"
+									name="camera"
+									color="white"
+								></Icon>
+								<Text
+									style={[
+										font.textCenter,
+										font.sizeL,
+										font.fontBold,
+										colors.offWhite,
+										{ marginLeft: 8 },
+									]}
+								>
+									DO CHALLENGE
+								</Text>
+							</TouchableOpacity>
 						)}
-					</Text>
+						<Text
+							style={[
+								{ marginTop: 4 },
+								colors.offWhite,
+								font.fontBold,
+								font.textRight,
+								{ fontSize: 17.5 },
+							]}
+						>
+							{getTimeRemainingStr(
+								props.challenge.expirationTime.toDate(),
+							)}
+						</Text>
+					</View>
 				</View>
 			)}
 		</View>
@@ -200,21 +214,30 @@ const styles = StyleSheet.create({
 	title: {
 		// backgroundColor: "#138A36",
 		color: "#E2E4F6",
-		textAlign: "center",
-		fontSize: 18,
+		// fontSize: 18,
 		fontWeight: "bold",
 	},
 	expanded: {
 		borderWidth: 2.5,
-		borderColor: "#e2e4f6",
-		borderRadius: 20,
+		// borderColor: "#138a36",
+		borderRadius: 10,
 		paddingVertical: 10,
-		marginTop: 2.5,
-		// borderTopWidth: 0,
+		borderTopLeftRadius: 0,
+		borderTopRightRadius: 0,
+		// marginTop: 0.5,
+		borderTopWidth: 0,
 		// backgroundColor : 'rgba(226, 228, 246, 0.8)',
 	},
 	marR: {
-		marginRight: 17.5,
+		marginRight: 22.5,
+	},
+	open: {
+		borderBottomLeftRadius: 0,
+		borderBottomRightRadius: 0,
+	},
+	closed: {
+		// borderBottomLeftRadius: 0,
+		// borderBottomRightRadius: 0,
 	},
 });
 

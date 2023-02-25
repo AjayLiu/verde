@@ -11,6 +11,7 @@
 		"format": "prettier --check ."
 	},
 	"dependencies": {
+		"@expo-google-fonts/heebo": "^0.2.3",
 		"@expo-google-fonts/playfair-display": "^0.2.3",
 		"@react-native-async-storage/async-storage": "^1.17.11",
 		"@react-native-material/core": "^1.3.7",
