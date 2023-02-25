@@ -36,8 +36,9 @@ export default function HomeScreen({ navigation }: RouterProps) {
 				flex.justifyStart,
 			]}
 		>
-			<Text style={[font.textCenter, font.sizeXL, colors.offWhite]}>
-				Challenges for {fireUser?.displayName}!
+			<Text style={[font.textCenter, font.sizeXL, colors.offWhite, font.fontBold, styles.button]}>
+				CHALLENGES
+				{/* Challenges for {fireUser?.displayName}!    */}
 			</Text>
 
 			{challenges.map((challenge, idx) => {

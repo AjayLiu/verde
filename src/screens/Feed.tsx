@@ -10,6 +10,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import UsernameContext from "../contexts/UsernameContext";
 import flex from "@styles/flexbox";
 import colors from "@styles/colors";
+import font from "@styles/font";
 
 export default function FeedScreen({ navigation }: RouterProps) {
 	const { authUser } = useUser();
@@ -55,35 +56,69 @@ export default function FeedScreen({ navigation }: RouterProps) {
 	};
 
 	return (
-		<ScrollView
-			refreshControl={
-				<RefreshControl
-					refreshing={refreshing}
-					onRefresh={onRefresh}
-				></RefreshControl>
-			}
-			onScroll={({ nativeEvent }) => {
-				if (isCloseToBottom(nativeEvent)) {
-					fetchMorePosts();
-				}
-			}}
-			scrollEventThrottle={400}
-		>
-			<View
-				style={[
-					flex.alignCenter,
-					flex.justifyCenter,
-					colors.offBlackBG,
-				]}
-			>
-				<Text style={[colors.offWhite]}>
-					Welcome {authUser?.displayName}!
+		<View>
+			<View style={[
+						flex.alignCenter,
+						flex.justifyCenter,
+						colors.offBlackBG,
+					]}>
+				<Text
+					style={[
+						colors.lightGreen,
+						font.sizeXXL,
+						font.textCenter,
+						// font.fontItalic,
+						font.fontBold,
+						styles.logo,
+					]}
+				>
+					VERDE
 				</Text>
-
-				{allPosts.slice(0, numPostsToShow).map((post: Post) => {
-					return <PostComponent key={post.uid} post={post} />;
-				})}
 			</View>
-		</ScrollView>
+			<ScrollView
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+					></RefreshControl>
+				}
+				onScroll={({ nativeEvent }) => {
+					if (isCloseToBottom(nativeEvent)) {
+						fetchMorePosts();
+					}
+				}}
+				scrollEventThrottle={400}
+				style={styles.marT}
+			>
+				<View
+					style={[
+						flex.alignCenter,
+						flex.justifyCenter,
+						colors.offBlackBG,
+					]}
+				>
+					{/* <Text style={[colors.offWhite]}>
+					Welcome {authUser?.displayName}!
+				</Text> */}
+
+					{allPosts.slice(0, numPostsToShow).map((post: Post) => {
+						return <PostComponent key={post.uid} post={post} />;
+					})}
+				</View>
+			</ScrollView>
+		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	padding: {
+		paddingVertical: 10,
+	},
+	logo: {
+		top: 0,
+		position: "absolute",
+	},
+	marT: {
+		marginTop: 40,
+	}
+});

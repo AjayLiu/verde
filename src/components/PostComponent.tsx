@@ -111,7 +111,7 @@ const PostComponent = (props: PostProps) => {
 	}, [props.post, authUser]);
 
 	return (
-		<View style={[flex.column, styles.marB]}>
+		<View style={[flex.column, styles.marB, styles.padB]}>
 			<View style={[flex.row, styles.marB]}>
 				<View style={[flex.growOne, flex.alignCenter]}>
 					<ProfilePicture size={35} user={author} />
@@ -203,6 +203,12 @@ const styles = StyleSheet.create({
 	// use this for all margins
 	marB: {
 		marginBottom: 5,
+	},
+	marT: {
+		marginTop: 5,
+	},
+	padB: {
+		paddingBottom: 1,
 	},
 	// sizing
 	image: {

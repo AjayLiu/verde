@@ -44,4 +44,7 @@ export default StyleSheet.create({
 	gray: {
 		color: "#A8A8A8",
 	},
+	grayBG: {
+		backgroundColor: "#A8A8A8",
+	},
 });
