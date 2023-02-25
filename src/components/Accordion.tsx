@@ -7,6 +7,12 @@ import { Button, Text } from "react-native-elements";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Challenge, RouterProps } from "src/types";
+import {
+	useFonts,
+	PlayfairDisplay_600SemiBold,
+	PlayfairDisplay_400Regular,
+	PlayfairDisplay_500Medium
+} from "@expo-google-fonts/playfair-display";
 
 type AccordionProps = {
 	navigation: RouterProps["navigation"];
@@ -15,6 +21,12 @@ type AccordionProps = {
 };
 
 const Accordion = (props: AccordionProps) => {
+	let [fontsLoaded] = useFonts({
+		PlayfairDisplay_400Regular,
+		PlayfairDisplay_600SemiBold,
+		PlayfairDisplay_500Medium,
+	});
+
 	const [isExpand, setIsExpand] = useState(false);
 
 	const getTimeRemainingStr = (endTime: Date) => {
@@ -112,10 +124,13 @@ const Accordion = (props: AccordionProps) => {
 								font.textCenter,
 								font.sizeL,
 								colors.offWhite,
-								{ marginHorizontal: 5 },
+								{
+									marginHorizontal: 5,
+									fontFamily: "PlayfairDisplay_500Medium",
+								},
 							]}
 						>
-							You completed:
+							you completed:
 						</Text>
 					)}
 					<Text
@@ -123,7 +138,8 @@ const Accordion = (props: AccordionProps) => {
 							font.textCenter,
 							font.sizeL,
 							colors.offWhite,
-							{ marginHorizontal: 30, fontWeight:'400' },
+							{ marginHorizontal: 30 },
+							{ fontFamily: "PlayfairDisplay_500Medium" },
 						]}
 					>
 						{props.challenge.description}
@@ -190,10 +206,12 @@ const styles = StyleSheet.create({
 	},
 	expanded: {
 		borderWidth: 2.5,
-		borderColor: "#138a36",
-		borderRadius: 10,
+		borderColor: "#e2e4f6",
+		borderRadius: 20,
 		paddingVertical: 10,
-		borderTopWidth: 0.75,
+		marginTop: 2.5,
+		// borderTopWidth: 0,
+		// backgroundColor : 'rgba(226, 228, 246, 0.8)',
 	},
 	marR: {
 		marginRight: 17.5,
