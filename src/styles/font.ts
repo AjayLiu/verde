@@ -10,6 +10,9 @@ export default StyleSheet.create({
 	sizeXL: {
 		fontSize: 20,
 	},
+	sizeXML: {
+		fontSize: 25,
+	},
 	sizeXXL: {
 		fontSize: 30,
 	},

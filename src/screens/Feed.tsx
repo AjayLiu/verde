@@ -61,11 +61,12 @@ export default function FeedScreen({ navigation }: RouterProps) {
 						flex.alignCenter,
 						flex.justifyCenter,
 						colors.offBlackBG,
+						styles.marB
 					]}>
 				<Text
 					style={[
 						colors.lightGreen,
-						font.sizeXXL,
+						font.sizeXML,
 						font.textCenter,
 						// font.fontItalic,
 						font.fontBold,
@@ -119,6 +120,9 @@ const styles = StyleSheet.create({
 		position: "absolute",
 	},
 	marT: {
-		marginTop: 40,
+		marginTop: 37,
+	},
+	marB: {
+		marginBottom: 2,
 	}
 });
