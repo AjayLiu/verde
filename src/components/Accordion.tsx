@@ -11,6 +11,7 @@ import {
 	useFonts,
 	Heebo_400Regular,
 	Heebo_600SemiBold,
+	Heebo_500Medium,
 } from "@expo-google-fonts/heebo";
 
 type AccordionProps = {
@@ -23,6 +24,7 @@ const Accordion = (props: AccordionProps) => {
 	let [fontsLoaded] = useFonts({
 		Heebo_400Regular,
 		Heebo_600SemiBold,
+		Heebo_500Medium,
 	});
 
 	const [isExpand, setIsExpand] = useState(false);
@@ -76,8 +78,7 @@ const Accordion = (props: AccordionProps) => {
 			<TouchableOpacity
 				style={[
 					{
-						marginTop: 16,
-						paddingVertical: 10,
+						paddingVertical: 12.5,
 						paddingHorizontal: 15,
 						// borderWidth: 2,
 						// borderColor: "#E2E4F6",
@@ -129,11 +130,11 @@ const Accordion = (props: AccordionProps) => {
 					{props.isCompleted && (
 						<Text
 							style={[
-								font.textCenter,
+								font.textLeft,
 								font.sizeXL,
 								colors.offWhite,
 								{
-									marginHorizontal: 5,
+									marginLeft: 6,
 									fontFamily: "Heebo_600SemiBold",
 								},
 							]}
@@ -143,64 +144,70 @@ const Accordion = (props: AccordionProps) => {
 					)}
 					<Text
 						style={[
-							font.textCenter,
-							{ fontSize: 17.5 },
+							font.textLeft,
+							{ fontSize: 17.5, marginLeft: 5 },
 							colors.offWhite,
-							{ marginHorizontal: 30 },
-							{ fontFamily: "Heebo_400Regular" },
+							// { marginHorizontal: 30 },
+							{ fontFamily: "Heebo_500Medium" },
 						]}
 					>
 						{props.challenge.description}
 					</Text>
-					<View style={[flexbox.row, flexbox.justifyCenter]}>
-						{!props.isCompleted && (
-							<TouchableOpacity
-								style={[
-									flexbox.row,
-									flexbox.alignCenter,
-									colors.blueBG,
-									{ paddingVertical: 10 },
-									{ paddingHorizontal: 16 },
-									{ borderRadius: 12 },
-									{ marginTop: 8 },
-									{ width: "100%" },
-								]}
-								onPress={() =>
-									challengeSelected(props.challenge)
-								}
-							>
-								<Icon
-									type="font-awesome"
-									name="camera"
-									color="white"
-								></Icon>
+
+					{!props.isCompleted && (
+						<>
+							<View style={[flexbox.row, { marginLeft: 10, marginRight: 20 }]}>
+								<TouchableOpacity
+									style={[
+										flexbox.row,
+										flexbox.alignCenter,
+										colors.blueBG,
+										{ paddingVertical: 10 },
+										{ paddingHorizontal: 16 },
+										{ borderRadius: 12 },
+										{ marginTop: 8 },
+										{ width: "100%" },
+									]}
+									onPress={() =>
+										challengeSelected(props.challenge)
+									}
+								>
+									<Icon
+										type="font-awesome"
+										name="camera"
+										color="white"
+									></Icon>
+									<Text
+										style={[
+											font.textCenter,
+											font.sizeL,
+											font.fontBold,
+											colors.offWhite,
+											{ marginLeft: 8 },
+										]}
+									>
+										DO CHALLENGE
+									</Text>
+								</TouchableOpacity>
 								<Text
 									style={[
-										font.textCenter,
-										font.sizeL,
-										font.fontBold,
+										{ marginTop: 20 },
+										// { paddingLeft:},
 										colors.offWhite,
-										{ marginLeft: 8 },
+										flexbox.justifyEnd,
+										font.fontBold,
+										// flexbox.alignCenter,
+										// font.textRight,
+										{ fontSize: 17.5 },
 									]}
 								>
-									DO CHALLENGE
+									{getTimeRemainingStr(
+										props.challenge.expirationTime.toDate(),
+									)}
 								</Text>
-							</TouchableOpacity>
-						)}
-						<Text
-							style={[
-								{ marginTop: 4 },
-								colors.offWhite,
-								font.fontBold,
-								font.textRight,
-								{ fontSize: 17.5 },
-							]}
-						>
-							{getTimeRemainingStr(
-								props.challenge.expirationTime.toDate(),
-							)}
-						</Text>
-					</View>
+							</View>
+						</>
+					)}
 				</View>
 			)}
 		</View>
@@ -210,6 +217,7 @@ const Accordion = (props: AccordionProps) => {
 const styles = StyleSheet.create({
 	container: {
 		width: "87.5%",
+		marginBottom: 13,
 	},
 	title: {
 		// backgroundColor: "#138A36",

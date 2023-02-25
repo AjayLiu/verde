@@ -48,9 +48,9 @@ export default StyleSheet.create({
 		backgroundColor: "#A8A8A8",
 	},
 	warningRed: {
-		color: "#CA0B00",
+		color: "#BB301A",
 	},
 	warningRedBg: {
-		backgroundColor: "#CA0B00",
+		backgroundColor: "#BB301A",
 	},
 });

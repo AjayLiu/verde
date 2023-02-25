@@ -164,6 +164,7 @@ export default function Profile({ navigation }: RouterProps) {
 						font.textCenter,
 						colors.gray,
 						styles.marB,
+						{ marginBottom: 10 },
 					]}
 				>
 					↑ Tap a day to see completed challenges! ↑
