@@ -33,7 +33,7 @@ export default function HomeSwipe({ navigation }: RouterProps) {
 
 	return (
 		<View style={[styles.h100, colors.offBlackBG]}>
-			<View style={[styles.h5, colors.offBlackBG]}></View>
+			<View style={[styles.h6, colors.offBlackBG]}></View>
 			<Swiper
 				data={data}
 				isStaticPills={true}
@@ -57,7 +57,7 @@ const styles = {
 	h100: {
 		height: "100%",
 	},
-	h5: {
-		height: "5%",
+	h6: {
+		height: "6%",
 	},
 };

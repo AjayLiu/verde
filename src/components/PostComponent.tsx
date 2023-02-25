@@ -174,8 +174,16 @@ const PostComponent = (props: PostProps) => {
 							!
 						</Text>
 					</View>
-					<View style={[flex.basis15, flex.row, flex.justifyCenter]}>
-						<Text style={[font.sizeXL, colors.offWhite]}>
+					<View
+						style={[
+							flex.basis15,
+							flex.row,
+							flex.justifyCenter,
+							flex.alignCenter,
+							styles.marB,
+						]}
+					>
+						<Text style={[font.sizeL, colors.offWhite]}>
 							{props.post.likes.length + (justLiked ? 1 : 0)}
 						</Text>
 						{alreadyLiked || justLiked ? (
@@ -189,7 +197,14 @@ const PostComponent = (props: PostProps) => {
 						)}
 					</View>
 				</View>
-				<View style={[styles.marB, flex.alignCenter]}>
+				<View
+					style={[
+						flex.alignCenter,
+						{
+							marginBottom: 20,
+						},
+					]}
+				>
 					<Text style={[styles.marB, font.sizeS, colors.gray]}>
 						{getPostTime()}
 					</Text>
