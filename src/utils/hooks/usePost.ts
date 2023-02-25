@@ -17,6 +17,7 @@ import { useUser } from "./useUser";
 import { uuidv4 } from "@firebase/util";
 import { useUpload } from "./useUpload";
 import { useChallenge } from "./useChallenge";
+import * as Haptics from "expo-haptics";
 
 export function usePost() {
 	const { updateUserFirestore, authUser } = useUser();
@@ -115,6 +116,7 @@ export function usePost() {
 			postUid: postUid,
 			timestamp: Timestamp.now(),
 		};
+
 		await updatePost(postUid, {
 			likes: arrayUnion(newLike),
 		});
@@ -123,6 +125,9 @@ export function usePost() {
 		await updateUserFirestore(post.authorUid, {
 			score: increment(1),
 		});
+
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 	};
 
 	return { makePost, getPost, getAllPosts, likePost };

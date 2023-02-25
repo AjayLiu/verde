@@ -8,6 +8,8 @@ import colors from "@styles/colors";
 import flex from "@styles/flexbox";
 import font from "@styles/font";
 import { usePost } from "@utils/hooks/usePost";
+import { Asset, useAssets } from "expo-asset";
+
 
 const dimensions = Dimensions.get("window");
 
@@ -188,12 +190,17 @@ const PostComponent = (props: PostProps) => {
 						</Text>
 						{alreadyLiked || justLiked ? (
 							// ALREADY LIKED
-							<Text style={[font.sizeXL]}>🌲</Text>
+							<Image 
+							style={[styles.small_image]}
+							source={require('@assets/treefilled.png')}/>
 						) : (
 							// HAVEN'T LIKED YET (slightly transparent)
-							<Text style={[font.sizeXL, { opacity: 0.5 }]}>
-								🌲
-							</Text>
+							<Image 
+							style={[styles.small_image]}
+							source={require('@assets/tree-icon.png')}/>
+							// <Text style={[font.sizeXL, { opacity: 0.5 }]}>
+							// 	ya
+							// </Text>
 						)}
 					</View>
 				</View>
@@ -230,6 +237,12 @@ const styles = StyleSheet.create({
 		width: dimensions.width,
 		height: dimensions.width,
 	},
+	small_image: {
+		width: 20,
+        height: 20,
+		marginLeft: 5,
+		
+	}
 });
 
 export default PostComponent;
