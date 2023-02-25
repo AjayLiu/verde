@@ -67,10 +67,10 @@ const Accordion = (props: AccordionProps) => {
 				style={[
 					{
 						marginTop: 16,
-						paddingVertical: 8,
-						paddingHorizontal: 8,
-						borderWidth: 2,
-						borderColor: "#E2E4F6",
+						paddingVertical: 10,
+						paddingHorizontal: 15,
+						// borderWidth: 2,
+						// borderColor: "#E2E4F6",
 						borderRadius: 10,
 					},
 					flexbox.row,
@@ -86,6 +86,8 @@ const Accordion = (props: AccordionProps) => {
 					type="font-awesome"
 					name={isExpand ? "chevron-down" : "chevron-right"}
 					color="white"
+					style={styles.marR}
+					size={20}
 				></Icon>
 				<Text
 					style={[
@@ -121,7 +123,7 @@ const Accordion = (props: AccordionProps) => {
 							font.textCenter,
 							font.sizeL,
 							colors.offWhite,
-							{ marginHorizontal: 20 },
+							{ marginHorizontal: 30, fontWeight:'400' },
 						]}
 					>
 						{props.challenge.description}
@@ -177,7 +179,7 @@ const Accordion = (props: AccordionProps) => {
 
 const styles = StyleSheet.create({
 	container: {
-		width: "85%",
+		width: "87.5%",
 	},
 	title: {
 		// backgroundColor: "#138A36",
@@ -187,10 +189,14 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	expanded: {
-		borderWidth: 2,
-		borderColor: "#E2E4F6",
+		borderWidth: 2.5,
+		borderColor: "#138a36",
 		borderRadius: 10,
 		paddingVertical: 10,
+		borderTopWidth: 0.75,
+	},
+	marR: {
+		marginRight: 17.5,
 	},
 });
 
