@@ -11,6 +11,7 @@ import {
 	Timestamp,
 	updateDoc,
 	increment,
+	arrayRemove,
 } from "firebase/firestore";
 import { db } from "@config/firebase";
 import { useUser } from "./useUser";
@@ -107,7 +108,20 @@ export function usePost() {
 				return;
 			}
 		});
-		if (alreadyLiked) return;
+
+		// If already like, unlike it
+		if (alreadyLiked) {
+			await updatePost(postUid, {
+				likes: arrayRemove(
+					post.likes.find((like) => like.authorUid === authUser?.uid),
+				),
+			});
+			// Remove one point to poster's score
+			await updateUserFirestore(post.authorUid, {
+				score: increment(-1),
+			});
+			return;
+		}
 
 		// Add like to post
 		const newLike: Like = {
@@ -126,7 +140,7 @@ export function usePost() {
 			score: increment(1),
 		});
 
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 	};
 

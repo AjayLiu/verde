@@ -9,7 +9,7 @@ import flex from "@styles/flexbox";
 import font from "@styles/font";
 import { usePost } from "@utils/hooks/usePost";
 import { Asset, useAssets } from "expo-asset";
-
+import { TouchableOpacity } from "react-native";
 
 const dimensions = Dimensions.get("window");
 
@@ -97,9 +97,15 @@ const PostComponent = (props: PostProps) => {
 
 	const [justLiked, setJustLiked] = useState(false);
 	const likeThePost = async () => {
-		if (alreadyLiked || justLiked) return;
 		await likePost(props.post.uid);
-		setJustLiked(true);
+		if (alreadyLiked || justLiked) {
+			// Already liked, so unlike
+			setJustLiked(false);
+			setAlreadyLiked(false);
+		} else {
+			setJustLiked(true);
+			setAlreadyLiked(true);
+		}
 	};
 
 	const [alreadyLiked, setAlreadyLiked] = useState(false);
@@ -176,7 +182,7 @@ const PostComponent = (props: PostProps) => {
 							!
 						</Text>
 					</View>
-					<View
+					<TouchableOpacity
 						style={[
 							flex.basis15,
 							flex.row,
@@ -184,25 +190,29 @@ const PostComponent = (props: PostProps) => {
 							flex.alignCenter,
 							styles.marB,
 						]}
+						onPress={likeThePost}
 					>
 						<Text style={[font.sizeL, colors.offWhite]}>
-							{props.post.likes.length + (justLiked ? 1 : 0)}
+							{props.post.likes.length +
+								(justLiked || alreadyLiked ? 1 : 0)}
 						</Text>
 						{alreadyLiked || justLiked ? (
 							// ALREADY LIKED
-							<Image 
-							style={[styles.small_image]}
-							source={require('@assets/treefilled.png')}/>
+							<Image
+								style={[styles.small_image]}
+								source={require("@assets/treefilled.png")}
+							/>
 						) : (
 							// HAVEN'T LIKED YET (slightly transparent)
-							<Image 
-							style={[styles.small_image]}
-							source={require('@assets/tree-icon.png')}/>
+							<Image
+								style={[styles.small_image]}
+								source={require("@assets/tree-icon.png")}
+							/>
 							// <Text style={[font.sizeXL, { opacity: 0.5 }]}>
 							// 	ya
 							// </Text>
 						)}
-					</View>
+					</TouchableOpacity>
 				</View>
 				<View
 					style={[
@@ -239,10 +249,9 @@ const styles = StyleSheet.create({
 	},
 	small_image: {
 		width: 20,
-        height: 20,
+		height: 20,
 		marginLeft: 5,
-		
-	}
+	},
 });
 
 export default PostComponent;
