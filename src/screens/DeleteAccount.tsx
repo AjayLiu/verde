@@ -69,7 +69,7 @@ const DeleteAccountScreen: React.FC<StackScreenProps<any>> = ({
 				]}
 			>
 				<TouchableOpacity
-					onPress={() => navigation.navigate("HomeSwiper")}
+					onPress={() => navigation.goBack()}
 					style={{}}
 				>
 					<Ionicons
