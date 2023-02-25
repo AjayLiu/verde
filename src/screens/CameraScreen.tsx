@@ -22,6 +22,7 @@ import ConfettiCannon from "react-native-confetti-cannon";
 import colors from "@styles/colors";
 import font from "@styles/font";
 import { Icon } from "react-native-elements";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 let camera: Camera | null;
 
@@ -158,14 +159,47 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 								}}
 							>
 								<View
+									style={[
+										{
+											marginTop: "8%",
+											height: "5%",
+											width: "100%",
+										},
+									]}
+								>
+									<TouchableOpacity
+										onPress={() =>
+											navigation.navigate("HomeSwiper")
+										}
+										// @ts-ignore
+										style={{
+											marginTop: 20,
+											borderRadius: "50%",
+											height: 50,
+											width: 50,
+										}}
+									>
+										<Ionicons
+											name="arrow-back-outline"
+											size={35}
+											color={"white"}
+											style={{
+												marginLeft: 20,
+											}}
+										/>
+									</TouchableOpacity>
+								</View>
+								<View
 									style={{
 										position: "absolute",
 										bottom: 0,
 										flexDirection: "row",
 										flex: 1,
 										width: "100%",
-										padding: 20,
+										paddingHorizontal: 20,
 										justifyContent: "space-evenly",
+										paddingTop: 20,
+										paddingBottom: 40,
 									}}
 								>
 									<TouchableOpacity
@@ -178,15 +212,11 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 											width: 50,
 										}}
 									>
-										<Text
-											style={{
-												fontSize: 40,
-												height: 50,
-												width: 50,
-											}}
-										>
-											🔄
-										</Text>
+										<Ionicons
+											name="camera-reverse-outline"
+											size={40}
+											color={"white"}
+										/>
 									</TouchableOpacity>
 									<View
 										style={{
@@ -210,24 +240,20 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 										// @ts-ignore
 										style={{
 											marginTop: 20,
-											borderRadius: "50%",
+											paddingLeft: 5,
 											height: 50,
 											width: 50,
-											backgroundColor:
-												flashMode === "off"
-													? "#000"
-													: "#fff",
 										}}
 									>
-										<Text
-											style={{
-												fontSize: 40,
-												height: 50,
-												width: 50,
-											}}
-										>
-											⚡
-										</Text>
+										<Ionicons
+											name={
+												flashMode === "off"
+													? "flash-off-outline"
+													: "flash-outline"
+											}
+											size={40}
+											color={"white"}
+										/>
 									</TouchableOpacity>
 								</View>
 							</View>
@@ -238,51 +264,86 @@ export default function CameraScreen({ route, navigation }: RouterProps) {
 				<View
 					style={[
 						{
-							flex: 1,
-							justifyContent: "center",
-							alignItems: "center",
 							width: "100%",
+							height: "100%",
 						},
-						colors.offBlackBG,
 					]}
 				>
-					<Text style={[font.sizeXL, colors.white, font.fontBold]}>
-						Your challenge:
-					</Text>
-					<Text
+					<View
 						style={[
-							font.sizeXL,
-							colors.white,
-							{ margin: 10 },
-							font.textCenter,
+							colors.offBlackBG,
+							{
+								paddingTop: "13%",
+								width: "100%",
+							},
 						]}
 					>
-						{"\n" + challenge.description}
-					</Text>
-					<TouchableOpacity
-						onPress={__startCamera}
+						<TouchableOpacity
+							onPress={() => navigation.navigate("HomeSwiper")}
+							// @ts-ignore
+							style={{}}
+						>
+							<Ionicons
+								name="arrow-back-outline"
+								size={35}
+								color={"#00cc4b"}
+								style={{
+									marginLeft: 20,
+								}}
+							/>
+						</TouchableOpacity>
+					</View>
+					<View
 						style={[
 							{
-								width: 130,
-								borderRadius: 4,
-								flexDirection: "row",
+								flex: 1,
 								justifyContent: "center",
 								alignItems: "center",
-								padding: 10,
+								width: "100%",
 							},
-							{ marginTop: 100 },
-							colors.darkGreenBG,
+							colors.offBlackBG,
 						]}
 					>
-						<Icon
-							type="font-awesome"
-							name="camera"
-							color="white"
-						></Icon>
-						<Text style={[colors.white, { marginLeft: 10 }]}>
-							Ready?
+						<Text
+							style={[font.sizeXL, colors.white, font.fontBold]}
+						>
+							Your challenge:
 						</Text>
-					</TouchableOpacity>
+						<Text
+							style={[
+								font.sizeXL,
+								colors.white,
+								{ margin: 10 },
+								font.textCenter,
+							]}
+						>
+							{"\n" + challenge.description}
+						</Text>
+						<TouchableOpacity
+							onPress={__startCamera}
+							style={[
+								{
+									width: 130,
+									borderRadius: 4,
+									flexDirection: "row",
+									justifyContent: "center",
+									alignItems: "center",
+									padding: 10,
+								},
+								{ marginTop: 100 },
+								colors.darkGreenBG,
+							]}
+						>
+							<Icon
+								type="font-awesome"
+								name="camera"
+								color="white"
+							></Icon>
+							<Text style={[colors.white, { marginLeft: 10 }]}>
+								Ready?
+							</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 			)}
 

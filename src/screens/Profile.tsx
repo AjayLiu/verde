@@ -37,7 +37,7 @@ export default function Profile({ navigation }: RouterProps) {
 		posts.forEach((post) => {
 			const timestamp = post.timestamp.toDate();
 			const date: string = getCalendarDateString(timestamp);
-			if (date === day.dateString) {
+			if (date === day.dateString && post.authorUid == fireUser?.uid) {
 				uid = post.challengeUid;
 			}
 		});
@@ -185,6 +185,7 @@ export default function Profile({ navigation }: RouterProps) {
 						styles.marL,
 						font.sizeL,
 						styles.marT,
+						styles.width90,
 					]}
 				>
 					{challenge === undefined ? (
@@ -265,6 +266,9 @@ const styles = StyleSheet.create({
 	},
 	width100: {
 		width: "100%",
+	},
+	width90: {
+		width: "90%",
 	},
 	height100: {
 		height: "100%",
