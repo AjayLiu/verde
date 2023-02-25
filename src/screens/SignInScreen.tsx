@@ -2,12 +2,18 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+	EmailAuthProvider,
+	getAuth,
+	reauthenticateWithCredential,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
 import { StackScreenProps } from "@react-navigation/stack";
 import UsernameContext from "../contexts/UsernameContext";
 import flexbox from "@styles/flexbox";
 import colors from "@styles/colors";
 import font from "@styles/font";
+import { useUser } from "@utils/hooks/useUser";
 
 const auth = getAuth();
 
@@ -21,6 +27,8 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 	const { hasPickedUsername, setHasPickedUsername } =
 		useContext(UsernameContext);
 
+	const { authUser, fireUser, deleteUserFromFirestore } = useUser();
+
 	async function signIn() {
 		if (value.email === "" || value.password === "") {
 			setValue({
@@ -32,7 +40,21 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 
 		try {
 			await signInWithEmailAndPassword(auth, value.email, value.password);
-			setHasPickedUsername(true);
+			if (!fireUser) {
+				// const credential = EmailAuthProvider.credential(
+				// 	value.email,
+				// 	value.password,
+				// );
+
+				// if (!authUser) throw new Error("No user signed in.");
+				// await reauthenticateWithCredential(authUser, credential);
+
+				// await deleteUserFromFirestore(authUser?.uid || "");
+
+				navigation.navigate("PickUsername");
+			} else {
+				setHasPickedUsername(true);
+			}
 		} catch (error: any) {
 			setValue({
 				...value,
