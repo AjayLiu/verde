@@ -69,9 +69,9 @@ const Accordion = (props: AccordionProps) => {
 						marginTop: 16,
 						paddingVertical: 8,
 						paddingHorizontal: 8,
-						borderWidth: 1,
+						borderWidth: 2,
 						borderColor: "#E2E4F6",
-						borderRadius: 3,
+						borderRadius: 10,
 					},
 					flexbox.row,
 					flexbox.alignCenter,
@@ -98,7 +98,7 @@ const Accordion = (props: AccordionProps) => {
 				>
 					{props.challenge.title}
 				</Text>
-				<Text style={[{ color: "white" }]}>
+				<Text style={[colors.offWhite, font.fontBold]}>
 					+{props.challenge.points}
 				</Text>
 			</TouchableOpacity>
@@ -121,7 +121,7 @@ const Accordion = (props: AccordionProps) => {
 							font.textCenter,
 							font.sizeL,
 							colors.offWhite,
-							{ marginHorizontal: 5 },
+							{ marginHorizontal: 20 },
 						]}
 					>
 						{props.challenge.description}
@@ -135,7 +135,7 @@ const Accordion = (props: AccordionProps) => {
 								{ paddingVertical: 10 },
 								{ paddingHorizontal: 16 },
 								{ borderRadius: 12 },
-								{ marginTop: 50 },
+								{ marginTop: 15 },
 							]}
 							onPress={() => challengeSelected(props.challenge)}
 						>
@@ -153,7 +153,7 @@ const Accordion = (props: AccordionProps) => {
 									{ marginLeft: 8 },
 								]}
 							>
-								Do challenge
+								DO CHALLENGE
 							</Text>
 						</TouchableOpacity>
 					)}
@@ -177,7 +177,7 @@ const Accordion = (props: AccordionProps) => {
 
 const styles = StyleSheet.create({
 	container: {
-		width: "80%",
+		width: "85%",
 	},
 	title: {
 		// backgroundColor: "#138A36",
@@ -187,10 +187,10 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	expanded: {
-		borderWidth: 1,
+		borderWidth: 2,
 		borderColor: "#E2E4F6",
-		borderRadius: 3,
-		paddingVertical: 8,
+		borderRadius: 10,
+		paddingVertical: 10,
 	},
 });
 
