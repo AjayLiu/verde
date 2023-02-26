@@ -120,6 +120,10 @@ export function usePost() {
 			await updateUserFirestore(post.authorUid, {
 				score: increment(-1),
 			});
+
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
 			return;
 		}
 

@@ -26,4 +26,12 @@ export default StyleSheet.create({
 	textCenter: {
 		textAlign: "center",
 	},
+	textLeft: {
+		textAlign: "left",
+		paddingLeft: 10,
+	},
+	textRight: {
+		textAlign: "right",
+		paddingRight: 10,
+	},
 });
