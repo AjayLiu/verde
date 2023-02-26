@@ -155,58 +155,62 @@ const Accordion = (props: AccordionProps) => {
 					</Text>
 
 					{!props.isCompleted && (
-						<>
-							<View style={[flexbox.row, { marginLeft: 10, marginRight: 20 }]}>
-								<TouchableOpacity
-									style={[
-										flexbox.row,
-										flexbox.alignCenter,
-										colors.blueBG,
-										{ paddingVertical: 10 },
-										{ paddingHorizontal: 16 },
-										{ borderRadius: 12 },
-										{ marginTop: 8 },
-										{ width: "100%" },
-									]}
-									onPress={() =>
-										challengeSelected(props.challenge)
-									}
-								>
-									<Icon
-										type="font-awesome"
-										name="camera"
-										color="white"
-									></Icon>
-									<Text
-										style={[
-											font.textCenter,
-											font.sizeL,
-											font.fontBold,
-											colors.offWhite,
-											{ marginLeft: 8 },
-										]}
-									>
-										DO CHALLENGE
-									</Text>
-								</TouchableOpacity>
+						<View
+							style={[
+								flexbox.row,
+								{ marginLeft: 10, marginRight: 20 },
+							]}
+						>
+							<TouchableOpacity
+								style={[
+									flexbox.row,
+									flexbox.alignCenter,
+									flexbox.justifyCenter,
+									colors.blueBG,
+									{ paddingVertical: 10 },
+									{ paddingHorizontal: 16 },
+									{ borderRadius: 12 },
+									{ marginTop: 8 },
+									{ width: "82.5%" },
+								]}
+								onPress={() =>
+									challengeSelected(props.challenge)
+								}
+							>
+								<Icon
+									type="font-awesome"
+									name="camera"
+									color="white"
+								></Icon>
 								<Text
 									style={[
-										{ marginTop: 20 },
-										// { paddingLeft:},
-										colors.offWhite,
-										flexbox.justifyEnd,
+										font.textCenter,
+										font.sizeL,
 										font.fontBold,
-										// flexbox.alignCenter,
-										// font.textRight,
-										{ fontSize: 17.5 },
+										colors.offWhite,
+										{ marginLeft: 8 },
 									]}
 								>
-									{getTimeRemainingStr(
-										props.challenge.expirationTime.toDate(),
-									)}
+									DO CHALLENGE
 								</Text>
-							</View>
-						</>
+							</TouchableOpacity>
+							<Text
+								style={[
+									{ marginTop: 20 },
+									{ paddingLeft: 4},
+									colors.offWhite,
+									// flexbox.justifyEnd,
+									font.fontBold,
+									// flexbox.alignCenter,
+									// font.textRight,
+									{ fontSize: 17.5 },
+								]}
+							>
+								{getTimeRemainingStr(
+									props.challenge.expirationTime.toDate(),
+								)}
+							</Text>
+						</View>
 					)}
 				</View>
 			)}

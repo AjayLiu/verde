@@ -12,6 +12,8 @@ import colors from "@styles/colors";
 import { usePost } from "@utils/hooks/usePost";
 import { DateData } from "react-native-calendars";
 import { getCalendarDateString } from "react-native-calendars/src/services";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
+import { useCallback } from "react";
 
 export default function Profile({ navigation }: RouterProps) {
 	const { fireUser } = useUser();
@@ -26,6 +28,12 @@ export default function Profile({ navigation }: RouterProps) {
 		timestamp: new Date().getTime(),
 		dateString: getCalendarDateString(new Date()),
 	});
+
+	const [refreshing, setRefreshing] = React.useState(false);
+
+	const onRefresh = useCallback(async () => {
+		setRefreshing(false);
+	}, []);
 
 	const fetchAllPosts = async () => {
 		const allPosts = await getAllPosts();
@@ -84,22 +92,14 @@ export default function Profile({ navigation }: RouterProps) {
 	}
 
 	return (
-		<View
-			style={[
-				styles.height100,
-				colors.offBlackBG,
-				flex.column,
-				flex.alignCenter,
-				flex.justifyStart,
-			]}
-		>
+		<View style={{flex: 1}}>
 			<View style={[styles.width100, flex.row, flex.justifyEnd]}>
 				{/* <Ionicons
-					name="albums"
-					size={22.5}
-					color={"#00CC4B"}
-					style={{ opacity: 0.25 }}
-				/> */}
+    name="albums"
+    size={22.5}
+    color={"#00CC4B"}
+    style={{ opacity: 0.25 }}
+/> */}
 
 				<Ionicons
 					name="settings-outline"
@@ -109,145 +109,178 @@ export default function Profile({ navigation }: RouterProps) {
 					onPress={() => navigation.navigate("Settings")}
 				/>
 			</View>
-			<ProfilePicture size={100} style={[styles.marB, styles.marT]} />
-			<Text
-				style={[
-					font.fontBold,
-					font.sizeXL,
-					styles.marT,
-					styles.marB,
-					colors.offWhite,
-				]}
-			>
-				{fireUser?.displayName}
-			</Text>
 
-			<View
-				style={[
-					styles.width100,
-					flex.row,
-					flex.justifyEvenly,
-					styles.marT,
-				]}
+			<ScrollView
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+					></RefreshControl>
+				}
 			>
-				<View style={flex.column}>
+				<View
+					style={[
+						styles.height100,
+						colors.offBlackBG,
+						flex.column,
+						flex.alignCenter,
+						flex.justifyStart,
+					]}
+				>
+					<ProfilePicture
+						size={100}
+						style={[styles.marB, styles.marT]}
+					/>
 					<Text
-						style={[font.textCenter, font.sizeXL, colors.offWhite]}
-					>
-						{fireUser?.score}
-					</Text>
-					<Text style={[font.sizeL, colors.offWhite]}>points</Text>
-				</View>
-				<View style={flex.column}>
-					<Text
-						style={[font.textCenter, font.sizeXL, colors.offWhite]}
-					>
-						{getNumPosts()}
-					</Text>
-					<Text style={[font.sizeL, colors.offWhite]}>
-						{getNumPosts() == 1 ? "post" : "posts"}
-					</Text>
-				</View>
-			</View>
-
-			<View style={[styles.width100, styles.marT]}>
-				<UserCalendar
-					posts={posts}
-					dayPress={dayPress}
-					selected={day}
-				/>
-			</View>
-			<View style={[styles.width100, styles.marL, styles.marT]}>
-				<Text
-					style={[
-						styles.width100,
-						font.textCenter,
-						colors.gray,
-						styles.marB,
-						{ marginBottom: 10 },
-					]}
-				>
-					↑ Tap a day to see completed challenges! ↑
-				</Text>
-				<Text
-					style={[
-						colors.offWhite,
-						font.sizeXML,
-						font.fontBold,
-						styles.marL,
-						styles.marT,
-					]}
-				>
-					{dateToString(day)}
-				</Text>
-				<Text
-					style={[
-						colors.offWhite,
-						styles.marL,
-						font.sizeL,
-						styles.marT,
-						styles.width90,
-					]}
-				>
-					{challenge === undefined ? (
-						"No challenge completed"
-					) : (
-						<Text>
-							<Text>You completed </Text>
-							<Text style={[font.fontBold]}>
-								{challenge.title}
-							</Text>
-							<Text> and earned </Text>
-							<Text style={[colors.lightGreen]}>
-								{challenge.points} points
-							</Text>
-							<Text>!</Text>
-						</Text>
-					)}
-				</Text>
-			</View>
-			{/* Uncomment below for button to send you to challenge page (needs to be debugged) */}
-			{/* <View>
-				{challenge === undefined ? (
-					<TouchableOpacity
 						style={[
-							flex.row,
-							flex.alignCenter,
-							colors.blueBG,
-							{ paddingVertical: 10 },
-							{ paddingHorizontal: 16 },
-							{ borderRadius: 12 },
-							{ marginTop: 15 },
+							font.fontBold,
+							font.sizeXL,
+							styles.marT,
+							styles.marB,
+							colors.offWhite,
 						]}
-						onPress={() =>
-							navigation.reset({
-								// index: 0,
-								routes: [{ name: "HomeSwiper" }],
-							})
-						}
 					>
-						<Ionicons
-							type="font-awesome"
-							name="menu"
-							color="white"
-							size={25}
-						></Ionicons>
+						{fireUser?.displayName}
+					</Text>
+
+					<View
+						style={[
+							styles.width100,
+							flex.row,
+							flex.justifyEvenly,
+							styles.marT,
+						]}
+					>
+						<View style={flex.column}>
+							<Text
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								{fireUser?.score}
+							</Text>
+							<Text style={[font.sizeL, colors.offWhite]}>
+								points
+							</Text>
+						</View>
+						<View style={flex.column}>
+							<Text
+								style={[
+									font.textCenter,
+									font.sizeXL,
+									colors.offWhite,
+								]}
+							>
+								{getNumPosts()}
+							</Text>
+							<Text style={[font.sizeL, colors.offWhite]}>
+								{getNumPosts() == 1 ? "post" : "posts"}
+							</Text>
+						</View>
+					</View>
+
+					<View style={[styles.width100, styles.marT]}>
+						<UserCalendar
+							posts={posts}
+							dayPress={dayPress}
+							selected={day}
+						/>
+					</View>
+					<View style={[styles.width100, styles.marL, styles.marT]}>
 						<Text
 							style={[
+								styles.width100,
 								font.textCenter,
-								font.sizeL,
-								font.fontBold,
-								colors.offWhite,
-								{ marginLeft: 8 },
+								colors.gray,
+								styles.marB,
+								{ marginBottom: 10 },
 							]}
 						>
-							CHALLENGES
+							↑ Tap a day to see completed challenges! ↑
 						</Text>
-					</TouchableOpacity>
-				) : (
-					<View></View>
-				)}
-			</View> */}
+						<Text
+							style={[
+								colors.offWhite,
+								font.sizeXML,
+								font.fontBold,
+								styles.marL,
+								styles.marT,
+							]}
+						>
+							{dateToString(day)}
+						</Text>
+						<Text
+							style={[
+								colors.offWhite,
+								styles.marL,
+								font.sizeL,
+								styles.marT,
+								styles.width90,
+							]}
+						>
+							{challenge === undefined ? (
+								"No challenge completed"
+							) : (
+								<Text>
+									<Text>You completed </Text>
+									<Text style={[font.fontBold]}>
+										{challenge.title}
+									</Text>
+									<Text> and earned </Text>
+									<Text style={[colors.lightGreen]}>
+										{challenge.points} points
+									</Text>
+									<Text>!</Text>
+								</Text>
+							)}
+						</Text>
+					</View>
+					{/* Uncomment below for button to send you to challenge page (needs to be debugged) */}
+					{/* <View>
+    {challenge === undefined ? (
+        <TouchableOpacity
+            style={[
+                flex.row,
+                flex.alignCenter,
+                colors.blueBG,
+                { paddingVertical: 10 },
+                { paddingHorizontal: 16 },
+                { borderRadius: 12 },
+                { marginTop: 15 },
+            ]}
+            onPress={() =>
+                navigation.reset({
+                    // index: 0,
+                    routes: [{ name: "HomeSwiper" }],
+                })
+            }
+        >
+            <Ionicons
+                type="font-awesome"
+                name="menu"
+                color="white"
+                size={25}
+            ></Ionicons>
+            <Text
+                style={[
+                    font.textCenter,
+                    font.sizeL,
+                    font.fontBold,
+                    colors.offWhite,
+                    { marginLeft: 8 },
+                ]}
+            >
+                CHALLENGES
+            </Text>
+        </TouchableOpacity>
+    ) : (
+        <View></View>
+    )}
+</View> */}
+				</View>
+			</ScrollView>
 		</View>
 	);
 }

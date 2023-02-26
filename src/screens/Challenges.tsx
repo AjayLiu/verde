@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import {
 	Dimensions,
+	NativeScrollEvent,
 	RefreshControl,
 	StyleSheet,
 	Text,
@@ -24,6 +25,18 @@ export default function HomeScreen({ navigation }: RouterProps) {
 
 	const [refreshing, setRefreshing] = React.useState(false);
 
+	const isCloseToBottom = ({
+		layoutMeasurement,
+		contentOffset,
+		contentSize,
+	}: NativeScrollEvent) => {
+		const paddingToBottom = 20;
+		return (
+			layoutMeasurement.height + contentOffset.y >=
+			contentSize.height - paddingToBottom
+		);
+	};
+
 	const onRefresh = useCallback(async () => {
 		setRefreshing(false);
 	}, []);
@@ -40,7 +53,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 	}, []);
 
 	return (
-		<View>
+		<View style={{ flex: 1 }}>
 			<View
 				style={[
 					flex.alignCenter,
@@ -70,7 +83,15 @@ export default function HomeScreen({ navigation }: RouterProps) {
 						onRefresh={onRefresh}
 					></RefreshControl>
 				}
+				// onScroll={({ nativeEvent }) => {
+				// 	if (isCloseToBottom(nativeEvent)) {
+
+				// 	}
+				// }}
+				// style={{ flex: 1, height: "90%" }}
+				// automaticallyAdjustsScrollIndicatorInsets={true}
 				scrollEventThrottle={400}
+				style={{ flexGrow: 1 }}
 			>
 				<View
 					style={[
@@ -79,7 +100,8 @@ export default function HomeScreen({ navigation }: RouterProps) {
 						flex.column,
 						flex.alignCenter,
 						flex.justifyStart,
-						styles.inner
+						{ paddingBottom: 20 }
+						// styles.inner,
 					]}
 				>
 					{challenges.map((challenge, idx) => {
@@ -134,7 +156,7 @@ const styles = StyleSheet.create({
 	marB: {
 		marginBottom: 17,
 	},
-	inner: {
-		flex: 1
-	}
+	// inner: {
+	// 	flex: 1,
+	// },
 });

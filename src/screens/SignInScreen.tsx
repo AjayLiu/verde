@@ -139,7 +139,7 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 					<Button
 						title="SIGN IN"
 						titleStyle={font.fontBold}
-						buttonStyle={[styles.button, colors.lightGreenBG]}
+						buttonStyle={[styles.button, colors.darkGreenBG]}
 						onPress={signIn}
 					/>
 					<View style={[flexbox.alignCenter, { marginTop: 10 }]}>

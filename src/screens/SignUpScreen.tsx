@@ -122,7 +122,7 @@ const SignUpScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 					<Button
 						title="SIGN UP"
 						titleStyle={font.fontBold}
-						buttonStyle={[styles.button, colors.lightGreenBG]}
+						buttonStyle={[styles.button, colors.darkGreenBG]}
 						onPress={signUp}
 					/>
 

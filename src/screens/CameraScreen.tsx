@@ -453,14 +453,18 @@ const CameraPreview = ({
 				>
 					<Progress.Circle
 						size={100}
-						showsText
-						unfilledColor={"white"}
+						// showsText
+						// unfilledColor={"white"}
 						progress={progress}
+						borderColor="#00cc4b"
+						color="#00cc4b"
 					/>
 					<Text
 						style={[
 							colors.offWhite,
 							colors.offBlackBG,
+							// colors.white,
+							font.fontBold,
 							{ padding: 10 },
 							{ marginTop: 10 },
 						]}
