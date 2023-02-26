@@ -7,7 +7,6 @@ import PostComponent from "@components/PostComponent";
 import { Post, RouterProps } from "src/types";
 import { usePost } from "@utils/hooks/usePost";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
-import UsernameContext from "../contexts/UsernameContext";
 import flex from "@styles/flexbox";
 import colors from "@styles/colors";
 import font from "@styles/font";
@@ -36,9 +35,6 @@ export default function FeedScreen({ navigation }: RouterProps) {
 		setRefreshing(false);
 	}, []);
 
-	const { hasPickedUsername, setHasPickedUsername } =
-		useContext(UsernameContext);
-
 	const isCloseToBottom = ({
 		layoutMeasurement,
 		contentOffset,
@@ -57,12 +53,14 @@ export default function FeedScreen({ navigation }: RouterProps) {
 
 	return (
 		<View>
-			<View style={[
-						flex.alignCenter,
-						flex.justifyCenter,
-						colors.offBlackBG,
-						styles.marB
-					]}>
+			<View
+				style={[
+					flex.alignCenter,
+					flex.justifyCenter,
+					colors.offBlackBG,
+					styles.marB,
+				]}
+			>
 				<Text
 					style={[
 						colors.lightGreen,
@@ -103,7 +101,15 @@ export default function FeedScreen({ navigation }: RouterProps) {
 				</Text> */}
 
 					{allPosts.slice(0, numPostsToShow).map((post: Post) => {
-						return <PostComponent key={post.uid} post={post} />;
+						return (
+							<PostComponent
+								key={post.uid}
+								post={post}
+								reloadPosts={() => {
+									fetchAllPosts();
+								}}
+							/>
+						);
 					})}
 				</View>
 			</ScrollView>
@@ -124,5 +130,5 @@ const styles = StyleSheet.create({
 	},
 	marB: {
 		marginBottom: 2,
-	}
+	},
 });

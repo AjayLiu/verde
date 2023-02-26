@@ -7,6 +7,7 @@ type ProfilePictureProps = {
 	user?: FirestoreUser;
 	style?: any;
 	size?: number;
+	image?: string;
 };
 
 const ProfilePicture = (props: ProfilePictureProps) => {
@@ -15,6 +16,7 @@ const ProfilePicture = (props: ProfilePictureProps) => {
 		<Image
 			source={{
 				uri:
+					props.image ||
 					props.user?.photoUrl ||
 					authUser?.photoURL ||
 					// loading image

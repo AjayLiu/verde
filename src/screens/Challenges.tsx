@@ -37,19 +37,19 @@ export default function HomeScreen({ navigation }: RouterProps) {
 		);
 	};
 
-	const onRefresh = useCallback(async () => {
-		setRefreshing(false);
-	}, []);
-
+	const getChallenges = async () => {
+		const result = await getActiveChallenges();
+		setChallenges(result);
+	};
 	useEffect(() => {
-		const getChallenges = async () => {
-			const result = await getActiveChallenges();
-			setChallenges(result);
-		};
-
 		getChallenges();
 
 		// console.log(fireUser?.completedChallengesUids);
+	}, []);
+
+	const onRefresh = useCallback(async () => {
+		await getChallenges();
+		setRefreshing(false);
 	}, []);
 
 	return (
@@ -100,7 +100,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 						flex.column,
 						flex.alignCenter,
 						flex.justifyStart,
-						{ paddingBottom: 20 }
+						{ paddingBottom: 20 },
 						// styles.inner,
 					]}
 				>

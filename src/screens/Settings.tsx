@@ -16,8 +16,12 @@ import { getAuth } from "firebase/auth";
 const auth = getAuth();
 
 export default function HomeScreen({ navigation }: RouterProps) {
-	const { authUser, deleteUserFromFirestore, updateProfilePicture } =
-		useUser();
+	const {
+		fireUser,
+		authUser,
+		deleteUserFromFirestore,
+		updateProfilePicture,
+	} = useUser();
 
 	// The path of the picked image
 	const [pickedImagePath, setPickedImagePath] = useState("");
@@ -32,7 +36,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 		if (!result.canceled) {
 			setPickedImagePath(result.assets[0].uri);
 			// console.log(result.assets[0]);
-			updateProfilePicture(result.assets[0].uri);
+			await updateProfilePicture(result.assets[0].uri);
 		}
 	};
 
@@ -98,7 +102,7 @@ export default function HomeScreen({ navigation }: RouterProps) {
 					Settings
 				</Text>
 			</View> */}
-			<ProfilePicture size={100} />
+			<ProfilePicture size={100} image={pickedImagePath} />
 			<View
 				style={[
 					flex.column,

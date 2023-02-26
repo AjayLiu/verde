@@ -23,6 +23,7 @@ import colors from "@styles/colors";
 import font from "@styles/font";
 import { Icon } from "react-native-elements";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import flexbox from "@styles/flexbox";
 
 let camera: Camera | null;
 
@@ -475,6 +476,21 @@ const CameraPreview = ({
 			)}
 			{showConfetti && (
 				<View
+					style={[
+						{
+							position: "absolute",
+							height: "100%",
+							width: "100%",
+						},
+						flexbox.alignCenter,
+						flexbox.justifyCenter,
+					]}
+				>
+					<ConfettiCannon count={200} origin={{ x: 0, y: 0 }} />
+				</View>
+			)}
+			{showConfetti && (
+				<View
 					style={{
 						position: "absolute",
 						top: 0,
@@ -485,7 +501,6 @@ const CameraPreview = ({
 						alignItems: "center",
 					}}
 				>
-					<ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
 					<Text
 						style={[
 							colors.offWhite,

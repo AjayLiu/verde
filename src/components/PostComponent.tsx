@@ -8,13 +8,13 @@ import colors from "@styles/colors";
 import flex from "@styles/flexbox";
 import font from "@styles/font";
 import { usePost } from "@utils/hooks/usePost";
-import { Asset, useAssets } from "expo-asset";
 import { TouchableOpacity } from "react-native";
 
 const dimensions = Dimensions.get("window");
 
 type PostProps = {
 	post: Post;
+	reloadPosts: () => void;
 };
 
 const PostComponent = (props: PostProps) => {
@@ -37,7 +37,7 @@ const PostComponent = (props: PostProps) => {
 
 		getAuthorInfo();
 		getChallengeInfo();
-	}, []);
+	}, [props.post]);
 
 	function getPostTime(): string {
 		const postTime = props.post.timestamp.toDate().getTime();
@@ -95,17 +95,15 @@ const PostComponent = (props: PostProps) => {
 		return true;
 	};
 
-	const [justLiked, setJustLiked] = useState(false);
 	const likeThePost = async () => {
 		await likePost(props.post.uid);
-		if (alreadyLiked || justLiked) {
+		if (alreadyLiked) {
 			// Already liked, so unlike
-			setJustLiked(false);
 			setAlreadyLiked(false);
 		} else {
-			setJustLiked(true);
 			setAlreadyLiked(true);
 		}
+		props.reloadPosts();
 	};
 
 	const [alreadyLiked, setAlreadyLiked] = useState(false);
@@ -132,7 +130,7 @@ const PostComponent = (props: PostProps) => {
 					</View>
 					<View>
 						<Text style={colors.offWhite}>
-							{(author?.score || 0) + (justLiked ? 1 : 0)} points
+							{(author?.score || 0) + " points"}
 						</Text>
 					</View>
 				</View>
@@ -193,10 +191,9 @@ const PostComponent = (props: PostProps) => {
 						onPress={likeThePost}
 					>
 						<Text style={[font.sizeL, colors.offWhite]}>
-							{props.post.likes.length +
-								(justLiked || alreadyLiked ? 1 : 0)}
+							{props.post.likes.length}
 						</Text>
-						{alreadyLiked || justLiked ? (
+						{alreadyLiked ? (
 							// ALREADY LIKED
 							<Image
 								style={[styles.small_image]}

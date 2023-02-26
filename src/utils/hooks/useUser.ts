@@ -186,7 +186,14 @@ export function useUser() {
 			});
 		};
 
-		uploadImageToStorage(photoURL, "avatars/" + authUser.uid, callback);
+		uploadImageToStorage(
+			photoURL,
+			"avatars/" + authUser.uid,
+			callback,
+			() => {
+				//
+			},
+		);
 	};
 
 	const [usernamesList, setUsernamesList] = useState<string[]>([]);
@@ -295,5 +302,6 @@ export function useUser() {
 		updateUsername,
 		checkIfUsernameValid,
 		fireUser,
+		fetchFireUser,
 	};
 }

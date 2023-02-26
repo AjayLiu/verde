@@ -16,7 +16,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { useCallback } from "react";
 
 export default function Profile({ navigation }: RouterProps) {
-	const { fireUser } = useUser();
+	const { fireUser, fetchFireUser } = useUser();
 	const { getAllPosts } = usePost();
 	const { getChallenge } = useChallenge();
 	const [challenge, setChallenge] = useState<Challenge>();
@@ -31,7 +31,19 @@ export default function Profile({ navigation }: RouterProps) {
 
 	const [refreshing, setRefreshing] = React.useState(false);
 
+	const [displayName, setDisplayName] = useState("");
+	const [pfp, setPfp] = useState("");
+	const [score, setScore] = useState(0);
+
+	useEffect(() => {
+		setDisplayName(fireUser?.displayName || "");
+		if (fireUser?.photoUrl) setPfp(fireUser?.photoUrl);
+		setScore(fireUser?.score || 0);
+	}, [fireUser?.displayName, fireUser?.photoUrl]);
+
 	const onRefresh = useCallback(async () => {
+		await fetchAllPosts();
+		await fetchFireUser();
 		setRefreshing(false);
 	}, []);
 
@@ -92,7 +104,7 @@ export default function Profile({ navigation }: RouterProps) {
 	}
 
 	return (
-		<View style={{flex: 1}}>
+		<View style={{ flex: 1 }}>
 			<View style={[styles.width100, flex.row, flex.justifyEnd]}>
 				{/* <Ionicons
     name="albums"
@@ -130,6 +142,7 @@ export default function Profile({ navigation }: RouterProps) {
 					<ProfilePicture
 						size={100}
 						style={[styles.marB, styles.marT]}
+						image={pfp}
 					/>
 					<Text
 						style={[
@@ -140,7 +153,7 @@ export default function Profile({ navigation }: RouterProps) {
 							colors.offWhite,
 						]}
 					>
-						{fireUser?.displayName}
+						{displayName}
 					</Text>
 
 					<View
@@ -159,7 +172,7 @@ export default function Profile({ navigation }: RouterProps) {
 									colors.offWhite,
 								]}
 							>
-								{fireUser?.score}
+								{score}
 							</Text>
 							<Text style={[font.sizeL, colors.offWhite]}>
 								points
