@@ -171,10 +171,6 @@ const PostComponent = (props: PostProps) => {
 							]}
 						>
 							<Text style={font.fontBold}>
-								{author?.displayName}
-							</Text>{" "}
-							completed{" "}
-							<Text style={font.fontBold}>
 								{challenge?.title || "a challenge"}
 							</Text>
 							!

@@ -16,7 +16,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { useCallback } from "react";
 
 export default function Profile({ navigation }: RouterProps) {
-	const { fireUser, fetchFireUser } = useUser();
+	const { fireUser, authUser, fetchFireUser } = useUser();
 	const { getAllPosts } = usePost();
 	const { getChallenge } = useChallenge();
 	const [challenge, setChallenge] = useState<Challenge>();
@@ -37,7 +37,7 @@ export default function Profile({ navigation }: RouterProps) {
 
 	useEffect(() => {
 		setDisplayName(fireUser?.displayName || "");
-		if (fireUser?.photoUrl) setPfp(fireUser?.photoUrl);
+		if (authUser?.photoURL) setPfp(authUser?.photoURL);
 		setScore(fireUser?.score || 0);
 	}, [fireUser?.displayName, fireUser?.photoUrl]);
 

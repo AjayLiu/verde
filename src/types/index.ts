@@ -47,6 +47,7 @@ export interface Challenge {
 	uid: string;
 	title: string;
 	description: string;
+	impact: string;
 	points: number;
 	startTime: Timestamp;
 	expirationTime: Timestamp;
