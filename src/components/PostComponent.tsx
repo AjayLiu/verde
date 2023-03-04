@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
+import { Text, View, Image, StyleSheet, Dimensions, Pressable } from "react-native";
 import ProfilePicture from "@components/ProfilePicture";
 import { Challenge, FirestoreUser, Post } from "src/types";
 import { useUser } from "@utils/hooks/useUser";
@@ -251,7 +251,7 @@ const PostComponent = (props: PostProps) => {
 							!
 						</Text>
 					</View>
-					<TouchableOpacity
+					<Pressable
 						style={[
 							flex.growTwo,
 							flex.row,
@@ -280,7 +280,7 @@ const PostComponent = (props: PostProps) => {
 							// 	ya
 							// </Text>
 						)}
-					</TouchableOpacity>
+					</Pressable>
 				</View>
 				<View
 					style={[
