@@ -8,7 +8,9 @@ import colors from "@styles/colors";
 import flex from "@styles/flexbox";
 import font from "@styles/font";
 import { usePost } from "@utils/hooks/usePost";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Modal from "react-native-modal";
 
 const dimensions = Dimensions.get("window");
 
@@ -23,6 +25,7 @@ const PostComponent = (props: PostProps) => {
 	const { likePost } = usePost();
 	const [author, setAuthor] = useState<FirestoreUser>();
 	const [challenge, setChallenge] = useState<Challenge>();
+	const [modalVisible, setModalVisible] = useState(false);
 
 	useEffect(() => {
 		const getAuthorInfo = async () => {
@@ -118,6 +121,67 @@ const PostComponent = (props: PostProps) => {
 
 	return (
 		<View style={[flex.column, styles.marB, styles.padB]}>
+			<Modal
+				isVisible={modalVisible}
+				onBackdropPress={() => {
+					setModalVisible(false);
+				}}
+				animationIn="fadeIn"
+				animationOut="fadeOut"
+				backdropTransitionOutTiming={0}
+			>
+				<View
+					style={[
+						colors.offBlackBG,
+						flex.column,
+						{
+							padding: 15,
+							borderRadius: 10,
+						},
+					]}
+				>
+					<Text
+						style={[
+							font.textCenter,
+							colors.offWhite,
+							font.sizeXL,
+							styles.marB,
+							{
+								width: "100%",
+							},
+						]}
+					>
+						<Text style={[font.fontBold]}>
+							{author?.displayName}
+						</Text>{" "}
+						completed{" "}
+						<Text style={[font.fontBold]}>{challenge?.title}</Text>
+						{"!"}
+					</Text>
+					<Text
+						style={[
+							colors.offWhite,
+							styles.marB,
+							{
+								width: "100%",
+							},
+						]}
+					>
+						Description:{" "}
+						{challenge?.description || "No description specified"}
+					</Text>
+					<Text
+						style={[
+							colors.offWhite,
+							{
+								width: "100%",
+							},
+						]}
+					>
+						Impact: {challenge?.impact || "No impact specified"}
+					</Text>
+				</View>
+			</Modal>
 			<View style={[flex.row, styles.marB]}>
 				<View style={[flex.growOne, flex.alignCenter]}>
 					<ProfilePicture size={35} user={author} />
@@ -130,7 +194,9 @@ const PostComponent = (props: PostProps) => {
 					</View>
 					<View>
 						<Text style={colors.offWhite}>
-							{(author?.score || 0) + " points"}
+							{(author?.score || 0) +
+								" point" +
+								((author?.score || 0) == 1 ? "" : "s")}
 						</Text>
 					</View>
 				</View>
@@ -155,9 +221,18 @@ const PostComponent = (props: PostProps) => {
 			</View>
 			<View style={flex.column}>
 				<View style={flex.row}>
+					<View style={[flex.growTwo, flex.alignCenter, styles.marB]}>
+						<TouchableOpacity onPress={() => setModalVisible(true)}>
+							<Ionicons
+								name="information-circle-outline"
+								size={25}
+								color={"white"}
+							/>
+						</TouchableOpacity>
+					</View>
 					<View
 						style={[
-							flex.basis85,
+							flex.growTen,
 							styles.marB,
 							flex.alignCenter,
 							flex.justifyCenter,
@@ -171,14 +246,14 @@ const PostComponent = (props: PostProps) => {
 							]}
 						>
 							<Text style={font.fontBold}>
-								{challenge?.title || "a challenge"}
+								{challenge?.title || "No Challenge"}
 							</Text>
 							!
 						</Text>
 					</View>
 					<TouchableOpacity
 						style={[
-							flex.basis15,
+							flex.growTwo,
 							flex.row,
 							flex.justifyCenter,
 							flex.alignCenter,
