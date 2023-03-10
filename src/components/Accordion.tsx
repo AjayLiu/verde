@@ -1,6 +1,7 @@
 import colors from "@styles/colors";
 import flexbox from "@styles/flexbox";
 import font from "@styles/font";
+import flex from "@styles/flexbox";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Text } from "react-native-elements";
@@ -13,6 +14,8 @@ import {
 	Heebo_600SemiBold,
 	Heebo_500Medium,
 } from "@expo-google-fonts/heebo";
+import Modal from "react-native-modal";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 type AccordionProps = {
 	navigation: RouterProps["navigation"];
@@ -21,7 +24,7 @@ type AccordionProps = {
 };
 
 const Accordion = (props: AccordionProps) => {
-	let [fontsLoaded] = useFonts({
+	const [fontsLoaded] = useFonts({
 		Heebo_400Regular,
 		Heebo_600SemiBold,
 		Heebo_500Medium,
@@ -73,6 +76,8 @@ const Accordion = (props: AccordionProps) => {
 		props.navigation.navigate("Camera", { challenge });
 	};
 
+	const [modalVisible, setModalVisible] = useState(false);
+
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity
@@ -80,8 +85,6 @@ const Accordion = (props: AccordionProps) => {
 					{
 						paddingVertical: 12.5,
 						paddingHorizontal: 15,
-						// borderWidth: 2,
-						// borderColor: "#E2E4F6",
 						borderRadius: 10,
 					},
 					flexbox.row,
@@ -117,6 +120,7 @@ const Accordion = (props: AccordionProps) => {
 					+{props.challenge.points}
 				</Text>
 			</TouchableOpacity>
+
 			{isExpand && (
 				<View
 					style={[
@@ -139,20 +143,70 @@ const Accordion = (props: AccordionProps) => {
 								},
 							]}
 						>
-							you completed:
+							You completed:
 						</Text>
 					)}
-					<Text
+					<View
 						style={[
-							font.textLeft,
-							{ fontSize: 17.5, marginLeft: 5 },
-							colors.offWhite,
-							// { marginHorizontal: 30 },
-							{ fontFamily: "Heebo_500Medium" },
+							flex.row,
+							flex.justifyCenter,
+							styles.marB,
+							styles.marT,
 						]}
 					>
-						{props.challenge.description}
-					</Text>
+						<TouchableOpacity onPress={() => setModalVisible(true)}>
+							<Ionicons
+								name="information-circle-outline"
+								size={25}
+								color={"white"}
+							/>
+						</TouchableOpacity>
+						<Modal
+							isVisible={modalVisible}
+							onBackdropPress={() => {
+								setModalVisible(false);
+							}}
+							animationIn="fadeIn"
+							animationOut="fadeOut"
+							backdropTransitionOutTiming={0}
+						>
+							<View
+								style={[
+									colors.offBlackBG,
+									flex.column,
+									{
+										padding: 15,
+										borderRadius: 10,
+									},
+								]}
+							>
+								<Text
+									style={[
+										colors.offWhite,
+										{
+											width: "100%",
+										},
+									]}
+								>
+									Impact:{" "}
+									{props.challenge?.impact ||
+										"No impact specified"}
+								</Text>
+							</View>
+						</Modal>
+
+						<Text
+							style={[
+								font.textLeft,
+								{ fontSize: 17.5 },
+								colors.offWhite,
+								// { marginHorizontal: 30 },
+								{ fontFamily: "Heebo_500Medium" },
+							]}
+						>
+							{props.challenge.description}
+						</Text>
+					</View>
 
 					{!props.isCompleted && (
 						<View
@@ -197,12 +251,10 @@ const Accordion = (props: AccordionProps) => {
 							<Text
 								style={[
 									{ marginTop: 20 },
-									{ paddingLeft: 4},
 									colors.offWhite,
 									// flexbox.justifyEnd,
 									font.fontBold,
 									// flexbox.alignCenter,
-									// font.textRight,
 									{ fontSize: 17.5 },
 								]}
 							>
@@ -219,6 +271,20 @@ const Accordion = (props: AccordionProps) => {
 };
 
 const styles = StyleSheet.create({
+	marB: {
+		marginBottom: 5,
+	},
+	marT: {
+		marginTop: 5,
+	},
+	padB: {
+		paddingBottom: 1,
+	},
+	small_image: {
+		width: 20,
+		height: 20,
+		marginLeft: 5,
+	},
 	container: {
 		width: "87.5%",
 		marginBottom: 13,
