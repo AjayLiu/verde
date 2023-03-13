@@ -41,17 +41,8 @@ const SignInScreen: React.FC<StackScreenProps<any>> = ({ navigation }) => {
 
 		try {
 			await signInWithEmailAndPassword(auth, value.email, value.password);
-			if (!fireUser) {
-				// const credential = EmailAuthProvider.credential(
-				// 	value.email,
-				// 	value.password,
-				// );
-
-				// if (!authUser) throw new Error("No user signed in.");
-				// await reauthenticateWithCredential(authUser, credential);
-
-				// await deleteUserFromFirestore(authUser?.uid || "");
-
+			// if (!fireUser || !authUser) {
+			if (!hasPickedUsername) {
 				navigation.navigate("PickUsername");
 			} else {
 				setHasPickedUsername(true);
