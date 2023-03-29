@@ -1,5 +1,11 @@
 import React, { Component, useCallback, useContext, useEffect } from "react";
-import { NativeScrollEvent, StyleSheet, Text, View } from "react-native";
+import {
+	NativeScrollEvent,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import { useUser } from "@hooks/useUser";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
@@ -10,6 +16,7 @@ import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import flex from "@styles/flexbox";
 import colors from "@styles/colors";
 import font from "@styles/font";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function FeedScreen({ navigation }: RouterProps) {
 	const { authUser } = useUser();
@@ -53,26 +60,37 @@ export default function FeedScreen({ navigation }: RouterProps) {
 
 	return (
 		<View>
-			<View
-				style={[
-					flex.alignCenter,
-					flex.justifyCenter,
-					colors.offBlackBG,
-					styles.marB,
-				]}
-			>
+			<View style={[flex.row, flex.justifyBetween, flex.alignCenter]}>
+				<TouchableOpacity onPress={() => {}}>
+					<Ionicons
+						name="menu-outline"
+						size={30}
+						color={"#e2e4f6"}
+						style={{
+							marginLeft: 15,
+						}}
+					/>
+				</TouchableOpacity>
 				<Text
 					style={[
 						colors.lightGreen,
 						font.sizeXML,
 						font.textCenter,
-						// font.fontItalic,
 						font.fontBold,
-						styles.logo,
 					]}
 				>
 					VERDE
 				</Text>
+				<TouchableOpacity onPress={() => {}}>
+					<Ionicons
+						name="person-circle-outline"
+						size={30}
+						color={"#e2e4f6"}
+						style={{
+							marginRight: 15,
+						}}
+					/>
+				</TouchableOpacity>
 			</View>
 			<ScrollView
 				refreshControl={
@@ -120,10 +138,6 @@ export default function FeedScreen({ navigation }: RouterProps) {
 const styles = StyleSheet.create({
 	padding: {
 		paddingVertical: 10,
-	},
-	logo: {
-		top: 0,
-		position: "absolute",
 	},
 	marT: {
 		marginTop: 37,
