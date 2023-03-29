@@ -161,51 +161,57 @@ const Accordion = (props: AccordionProps) => {
 								color={"white"}
 							/>
 						</TouchableOpacity>
-						<Modal
-							isVisible={modalVisible}
-							onBackdropPress={() => {
-								setModalVisible(false);
-							}}
-							animationIn="fadeIn"
-							animationOut="fadeOut"
-							backdropTransitionOutTiming={0}
+						<View 
+							style={[
+								{width: "85%"}
+							]}
 						>
-							<View
-								style={[
-									colors.offBlackBG,
-									flex.column,
-									{
-										padding: 15,
-										borderRadius: 10,
-									},
-								]}
+							<Modal
+								isVisible={modalVisible}
+								onBackdropPress={() => {
+									setModalVisible(false);
+								}}
+								animationIn="fadeIn"
+								animationOut="fadeOut"
+								backdropTransitionOutTiming={0}
 							>
-								<Text
+								<View
 									style={[
-										colors.offWhite,
+										colors.offBlackBG,
+										flex.column,
 										{
-											width: "100%",
+											padding: 15,
+											borderRadius: 10,
 										},
 									]}
 								>
-									Impact:{" "}
-									{props.challenge?.impact ||
-										"No impact specified"}
-								</Text>
-							</View>
-						</Modal>
+									<Text
+										style={[
+											colors.offWhite,
+											{
+												width: "100%",
+											},
+										]}
+									>
+										Impact:{" "}
+										{props.challenge?.impact ||
+											"No impact specified"}
+									</Text>
+								</View>
+							</Modal>
 
-						<Text
-							style={[
-								font.textLeft,
-								{ fontSize: 17.5 },
-								colors.offWhite,
-								// { marginHorizontal: 30 },
-								{ fontFamily: "Heebo_500Medium" },
-							]}
-						>
-							{props.challenge.description}
-						</Text>
+							<Text
+								style={[
+									font.textLeft,
+									{ fontSize: 17.5 },
+									colors.offWhite,
+									// { marginHorizontal: 30 },
+									{ fontFamily: "Heebo_500Medium" },
+								]}
+							>
+								{props.challenge.description}
+							</Text>
+						</View>
 					</View>
 
 					{!props.isCompleted && (
