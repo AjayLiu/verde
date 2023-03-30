@@ -59,7 +59,7 @@ export default function FeedScreen({ navigation }: RouterProps) {
 	};
 
 	return (
-		<View>
+		<View style={{flex: 1}}>
 			<View style={[flex.row, flex.justifyBetween, flex.alignCenter]}>
 				<TouchableOpacity onPress={() => {}}>
 					<Ionicons
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 10,
 	},
 	marT: {
-		marginTop: 37,
+		marginTop: 10,
 	},
 	marB: {
 		marginBottom: 2,
