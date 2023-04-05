@@ -7,6 +7,7 @@
 
   <p align="center">
     A social media app where users upload photos of themselves completing fun sustainability challenges!
+    <br>Won 1st at UC Santa Barbara's Google Developer Student Club's Solution Challenge.
 </p>
 
 <!-- TABLE OF CONTENTS -->
@@ -38,11 +39,14 @@
 
 ## About The Project
 
-<!-- <img src="https://github.com/AjayLiu/ajayliu/blob/main/scroll.gif?raw=true"></img> -->
+Click to watch our Demo Video below!
+
+[![Demo Video](https://img.youtube.com/vi/o1LMi6rVhtw/0.jpg)](https://www.youtube.com/watch?v=o1LMi6rVhtw)
 
 <img src="src/assets/solutionchallengebanner.png"></img>
 
-This app is a collaborative project between Ajay Liu ([@ajayliu](https://github.com/ajayliu)), Rohil Shah ([@rohildshah](https://github.com/rohildshah)), Will Corcoran ([@wrcorcoran](https://github.com/wrcorcoran)), and Nikhil Vyas ([@nikhilvyas109](https://github.com/nikhilvyas109)) for the [2023 Google Developer Student Club Solution Challenge](https://developers.google.com/community/gdsc-solution-challenge)
+This app is a collaborative project between Ajay Liu ([@ajayliu](https://github.com/ajayliu)), Rohil Shah ([@rohildshah](https://github.com/rohildshah)), Will Corcoran ([@wrcorcoran](https://github.com/wrcorcoran)), and Nikhil Vyas ([@nikhilvyas109](https://github.com/nikhilvyas109)) for the [2023 Google Developer Student Club Solution Challenge](https://developers.google.com/community/gdsc-solution-challenge). Won 1st at UC Santa Barbara's Google Developer Student Club's Solution Challenge.
+
 
 ### Built With
 
